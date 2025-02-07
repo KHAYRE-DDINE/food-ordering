@@ -1,0 +1,14 @@
+.cover {
+    bottom: 78px;
+    border-radius: 14px 14px 30px 30px;
+}
+
+.icon {
+    position: absolute;
+    right: 0px;
+}
+
+.btn-send {
+    top: -2px;
+    right: 2px;
+}
