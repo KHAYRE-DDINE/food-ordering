@@ -102,7 +102,7 @@ const AddButton = ({ item }: { item: ProductWithRelations }) => {
 export default AddButton
 
 
-function PickSize({
+export function PickSize({
     sizes, item, selectedSize, setSelectedSize
 }: {
     sizes: Size[],
@@ -119,7 +119,7 @@ function PickSize({
                         id={item.id}
                         checked={selectedSize.id === size.id}
                         onClick={() => setSelectedSize(size)}
-                        className=" w-5 h-5 border border-primary rounded-full" />
+                        className={`${selectedSize.id === size.id ? 'bg-primary' : ''} w-5 h-5 border border-primary rounded-full`} />
                     <Label htmlFor={size.id}>{size.name} {FormatCurrency(size.price + item.basePrice)}</Label>
                 </div>
             ))}
@@ -127,7 +127,7 @@ function PickSize({
     )
 }
 
-function Extras(
+export function Extras(
     { extras, selectedExtras, setSelectedExtras }
         : {
             extras: Extra[], selectedExtras: Extra[], setSelectedExtras: React.Dispatch<React.SetStateAction<Extra[]>>
@@ -150,7 +150,7 @@ function Extras(
                         id={extra.id}
                         checked={Boolean(selectedExtras.find((e) => e.id === extra.id))}
                         onClick={() => handleExtras(extra)}
-                        className="w-5 h-5 border border-primary rounded-md" />
+                        className={`${Boolean(selectedExtras.find((ex) => ex.id === extra.id)) ? 'bg-primary' : ''} w-5 h-5 border border-primary rounded-md`} />
                     <Label
                         htmlFor={extra.id}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -163,7 +163,7 @@ function Extras(
     )
 }
 
-function ChooseQuantity({ quantity, item, selectedSize, selectedExtras }
+export function ChooseQuantity({ quantity, item, selectedSize, selectedExtras }
     :
     {
         quantity: number,

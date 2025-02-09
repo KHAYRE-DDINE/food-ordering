@@ -18,7 +18,7 @@ const Menu = async ({ items }: { items: ProductWithRelations[] }) => {
                 </ul>
             </div>
         ) : (
-            <p className='text-accent text-center'>{noProductsFound}</p>
+            <p className='text-accent text-center mb-4'>{noProductsFound}</p>
         )
     )
 }

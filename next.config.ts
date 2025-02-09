@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    optimizeCss: true, // Enable CSS optimization
+  },
 };
 
 export default nextConfig;

@@ -26,12 +26,13 @@ const Items = () => {
                             <li key={item.id}>
                                 <div className='flex flex-col md:flex-row gap-6 justify-between'>
                                     <div className='flex items-center gap-2'>
-                                        <div className='relative w-24 h-24'>
+                                        <div className='relative w-24 h-24 flex items-center'>
                                             <Image
                                                 src={item.image}
-                                                className='object-contain'
+                                                className='object-contain rounded-full'
                                                 alt={item.name}
-                                                fill
+                                                width={100}
+                                                height={100}
                                             />
                                         </div>
                                         <div>

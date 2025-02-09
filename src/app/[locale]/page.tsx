@@ -1,6 +1,5 @@
 import BestSellers from "./_components/BestSellers";
 import Hero from "./_components/Hero";
-import AboutPage from "./about/page";
 
 export default async function Home() {
 
@@ -183,7 +182,12 @@ export default async function Home() {
   //   },
   // });
 
-  // const getIt = await db.product.findMany()
+  // const getIt = await db.product.findMany({
+  //   select: {
+  //     name: true,
+  //     image: true
+  //   }
+  // })
 
   // console.log(getIt)
 
@@ -191,7 +195,6 @@ export default async function Home() {
     <div>
       <Hero />
       <BestSellers />
-      <AboutPage />
     </div>
   );
 }

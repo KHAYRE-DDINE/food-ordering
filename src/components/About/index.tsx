@@ -15,7 +15,7 @@ const About = async () => {
             <div className="text-center mb-4">
                 <MainHead title={aboutUs} subTitle={ourStory} />
             </div>
-            <div className="container grid gap-10">
+            <div className="container grid gap-10 mt-24">
                 <div className="flex items-center justify-around gap-5 flex-row-reverse">
                     <div>
                         <Image
@@ -38,7 +38,7 @@ const About = async () => {
                 <div className="flex items-center justify-around gap-5 ">
                     <div>
                         <Image
-                            src='https://img.freepik.com/free-vector/combo-offer-concept-illustration_114360-6034.jpg?t=st=1738451765~exp=1738455365~hmac=987310b4f455ad4df76ed73e923dcfc6dbd01675df9f2d054021c30c1c3f81a4&w=740'
+                            src='https://img.freepik.com/free-vector/surprise-gift-concept-illustration_114360-30506.jpg?t=st=1738965026~exp=1738968626~hmac=e2f7e734a0911d6dfc8fbf3aab775aa6baf546d6ca58d5aa8ca87e80c2cd3ba8&w=740'
                             alt="img-1" width={500} height={500} className="hover:scale-110 transition-all duration-500" />
                     </div>
                     <div className="text-accent max-w-md mx-auto mt-4 flex flex-col gap-4">
@@ -57,7 +57,7 @@ const About = async () => {
                 <div className="flex items-center justify-around gap-5 flex-row-reverse">
                     <div>
                         <Image
-                            src='https://img.freepik.com/free-vector/delivery-guy-motor-scooter-wearing-mask_23-2148498576.jpg?t=st=1738452461~exp=1738456061~hmac=03760b4093f898d3ae46dc86822d4ac1f04993bb6eb49e8630d891091fff424f&w=740'
+                            src='https://img.freepik.com/free-vector/chef-holding-tray-food_1020-664.jpg?t=st=1738964941~exp=1738968541~hmac=5b2271c112359cb0395791a9e30089bdcc8a927ba78d1bf11cd085fb06d857ce&w=740'
                             alt="img-1" width={500} height={500} className="hover:scale-110 transition-all duration-500" />
                     </div>
                     <div className="text-accent max-w-md mx-auto mt-4 flex flex-col gap-4">

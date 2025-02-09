@@ -5,7 +5,6 @@ import React from 'react'
 const MenuPage = async () => {
     const categories = await getProductByCategory()
 
-
     return (
         <div>
             {categories.map((category) => (
