@@ -21,9 +21,10 @@ const Contact = async () => {
             </div>
             <div className="container">
                 <div className='grid grid-cols-1 lg:grid-cols-2 mt-[80px] relative'>
-                    <div className="image">
+                    <div className="relative image w-[400px] h-[400px]">
                         {/* <img src="/public/assets/images/women-food.jpg" alt="woman" className="object-contain" /> */}
-                        <Image src={"/assets/images/women-food.jpg"} alt='woman' className='object-contain' layout="fill"
+                        <Image src={"https://img.freepik.com/free-vector/retro-cartoon-internet-stickers-collection_23-2151023117.jpg?t=st=1739445838~exp=1739449438~hmac=4cbca2e87e5ae50b8da8454611890ebbfa221e34d0576ff20fa1ea1d209f76b3&w=740"}
+                            alt='woman' className='object-contain' layout="fill"
                         />
                     </div>
                     <div className="form">

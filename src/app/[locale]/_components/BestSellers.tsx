@@ -6,11 +6,11 @@ import getTrans from '@/lib/translation'
 import { getBestSellers } from '@/server/db/products'
 
 const BestSellers = async () => {
-    const bestSellers = await getBestSellers(3)
+    const bestSellers = await getBestSellers()
     const locale = await getCurrentLocale()
     const { home } = await getTrans(locale)
     const { bestSeller } = home
-
+console.log(bestSellers)
 
     return (
         <section>

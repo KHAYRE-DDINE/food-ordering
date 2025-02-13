@@ -182,12 +182,41 @@ export default async function Home() {
   //   },
   // });
 
-  // const getIt = await db.product.findMany({
-  //   select: {
-  //     name: true,
-  //     image: true
+  // const getIt = await db.orderProduct.update({
+  //   where: {
+  //     id: 'meat001qazxswedcvfrtgb'
+  //   },
+  //   data: {
+  //     quantity: 3
   //   }
   // })
+
+  // const getIt = await db.orderProduct.create({
+  //   data: {
+  //     productId: 'classic001asdfghjklqwe',
+  //     orderId: '4567889ikmnbvcre5678',
+  //     quantity: 5,
+  //     userId: '6787acjums5cra98mlsca'
+  //   }
+  // })
+
+  // const getIt = await db.order.create({
+  //   data: {
+  //     id: '4567889ikmnbvcre5678',
+  //     paid: true,
+  //     subTotal: 4.87,
+  //     deliveryFee: 5,
+  //     totalPrice: 8,
+  //     userEmail: 'khirdin@email.com',
+  //     phone: '+232393827492',
+  //     streetAddress: 'houman street',
+  //     postalCode: '76462',
+  //     city: 'tanger',
+  //     country: 'morocco',
+  //   }
+  // })
+
+  // const getIt = await db.orderProduct.findMany()
 
   // console.log(getIt)
 

@@ -31,13 +31,13 @@ export const getBestSellers = cache(
                 },
             },
             orderBy: {
-                createdAt: 'desc', // Ensure `createdAt` exists
+                createdAt: 'desc', 
             },
             include: {
                 sizes: true,
                 extras: true,
             },
-            take: limit, // Optional: Limit the number of results
+            take: limit,
         });
         return product;
     }, ['best-seller'], { revalidate: 3600 }

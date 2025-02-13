@@ -30,9 +30,9 @@ const Hero = async () => {
                     </div>
                 </div>
 
-                <div className='relative hidden md:block'>
-                    <Image src='/assets/images/pizza.png' alt='Pizza' className='object-contain'
-                        fill loading='eager' priority
+                <div className='relative hidden md:block w-[500px] h-[280px]'>
+                    <Image src='https://img.freepik.com/free-psd/close-up-hamburger-isolated_23-2151604203.jpg?t=st=1739445315~exp=1739448915~hmac=8b51b619e709c92d1277ccadf2c558ea8aa49f210f879cee785d8153c806fede&w=740'
+                        alt='Pizza' className='object-contain' loading='eager' priority fill
                     />
                 </div>
             </div>

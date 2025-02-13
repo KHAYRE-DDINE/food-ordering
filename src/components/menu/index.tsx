@@ -10,7 +10,7 @@ const Menu = async ({ items }: { items: ProductWithRelations[] }) => {
 
     return (
         items.length > 0 ? (
-            <div className="container">
+            <div className="my-6">
                 <ul className='grid grid-cols-1 sm:grid-cols-3 gap-5 text-center'>
                     {items.map((item) => (
                         <MenuItem key={item.id} item={item} />

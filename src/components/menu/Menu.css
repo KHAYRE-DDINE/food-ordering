@@ -1,4 +1,7 @@
-.menu-item {}
+.menu-item {
+    display: grid;
+    grid-template-rows: 196px 71px 20px;
+}
 
 .menu-item:hover img {
     transition: .3s;
