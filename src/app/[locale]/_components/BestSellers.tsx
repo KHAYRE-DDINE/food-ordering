@@ -10,11 +10,11 @@ const BestSellers = async () => {
     const locale = await getCurrentLocale()
     const { home } = await getTrans(locale)
     const { bestSeller } = home
-console.log(bestSellers)
+    console.log(bestSellers)
 
     return (
         <section>
-            <div className="container">
+            <div className="">
                 <div className='text-center mb-4'>
                     <MainHead title={bestSeller.checkOut} subTitle={bestSeller.OurBestSellers} />
                 </div>

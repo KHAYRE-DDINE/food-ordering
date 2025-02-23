@@ -52,6 +52,10 @@ export default {
 					'5': 'hsl(var(--chart-5))'
 				}
 			},
+			boxShadow: {
+				custom: '0px -20px 46px 0px hsl(var(--primary))'
+			},
+
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',

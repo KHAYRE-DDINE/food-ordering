@@ -221,7 +221,7 @@ export default async function Home() {
   // console.log(getIt)
 
   return (
-    <div>
+    <div className="">
       <Hero />
       <BestSellers />
     </div>

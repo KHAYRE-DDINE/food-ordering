@@ -52,9 +52,12 @@ export default async function RootLayout({
       >
         <ReduxProvider>
           <Header />
-          {children}
+          <div className="pt-[80px]">
+            {children}
+          </div>
           <Footer />
           <ChatAi />
+          {/* <div className="w-full h-3 shadow-[0_5px_15px_rgba(0,0,255,0.5)]"></div> */}
         </ReduxProvider>
       </body>
     </html>

@@ -14,7 +14,7 @@ const Hero = async () => {
 
     return (
         <section className='section-gap'>
-            <div className='container grid grid-cols-1 md:grid-cols-2'>
+            <div className='container grid grid-cols-1 md:grid-cols-2 gap-3'>
                 <div className='md:py-12'>
                     <h1 className='font-bold text-4xl'>{hero.title}</h1>
                     <p className='text-accent py-4'>{hero.description}</p>
@@ -30,8 +30,8 @@ const Hero = async () => {
                     </div>
                 </div>
 
-                <div className='relative hidden md:block w-[500px] h-[280px]'>
-                    <Image src='https://img.freepik.com/free-psd/close-up-hamburger-isolated_23-2151604203.jpg?t=st=1739445315~exp=1739448915~hmac=8b51b619e709c92d1277ccadf2c558ea8aa49f210f879cee785d8153c806fede&w=740'
+                <div className='relative hidden md:block w-[100%] h-[280px]'>
+                    <Image src='https://img.freepik.com/free-photo/black-plate-vegetables-chicken-cutlets_114579-86324.jpg?t=st=1739714173~exp=1739717773~hmac=568f3808a890ee08770e87005cb7a54727bbcdf6ad3e27f23182cb9765f87810&w=740'
                         alt='Pizza' className='object-contain' loading='eager' priority fill
                     />
                 </div>

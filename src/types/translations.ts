@@ -23,11 +23,36 @@ export type Translations = {
         about: {
             ourStory: string;
             aboutUs: string;
-            descriptions: {
-                one: string;
-                two: string;
-                three: string;
-            };
+            firstTitle: string,
+            firstDescriptions: {
+                beginning: string,
+                one: string,
+                two: string,
+                three: string,
+                four: string,
+                five: string
+            },
+            firstFoot: string,
+            secondTitle: string,
+            secondDescriptions: {
+                beginning: string,
+                one: string,
+                two: string,
+                three: string,
+                four: string,
+                five: string
+            },
+            secondFoot: string,
+            thirdTitle: string,
+            thirdDescriptions: {
+                beginning: string,
+                one: string,
+                two: string,
+                three: string,
+                four: string,
+                five: string
+            },
+            thirdFoot: string
         };
         contact: {
             "Don't Hesitate": string;
