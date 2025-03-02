@@ -10,16 +10,16 @@ export const ChatAi = () => {
 
 
     /*
-                                <div className='ai'>
-                                    <span className='text-[12px] ml-[36px] text-accent uppercase font-bold '>AI Khayreddine</span>
-                                    <div className=' flex items-center gap-2 '>
-                                        <ScanFace />
-                                        <p className='bg-[#ececec] rounded-xl px-2 py-2 text-[14px]'>pbsacn asdlicln jsuocan</p>
-                                    </div>
-                                </div>
-                                <div className='user flex justify-end gap-2 '>
-                                    <p className='bg-white border-black border-[1px] rounded-full px-2 py-2 text-[14px] mx-4 my-2'>pbsacn asdlicln jsuocan</p>
-                                </div>
+         <div className='ai'>
+             <span className='text-[12px] ml-[36px] text-accent uppercase font-bold '>AI Khayreddine</span>
+             <div className=' flex items-center gap-2 '>
+                 <ScanFace />
+                 <p className='bg-[#ececec] rounded-xl px-2 py-2 text-[14px]'>pbsacn asdlicln jsuocan</p>
+             </div>
+         </div>
+         <div className='user flex justify-end gap-2 '>
+             <p className='bg-white border-black border-[1px] rounded-full px-2 py-2 text-[14px] mx-4 my-2'>pbsacn asdlicln jsuocan</p>
+         </div>
     */
 
     return (

@@ -47,12 +47,12 @@ export default async function RootLayout({
     >
       <body
         className={
-          locale === Languages.ARABIC ? cairo.className : roboto.className
+          `${locale === Languages.ARABIC ? cairo.className : roboto.className} min-h-[100vh]`
         }
       >
         <ReduxProvider>
           <Header />
-          <div className="pt-[80px]">
+          <div className="pt-[80px]" style={{ minHeight: 'calc(100vh - 95px)' }}>
             {children}
           </div>
           <Footer />

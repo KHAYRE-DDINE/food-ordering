@@ -10,7 +10,6 @@ const BestSellers = async () => {
     const locale = await getCurrentLocale()
     const { home } = await getTrans(locale)
     const { bestSeller } = home
-    console.log(bestSellers)
 
     return (
         <section>
