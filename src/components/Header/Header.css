@@ -1,0 +1,87 @@
+.navbar a:not(:last-of-type) {
+    width: 80px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar a:last-of-type {
+    box-shadow: 3px -4px 0px 8px #ffffff, -1px 4px 0px 4px hsl(14 99% 47%);
+}
+
+.navbar a:not(:last-of-type) span {
+    position: absolute;
+    width: 2px;
+    height: 0%;
+    background: rgb(131, 58, 180);
+    background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+}
+
+.navbar a:is(:last-of-type) span {
+    display: none;
+}
+
+.navbar a:not(:last-of-type)::after,
+.navbar a:not(:last-of-type)::before {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: rgb(131, 58, 180);
+    background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+}
+
+.navbar a::after {
+    left: 0;
+    top: 0;
+}
+
+.navbar a:hover::after {
+    transition-delay: 0s;
+}
+
+.navbar a span:first-of-type {
+    right: 0;
+    top: 0;
+}
+
+.navbar a:hover span:first-of-type {
+    transition-delay: 0.2s;
+}
+
+.navbar a::before {
+    right: 0;
+    bottom: 0;
+}
+
+.navbar a:hover::before {
+    transition-delay: .4s;
+}
+
+.navbar a span:last-of-type {
+    left: 0;
+    bottom: 0;
+}
+
+.navbar a:hover span:last-of-type {
+    transition-delay: .6s;
+}
+
+.navbar a:hover::before,
+.navbar a:hover::after {
+    width: 100%;
+    transition-property: width;
+    transition-duration: .5s;
+}
+
+.navbar a:hover span {
+    height: 100%;
+    transition-property: height;
+    transition-duration: .5s;
+}
