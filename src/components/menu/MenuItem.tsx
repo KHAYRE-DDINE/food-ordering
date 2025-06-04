@@ -13,10 +13,10 @@ function MenuItem({ item }: { item: ProductWithRelations }) {
     return (
 
         <motion.div
-            initial={{ opacity: 0, y: 20, scale: 1 }}
+            initial={{ opacity: 0, y: 20}}
             whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: .4, delay: .2 }}
+            // whileHover={{ scale: 1.1 }}
+            // transition={{ duration: .4, delay: .2 }}
             className='menu-item h-full p-4 rounded-md bg-gray-200 hover:shadow-2xl shadow-[#000000b3] duration-75'>
             <div className="relative w-full h-48 mx-auto overflow-hidden">
                 <Image src={item.image} className='object-fill' alt={item.name} fill />

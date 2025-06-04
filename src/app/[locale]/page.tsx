@@ -10,129 +10,137 @@ import { FaChevronRight } from "react-icons/fa6";
 import { db } from "@/lib/prisma";
 
 export default async function Home() {
-  await db.product.createMany({
-    data: [
-      {
-        id: 'meat001qazxswedcvfrtgb',
-        name: 'Grilled Chicken Shawarma',
-        description: 'Juicy grilled chicken marinated in Middle Eastern spices, served in a warm pita with garlic sauce and fresh veggies.',
-        image: 'https://images.unsplash.com/photo-1626804475297-41608ea09aeb?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 1,
-        basePrice: 12.99,
-        categoryId: '621e5449-7b7a-4d1a-8ffa-e6232ce36964', // Meat
-      },
-      {
-        id: 'meat002ae79fc8oijnebcybo',
-        name: 'Beef Kebab Platter',
-        description: 'Tender beef kebabs grilled to perfection, served with saffron rice, grilled vegetables, and a side of hummus.',
-        image: 'https://images.unsplash.com/photo-1603360946369-dc9bbf814ecf?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 2,
-        basePrice: 14.99,
-        categoryId: '621e5449-7b7a-4d1a-8ffa-e6232ce36964', // Meat
-      },
-      {
-        id: 'meat003768oinjbvcxsr45678',
-        name: 'Lamb Biryani',
-        description: 'Fragrant basmati rice cooked with tender lamb pieces, aromatic spices, and garnished with fried onions and fresh herbs.',
-        image: 'https://images.unsplash.com/photo-1630910392844-7b9985b0d2f7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 11,
-        basePrice: 15.99,
-        categoryId: '621e5449-7b7a-4d1a-8ffa-e6232ce36964', // Meat
-      },
-      {
-        id: 'meat004a9kf9e0k687siahcunt',
-        name: 'Chicken Tikka Masala',
-        description: 'Tender chicken pieces cooked in a creamy tomato-based sauce with aromatic spices, served with naan bread.',
-        image: 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 12,
-        basePrice: 13.99,
-        categoryId: '621e5449-7b7a-4d1a-8ffa-e6232ce36964', // Meat
-      },
-      {
-        id: 'meat005qazxsw7568agidun',
-        name: 'Beef Kofta Curry',
-        description: 'Spiced beef meatballs simmered in a rich and flavorful curry sauce, served with steamed rice.',
-        image: 'https://images.unsplash.com/photo-1606491956576-8d8e4c1b9a9e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 13,
-        basePrice: 14.99,
-        categoryId: '621e5449-7b7a-4d1a-8ffa-e6232ce36964', // Meat
-      },
-      {
-        id: 'cheese001qwertyuiopasd',
-        name: 'Four-Cheese Mac and Cheese',
-        description: 'Creamy macaroni baked with a blend of cheddar, mozzarella, Parmesan, and Gouda cheeses.',
-        image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 3,
-        basePrice: 9.99,
-        categoryId: '66073c05-e2f7-47b7-bb5f-793d6edae04e', // Cheese
-      },
-      {
-        id: 'cheese002lkjhgfdsazxcv',
-        name: 'Cheese Fondue',
-        description: 'A rich blend of melted Swiss cheeses served with bread cubes, vegetables, and apple slices for dipping.',
-        image: 'https://images.unsplash.com/photo-1608212581897-1b5c6d1b1b1f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 4,
-        basePrice: 14.99,
-        categoryId: '66073c05-e2f7-47b7-bb5f-793d6edae04e', // Cheese
-      },
-      {
-        id: 'veg001mnbvcxzlkjhgfds',
-        name: 'Veggie Supreme Pizza',
-        description: 'Packed with fresh vegetables: bell peppers, olives, mushrooms, and onions.',
-        image: 'https://images.unsplash.com/photo-1590947132387-155cc02f3212?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 5,
-        basePrice: 9.99,
-        categoryId: 'd070804e-542a-4995-8548-9c16a52df2b8', // Vegetarian
-      },
-      {
-        id: 'veg002poiuytrewqasdf',
-        name: 'Caprese Salad',
-        description: 'Fresh mozzarella, ripe tomatoes, and basil leaves drizzled with balsamic glaze.',
-        image: 'https://images.unsplash.com/photo-1607532941433-304659e8198a?q=80&w=1378&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 6,
-        basePrice: 7.99,
-        categoryId: 'd070804e-542a-4995-8548-9c16a52df2b8', // Vegetarian
-      },
-      {
-        id: 'classic001asdfghjklqwe',
-        name: 'Margherita Pizza',
-        description: 'Classic Margherita pizza with fresh tomatoes, mozzarella cheese, and basil leaves.',
-        image: 'https://plus.unsplash.com/premium_photo-1679924471091-f7cd7ad90ddf?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 7,
-        basePrice: 8.99,
-        categoryId: 'a8a13c73-5444-49f2-8f5b-cb726a7ec784', // Classic
-      },
-      {
-        id: 'classic002zxcvbnmlkjhg',
-        name: 'Spaghetti Carbonara',
-        description: 'Classic Italian pasta with creamy egg sauce, pancetta, and Parmesan cheese.',
-        image: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 8,
-        basePrice: 10.99,
-        categoryId: 'a8a13c73-5444-49f2-8f5b-cb726a7ec784', // Classic
-      },
-      {
-        id: 'spicy001qazwsxedcrfvtg',
-        name: 'Spicy Chicken Wings',
-        description: 'Crispy chicken wings tossed in a fiery hot sauce, served with blue cheese dressing.',
-        image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?q=80&w=1380&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 9,
-        basePrice: 11.99,
-        categoryId: 'ae2990be-c983-416b-a383-0a7a76894678', // Spicy
-      },
-      {
-        id: 'spicy002plokmijnuhbyg',
-        name: 'Spicy Thai Curry',
-        description: 'Aromatic Thai curry with coconut milk, chili, and your choice of vegetables or meat.',
-        image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        order: 10,
-        basePrice: 13.99,
-        categoryId: 'ae2990be-c983-416b-a383-0a7a76894678', // Spicy
-      },
-    ],
-  })
+  // await db.product.createMany({
+  //   data: [
+  //     {
+  //       id: 'meat001qazxswedcvfrtgb',
+  //       name: 'Grilled Chicken Shawarma',
+  //       description: 'Juicy grilled chicken marinated in Middle Eastern spices, served in a warm pita with garlic sauce and fresh veggies.',
+  //       image: 'https://images.unsplash.com/photo-1626804475297-41608ea09aeb?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 1,
+  //       basePrice: 12.99,
+  //       categoryId: '5fa045e6-bba6-484b-9431-59acfb99c558', // Meat
+  //     },
+  //     {
+  //       id: 'meat002ae79fc8oijnebcybo',
+  //       name: 'Beef Kebab Platter',
+  //       description: 'Tender beef kebabs grilled to perfection, served with saffron rice, grilled vegetables, and a side of hummus.',
+  //       image: 'https://images.unsplash.com/photo-1603360946369-dc9bbf814ecf?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 2,
+  //       basePrice: 14.99,
+  //       categoryId: '5fa045e6-bba6-484b-9431-59acfb99c558', // Meat
+  //     },
+  //     {
+  //       id: 'meat003768oinjbvcxsr45678',
+  //       name: 'Lamb Biryani',
+  //       description: 'Fragrant basmati rice cooked with tender lamb pieces, aromatic spices, and garnished with fried onions and fresh herbs.',
+  //       image: 'https://images.unsplash.com/photo-1630910392844-7b9985b0d2f7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 11,
+  //       basePrice: 15.99,
+  //       categoryId: '5fa045e6-bba6-484b-9431-59acfb99c558', // Meat
+  //     },
+  //     {
+  //       id: 'meat004a9kf9e0k687siahcunt',
+  //       name: 'Chicken Tikka Masala',
+  //       description: 'Tender chicken pieces cooked in a creamy tomato-based sauce with aromatic spices, served with naan bread.',
+  //       image: 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 12,
+  //       basePrice: 13.99,
+  //       categoryId: '5fa045e6-bba6-484b-9431-59acfb99c558', // Meat
+  //     },
+  //     {
+  //       id: 'meat005qazxsw7568agidun',
+  //       name: 'Beef Kofta Curry',
+  //       description: 'Spiced beef meatballs simmered in a rich and flavorful curry sauce, served with steamed rice.',
+  //       image: 'https://images.unsplash.com/photo-1606491956576-8d8e4c1b9a9e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 13,
+  //       basePrice: 14.99,
+  //       categoryId: '5fa045e6-bba6-484b-9431-59acfb99c558', // Meat
+  //     },
+  //     {
+  //       id: 'cheese001qwertyuiopasd',
+  //       name: 'Four-Cheese Mac and Cheese',
+  //       description: 'Creamy macaroni baked with a blend of cheddar, mozzarella, Parmesan, and Gouda cheeses.',
+  //       image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 3,
+  //       basePrice: 9.99,
+  //       categoryId: '04be2875-9e7d-49ee-9ccb-cec7bea11e85', // Cheese
+  //     },
+  //     {
+  //       id: 'cheese002lkjhgfdsazxcv',
+  //       name: 'Cheese Fondue',
+  //       description: 'A rich blend of melted Swiss cheeses served with bread cubes, vegetables, and apple slices for dipping.',
+  //       image: 'https://images.unsplash.com/photo-1608212581897-1b5c6d1b1b1f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 4,
+  //       basePrice: 14.99,
+  //       categoryId: '04be2875-9e7d-49ee-9ccb-cec7bea11e85', // Cheese
+  //     },
+  //     {
+  //       id: 'veg001mnbvcxzlkjhgfds',
+  //       name: 'Veggie Supreme Pizza',
+  //       description: 'Packed with fresh vegetables: bell peppers, olives, mushrooms, and onions.',
+  //       image: 'https://images.unsplash.com/photo-1590947132387-155cc02f3212?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 5,
+  //       basePrice: 9.99,
+  //       categoryId: '060c43ec-c64c-4e6e-8b80-aedcd816c88d', // Vegetarian
+  //     },
+  //     {
+  //       id: 'veg002poiuytrewqasdf',
+  //       name: 'Caprese Salad',
+  //       description: 'Fresh mozzarella, ripe tomatoes, and basil leaves drizzled with balsamic glaze.',
+  //       image: 'https://images.unsplash.com/photo-1607532941433-304659e8198a?q=80&w=1378&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 6,
+  //       basePrice: 7.99,
+  //       categoryId: '060c43ec-c64c-4e6e-8b80-aedcd816c88d', // Vegetarian
+  //     },
+  //     {
+  //       id: 'classic001asdfghjklqwe',
+  //       name: 'Margherita Pizza',
+  //       description: 'Classic Margherita pizza with fresh tomatoes, mozzarella cheese, and basil leaves.',
+  //       image: 'https://plus.unsplash.com/premium_photo-1679924471091-f7cd7ad90ddf?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 7,
+  //       basePrice: 8.99,
+  //       categoryId: '4d592f32-8620-499c-90cc-37523e2ce1d3', // Classic
+  //     },
+  //     {
+  //       id: 'classic002zxcvbnmlkjhg',
+  //       name: 'Spaghetti Carbonara',
+  //       description: 'Classic Italian pasta with creamy egg sauce, pancetta, and Parmesan cheese.',
+  //       image: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 8,
+  //       basePrice: 10.99,
+  //       categoryId: '4d592f32-8620-499c-90cc-37523e2ce1d3', // Classic
+  //     },
+  //     {
+  //       id: 'spicy001qazwsxedcrfvtg',
+  //       name: 'Spicy Chicken Wings',
+  //       description: 'Crispy chicken wings tossed in a fiery hot sauce, served with blue cheese dressing.',
+  //       image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?q=80&w=1380&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 9,
+  //       basePrice: 11.99,
+  //       categoryId: '004e0cef-f033-41b1-8479-20892ca68c5a', // Spicy
+  //     },
+  //     {
+  //       id: 'spicy002plokmijnuhbyg',
+  //       name: 'Spicy Thai Curry',
+  //       description: 'Aromatic Thai curry with coconut milk, chili, and your choice of vegetables or meat.',
+  //       image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       order: 10,
+  //       basePrice: 13.99,
+  //       categoryId: '004e0cef-f033-41b1-8479-20892ca68c5a', // Spicy
+  //     },
+  //   ],
+  // })
 
-  const products = await db.product.findMany();
+  // const products = await db.product.findUnique({
+  //   where: {
+  //     id: "meat005qazxsw7568agidun", // Specify the product ID to update
+  //   },
+  //   include: {
+  //     size: true,
+  //     extra: true,
+  //   },
+  // });
 
   // for (const product of products) {
   //   await db.size.createMany({
@@ -164,49 +172,52 @@ export default async function Home() {
   //   ]
   // })
 
+  await db.product.update({
+    where: {
+      id: "meat005qazxsw7568agidun", // Specify the product ID to update
+    },
+    data: {
+      image:
+        "https://images.unsplash.com/photo-1505253758473-96b7015fcd40?q=80&w=1300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // New image URL
+    },
+  });
+
   // await db.product.update({
   //   where: {
-  //     id: 'meat005qazxsw7568agidun', // Specify the product ID to update
+  //     id: "meat002ae79fc8oijnebcybo", // Specify the product ID to update
   //   },
   //   data: {
-  //     image: 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?q=80&w=1300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // New image URL
+  //     image:
+  //       "https://images.unsplash.com/photo-1570461226513-e08b58a52c53?q=80&w=1474&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // New image URL
   //   },
   // });
 
   // await db.product.update({
   //   where: {
-  //     id: 'meat002ae79fc8oijnebcybo', // Specify the product ID to update
+  //     id: "cheese002lkjhgfdsazxcv", // Specify the product ID to update
   //   },
   //   data: {
-  //     image: 'https://images.unsplash.com/photo-1570461226513-e08b58a52c53?q=80&w=1474&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // New image URL
+  //     image:
+  //       "https://img.freepik.com/free-photo/close-up-melted-cheese-recipe_23-2149286847.jpg?t=st=1740925740~exp=1740929340~hmac=1d92486f6508c94fa1ccfbeb9eded2a753fb6281e368ec7c27bde62ae879ae8b&w=1060", // New image URL
   //   },
   // });
 
-  // await db.product.update({
+  // await db.orderProduct.update({
   //   where: {
-  //     id: 'cheese002lkjhgfdsazxcv', // Specify the product ID to update
+  //     id: "meat001qazxswedcvfrtgb",
   //   },
   //   data: {
-  //     image: 'https://img.freepik.com/free-photo/close-up-melted-cheese-recipe_23-2149286847.jpg?t=st=1740925740~exp=1740929340~hmac=1d92486f6508c94fa1ccfbeb9eded2a753fb6281e368ec7c27bde62ae879ae8b&w=1060', // New image URL
+  //     quantity: 3,
   //   },
   // });
 
-  // const getIt = await db.orderProduct.update({
-  //   where: {
-  //     id: 'meat001qazxswedcvfrtgb'
-  //   },
+  // await db.orderProduct.create({
   //   data: {
-  //     quantity: 3
-  //   }
-  // })
-
-  // const getIt = await db.orderProduct.create({
-  //   data: {
-  //     orderId: '54678huns9ucuy786d5r456',
-  //     productId: 'cheese002lkjhgfdsazxcv',
+  //     orderId: "54678huns9ucuy786d5r456",
+  //     productId: "cheese002lkjhgfdsazxcv",
   //     quantity: 4,
-  //   }
-  // })
+  //   },
+  // });
 
   // const order = await db.order.create({
   //   data: {
@@ -227,7 +238,7 @@ export default async function Home() {
   console.log(products);
 
   return (
-    <div className="">
+    <div>
       <div className="container">
         <div className="why mt-12 border border-1 border-[#0a8800] rounded-md">
           <div className="resons flex justify-between items-center p-3 rounded-md bg-[#0a8800] text-white hover:opacity-80">
@@ -256,7 +267,7 @@ export default async function Home() {
         </div>
         <div className="lighting animate-pulse text-white bg-gradient-to-r from-[#f5a153] to-[#d63d00] flex justify-center items-center gap-3 p-3 rounded-md mt-5">
           <div className="flex justify-center items-center gap-2">
-            <BsFillLightningFill size={25}/>
+            <BsFillLightningFill size={25} />
             <span className="font-bold text-[20px]">Lightning deals</span>
           </div>
           <div className="flex justify-center items-center gap-1 opacity-80">
