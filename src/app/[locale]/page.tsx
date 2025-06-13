@@ -135,11 +135,7 @@ export default async function Home() {
   // const products = await db.product.findUnique({
   //   where: {
   //     id: "meat005qazxsw7568agidun", // Specify the product ID to update
-  //   },
-  //   include: {
-  //     size: true,
-  //     extra: true,
-  //   },
+  //   }
   // });
 
   // for (const product of products) {
@@ -172,15 +168,15 @@ export default async function Home() {
   //   ]
   // })
 
-  await db.product.update({
-    where: {
-      id: "meat005qazxsw7568agidun", // Specify the product ID to update
-    },
-    data: {
-      image:
-        "https://images.unsplash.com/photo-1505253758473-96b7015fcd40?q=80&w=1300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // New image URL
-    },
-  });
+  // await db.product.update({
+  //   where: {
+  //     id: "meat005qazxsw7568agidun", // Specify the product ID to update
+  //   },
+  //   data: {
+  //     image:
+  //       "https://images.unsplash.com/photo-1505253758473-96b7015fcd40?q=80&w=1300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // New image URL
+  //   },
+  // });
 
   // await db.product.update({
   //   where: {
@@ -235,7 +231,7 @@ export default async function Home() {
   //   }
   // });
 
-  console.log(products);
+  // console.log(products)
 
   return (
     <div>
