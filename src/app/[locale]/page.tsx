@@ -132,11 +132,7 @@ export default async function Home() {
   //   ],
   // })
 
-  // const products = await db.product.findUnique({
-  //   where: {
-  //     id: "meat005qazxsw7568agidun", // Specify the product ID to update
-  //   }
-  // });
+  const products = await db.category.findMany();
 
   // for (const product of products) {
   //   await db.size.createMany({
@@ -231,7 +227,7 @@ export default async function Home() {
   //   }
   // });
 
-  // console.log(products)
+  console.log(products)
 
   return (
     <div>

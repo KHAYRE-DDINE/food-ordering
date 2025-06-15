@@ -2,6 +2,9 @@
 import { SearchIcon } from "lucide-react";
 import React, { useState } from "react";
 import DropDown from "../SelectDropDown";
+import { useDispatch } from "react-redux";
+import { addToFilter } from "@/redux/features/filter/filterSlice";
+import { FilterItems as filterItems } from "@/redux/features/filter/filterSlice";
 
 function FilterItems() {
   const add = [
@@ -26,8 +29,24 @@ function FilterItems() {
       name: "pepper",
     },
   ];
+  const dispatch = useDispatch();
+
   const [selectedCategory, setSelectedCategory] =
     useState<string>("Choose a Category");
+
+  // const [selectedDiatery, setSelectedDiatery] =
+  //   useState<string>("Choose a Category");
+
+  const handleCheckedBoxes = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    item: filterItems
+  ) => {
+    if (event.target.checked) {
+      dispatch(
+        addToFilter({ name: 'dietary', value: item.name })
+      );
+    }
+  };
 
   return (
     <div className="filter container bg-[#80808029] h-[200px] rounded-xl py-5 px-16 mt-10">
@@ -41,6 +60,9 @@ function FilterItems() {
               name="search"
               placeholder="Search by name or keyword..."
               className="px-9 py-[9px] w-[300px] rounded-lg shadow-inner shadow-gray-200 placeholder:text-[15px] focus-visible:!border-primary"
+              onChange={(e) =>
+                dispatch(addToFilter({ name: "search", value: e.target.value }))
+              }
             />
           </div>
         </div>
@@ -50,23 +72,24 @@ function FilterItems() {
             <DropDown
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
+              dispatch={dispatch}
             />
           </div>
         </div>
       </div>
-      <div className="bottom mt-5">
+      <div className="bottom mt-5 mx-auto w-[640px]">
         <label className="text-[15px] ">Dietary Options</label>
-        <div className="flex items-center justify-between mt-2">
+        <div className="flex items-center justify-between mt-2 ">
           {add.map((e) => (
-            <div key={e.id} className="">
+            <div key={e.id} className="gap-1 flex items-center">
               <input
                 className="border-primary "
                 type="checkbox"
                 name={e.name}
                 id={e.name}
+                onChange={(event) => handleCheckedBoxes(event, e)}
               />
               <label className="capitalize" htmlFor={e.name}>
-                {" "}
                 {e.name}
               </label>
             </div>

@@ -5,6 +5,8 @@ import FilterItems from "@/components/Filter";
 
 const MenuPage = async () => {
   const categories = await getProductByCategory();
+
+  
   console.log(categories);
 
   return (
