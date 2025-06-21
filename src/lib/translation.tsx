@@ -1,4 +1,4 @@
-import 'server-only'
+// import 'server-only'
 
 import { Languages } from '@/constants/enums'
 import { Locale } from '@/i18n.config'

@@ -34,9 +34,6 @@ function FilterItems() {
   const [selectedCategory, setSelectedCategory] =
     useState<string>("Choose a Category");
 
-  // const [selectedDiatery, setSelectedDiatery] =
-  //   useState<string>("Choose a Category");
-
   const handleCheckedBoxes = (
     event: React.ChangeEvent<HTMLInputElement>,
     item: filterItems
