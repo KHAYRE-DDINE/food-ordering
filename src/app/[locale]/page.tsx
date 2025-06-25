@@ -7,7 +7,6 @@ import { IoShieldCheckmark } from "react-icons/io5";
 import { IoIosNotifications } from "react-icons/io";
 import { BsFillLightningFill } from "react-icons/bs";
 import { FaChevronRight } from "react-icons/fa6";
-import { db } from "@/lib/prisma";
 
 export default async function Home() {
   // await db.product.createMany({
