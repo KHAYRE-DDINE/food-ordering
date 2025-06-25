@@ -1,0 +1,267 @@
+{
+  "logo": "مطعمك",
+  "home": {
+    "hero": {
+      "title": "قطعة من السعادة",
+      "description": "تشعر برغبة في البيتزا؟ لدينا ما يلبي رغبتك مع المكونات الطازجة، والنكهات التي لا تنتهي، والتوصيل الأسرع. قطعتك المثالية على بعد نقرة واحدة!",
+      "orderNow": "اطلب الآن",
+      "learnMore": "اعرف المزيد"
+    },
+    "bestSeller": {
+      "checkOut": "اكتشف",
+      "OurBestSellers": "أفضل مبيعاتنا"
+    },
+    "about": {
+      "ourStory": "قصتنا",
+      "aboutUs": "معلومات عنا",
+      "firstTitle": "Our Services",
+      "firstDescriptions": {
+        "beginning": "At Pizza Restaurant, we’re passionate about creating unforgettable culinary experiences. From savory dishes to sweet delights, our services are designed to satisfy every craving. Here’s what we bring to the table:",
+        "one": "Exquisite meals crafted with fresh, high-quality ingredients.",
+        "two": "Perfectly tailored menus for weddings, corporate events, and private parties.",
+        "three": "Healthy, delicious meals delivered straight to your door.",
+        "four": "Learn the secrets behind our signature dishes with hands-on cooking sessions.",
+        "five": "Personalized dining experiences to suit your taste and dietary needs."
+      },
+      "firstFoot": "Let us take care of the cooking—you just enjoy the feast!",
+      "secondTitle": "Our Offers",
+      "secondDescriptions": {
+        "beginning": "We believe good food should be accessible to everyone. That’s why we’ve prepared special offers to make your dining experience even sweeter:",
+        "one": "Enjoy 10% off your first order with us!",
+        "two": "Special packages for family-sized meals at unbeatable prices.",
+        "three": " Limited-time dishes featuring the freshest seasonal ingredients.",
+        "four": "Earn points with every order and redeem them for free meals.",
+        "five": "Book your next event with us and receive exclusive perks."
+      },
+      "secondFoot": "Indulge in flavor without breaking the bank—explore our offers today!",
+      "thirdTitle": "Our Features",
+      "thirdDescriptions": {
+        "beginning": "What makes us the go-to choice for food lovers? It’s our dedication to quality, creativity, and customer satisfaction. Here’s what sets us apart:",
+        "one": "We source our ingredients locally to ensure the highest quality.",
+        "two": "From vegan and gluten-free to hearty comfort food, there’s something for everyone.",
+        "three": "Every dish is a masterpiece, created by our talented culinary team.",
+        "four": "Hot, fresh meals delivered right to your doorstep.",
+        "five": "We’re committed to sustainability, from packaging to kitchen operations."
+      },
+      "thirdFoot": "Taste the difference with a dining experience that’s as unique as you are."
+    },
+    "contact": {
+      "Don't Hesitate": "لا تتردد",
+      "contactUs": "اتصل بنا"
+    }
+  },
+  "navbar": {
+    "home": "الصفحة الرئيسية",
+    "about": "معلومات عنا",
+    "menu": "القائمة",
+    "contact": "تواصل معنا",
+    "login": "تسجيل الدخول",
+    "register": "انشاء حساب",
+    "signOut": "تسجيل الخروج",
+    "profile": "الملف الشخصي",
+    "admin": "المسؤول"
+  },
+  "auth": {
+    "login": {
+      "title": "مرحبًا بعودتك",
+      "name": {
+        "label": "الاسم",
+        "placeholder": "أدخل اسمك"
+      },
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "أدخل بريدك الإلكتروني"
+      },
+      "password": {
+        "label": "كلمة المرور",
+        "placeholder": "أدخل كلمة المرور"
+      },
+      "submit": "تسجيل الدخول",
+      "authPrompt": {
+        "message": "ليس لديك حساب؟ ",
+        "signUpLinkText": "سجل الآن"
+      }
+    },
+    "register": {
+      "title": "إنشاء حساب",
+      "name": {
+        "label": "الاسم",
+        "placeholder": "أدخل اسمك"
+      },
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "أدخل بريدك الإلكتروني"
+      },
+      "password": {
+        "label": "كلمة المرور",
+        "placeholder": "أدخل كلمة المرور"
+      },
+      "confirmPassword": {
+        "label": "تأكيد كلمة المرور",
+        "placeholder": "أعد إدخال كلمة المرور"
+      },
+      "submit": "إنشاء حساب",
+      "authPrompt": {
+        "message": "هل لديك حساب؟ ",
+        "loginLinkText": "تسجيل الدخول"
+      }
+    }
+  },
+  "validation": {
+    "nameRequired": "الاسم مطلوب",
+    "validEmail": "يجب أن يكون بريد إلكتروني صالح",
+    "passwordMinLength": "يجب أن تكون كلمة المرور على الأقل 6 أحرف",
+    "passwordMaxLength": "يجب أن تكون كلمة المرور على الأكثر 40 حرفًا",
+    "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
+    "passwordMismatch": "كلمة المرور غير متطابقة"
+  },
+  "messages": {
+    "userNotFound": "المستخدم غير موجود",
+    "incorrectPassword": "كلمة المرور غير صحيحة",
+    "loginSuccessful": "تم تسجيل الدخول بنجاح",
+    "unexpectedError": "حدث خطأ غير متوقع",
+    "userAlreadyExists": "المستخدم موجود بالفعل",
+    "accountCreated": "تم إنشاء الحساب بنجاح",
+    "updateProfileSucess": "تم تحديث الملف الشخصي بنجاح",
+    "categoryAdded": "تم اضافة الفئة بنجاح",
+    "updatecategorySucess": "تم تحديث الفئة بنجاح",
+    "deleteCategorySucess": "تم حذف الفئة بنجاح",
+    "productAdded": "تم اضافة المنتج بنجاح",
+    "updateProductSucess": "تم تحديث المنتج بنجاح",
+    "deleteProductSucess": "تم حذف المنتج بنجاح",
+    "updateUserSucess": "تم تحديث المستخدم بنجاح",
+    "deleteUserSucess": "تم حذف المستخدم بنجاح"
+  },
+  "menuItem": {
+    "addToCart": "أضف الي العربة"
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "form": {
+      "name": {
+        "label": "الاسم",
+        "placeholder": "أدخل اسمك"
+      },
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "أدخل بريدك الإلكتروني"
+      },
+      "phone": {
+        "label": "الهاتف",
+        "placeholder": "أدخل رقم هاتفك",
+        "validation": {
+          "required": "رقم الهاتف مطلوب",
+          "invalid": "يرجى إدخال رقم هاتف صالح"
+        }
+      },
+      "address": {
+        "label": "العنوان",
+        "placeholder": "أدخل عنوانك",
+        "validation": {
+          "required": "العنوان مطلوب"
+        }
+      },
+      "postalCode": {
+        "label": "الرمز البريدي",
+        "placeholder": "أدخل الرمز البريدي",
+        "validation": {
+          "required": "الرمز البريدي مطلوب",
+          "invalid": "يرجى إدخال رمز بريدي صالح"
+        }
+      },
+      "city": {
+        "label": "المدينة",
+        "placeholder": "أدخل مدينتك",
+        "validation": {
+          "required": "المدينة مطلوبة"
+        }
+      },
+      "country": {
+        "label": "الدولة",
+        "placeholder": "أدخل دولتك",
+        "validation": {
+          "required": "الدولة مطلوبة"
+        }
+      }
+    }
+  },
+  "admin": {
+    "tabs": {
+      "profile": "الملف الشخصي",
+      "categories": "الفئات",
+      "menuItems": "عناصر القائمة",
+      "users": "المستخدمون",
+      "orders": "الطلبات"
+    },
+    "categories": {
+      "form": {
+        "editName": "تعديل اسم الفئة",
+        "name": {
+          "label": "اسم الفئة",
+          "placeholder": "أدخل اسم الفئة",
+          "validation": {
+            "required": "اسم الفئة مطلوب"
+          }
+        }
+      }
+    },
+    "menu-items": {
+      "createNewMenuItem": "إنشاء عنصر قائمة جديد",
+      "addItemSize": "إضافة حجم العنصر",
+      "addExtraItem": "إضافة عنصر إضافي",
+      "menuOption": {
+        "name": "الاسم",
+        "extraPrice": "السعر الاضافي"
+      },
+      "form": {
+        "name": {
+          "label": "اسم العنصر",
+          "placeholder": "أدخل اسم العنصر",
+          "validation": {
+            "required": "اسم العنصر مطلوب"
+          }
+        },
+        "description": {
+          "label": "اسم الوصف",
+          "placeholder": "أدخل اسم الوصف",
+          "validation": {
+            "required": "اسم الوصف مطلوب"
+          }
+        },
+        "basePrice": {
+          "label": "السعر الأساسي",
+          "placeholder": "أدخل السعر الأساسي",
+          "validation": {
+            "required": "السعر الأساسي مطلوب"
+          }
+        },
+        "category": {
+          "validation": {
+            "required": "اختيار الفئة مطلوب"
+          }
+        },
+        "image": {
+          "validation": {
+            "required": "صورة المنتج مطلوبة"
+          }
+        }
+      }
+    }
+  },
+  "category": "الفئة",
+  "save": "حفظ",
+  "edit": "تعديل",
+  "delete": "حذف",
+  "create": "انشاء",
+  "sizes": "الأحجام",
+  "extrasIngredients": "عناصر اضافية",
+  "cancel": "الغاء",
+  "cart": {
+    "title": "عربة التسوق",
+    "noItemsInCart": "لا توجد عناصر في سلة التسوق الخاصة بك. أضف بعضًا"
+  },
+
+  "copyRight": "© 2025 جميع الحقوق محفوظة",
+  "noProductsFound": "لم يتم العثور على منتجات",
+  "noCategoriesFound": "لم يتم العثور على الفئات"
+}
