@@ -7,6 +7,7 @@ import { IoShieldCheckmark } from "react-icons/io5";
 import { IoIosNotifications } from "react-icons/io";
 import { BsFillLightningFill } from "react-icons/bs";
 import { FaChevronRight } from "react-icons/fa6";
+import { db } from "@/lib/prisma";
 
 export default async function Home() {
   // await db.product.createMany({
@@ -165,10 +166,10 @@ export default async function Home() {
 
   // await db.product.update({
   //   where: {
-  //     id: "meat003768oinjbvcxsr45678",
+  //     id: "cheese001qwertyuiopasd",
   //   },
   //   data: {
-  //     image : 'https://cdn.pixabay.com/photo/2024/01/18/17/20/ai-generated-8517258_960_720.jpg'
+  //     image : 'https://plus.unsplash.com/premium_photo-1661677825991-caa232fea9da?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFjYXJvbmklMjBhbmQlMjBjaGVlc2V8ZW58MHx8MHx8fDA%3D'
   //   },
   // });
 
