@@ -1,10 +1,19 @@
 import MainHead from "@/components/main-heading";
-import FilterItems from "@/components/Filter";
 import Categories from "@/components/Categories/Categories";
 import { getProductByCategory } from "@/server/db/products";
+import FilterItems from "@/components/Filter";
 
-const MenuPage = async () => {
-  const categories = await getProductByCategory() ;
+export default async function MenuPage() {
+  // Fetch categories
+  const categories = await getProductByCategory();
+
+  if (!categories || categories.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>No categories found. Please try again later.</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -15,6 +24,4 @@ const MenuPage = async () => {
       <Categories categories={categories} />
     </div>
   );
-};
-
-export default MenuPage;
+}

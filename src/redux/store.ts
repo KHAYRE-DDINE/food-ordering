@@ -9,7 +9,6 @@ export const store = configureStore({
         cart: cartReducer,
         filter : filterReducer
     },
-    devTools: process.env.NODE_ENV === Environments.DEV
 })
 
 

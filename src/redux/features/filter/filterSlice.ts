@@ -9,8 +9,26 @@ interface FilterStore {
   items: FilterItems[];
 }
 
+let initialFilterItems: FilterItems[] = [];
+
+// Safely get and parse filter from localStorage
+if (typeof window !== 'undefined') {
+  try {
+    const storedFilter = window.localStorage.getItem('filter');
+    if (storedFilter) {
+      const parsed = JSON.parse(storedFilter);
+      // Ensure we have a valid array structure
+      if (Array.isArray(parsed?.items)) {
+        initialFilterItems = parsed.items;
+      }
+    }
+  } catch (error) {
+    console.error('Error parsing filter from localStorage:', error);
+  }
+}
+
 const initialState: FilterStore = {
-  items: [],
+  items: initialFilterItems
 };
 
 const filterSlice = createSlice({

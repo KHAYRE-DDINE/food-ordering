@@ -1,10 +1,11 @@
 "use client";
 import { SearchIcon } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DropDown from "../SelectDropDown";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToFilter } from "@/redux/features/filter/filterSlice";
 import { FilterItems as FilterCheckout } from "@/redux/features/filter/filterSlice";
+import { RootState } from "@/redux/store";
 
 function FilterItems() {
   const add = [
@@ -30,6 +31,7 @@ function FilterItems() {
     },
   ];
   const dispatch = useDispatch();
+  const filters = useSelector((state: RootState) => state.filter);
 
   const [selectedCategory, setSelectedCategory] =
     useState<string>("Choose a Category");
@@ -39,14 +41,18 @@ function FilterItems() {
     item: FilterCheckout
   ) => {
     if (event.target.checked) {
-      dispatch(
-        addToFilter({ name: 'dietary', value: item.name })
-      );
+      dispatch(addToFilter({ name: "dietary", value: item.name }));
     }
   };
 
+
+  useEffect(()=>{
+    localStorage.setItem('filter', JSON.stringify(filters))
+  },[filters])
+
+
   return (
-    <div className="filter container bg-[#80808029] h-[200px] rounded-xl py-5 px-16 mt-10">
+    <div className="filter container bg-[#80808029] h-[200px] rounded-xl py-5 px-16 mt-10 m">
       <div className="top flex items-center justify-center gap-12">
         <div>
           <label className="text-[15px] ">Search menu</label>
@@ -84,7 +90,9 @@ function FilterItems() {
                 type="checkbox"
                 name={e.name}
                 id={e.name}
-                onChange={(event) => handleCheckedBoxes(event, {name:e.name, value:e.name})}
+                onChange={(event) =>
+                  handleCheckedBoxes(event, { name: e.name, value: e.name })
+                }
               />
               <label className="capitalize" htmlFor={e.name}>
                 {e.name}
