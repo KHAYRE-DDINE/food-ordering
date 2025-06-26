@@ -11,10 +11,10 @@ interface FilterStore {
 
 let initialFilterItems: FilterItems[] = [];
 
-// Safely get and parse filter from localStorage
+// Safely get and parse filter from sessionStorage
 if (typeof window !== 'undefined') {
   try {
-    const storedFilter = window.localStorage.getItem('filter');
+    const storedFilter = window.sessionStorage.getItem('filter');
     if (storedFilter) {
       const parsed = JSON.parse(storedFilter);
       // Ensure we have a valid array structure
@@ -23,7 +23,7 @@ if (typeof window !== 'undefined') {
       }
     }
   } catch (error) {
-    console.error('Error parsing filter from localStorage:', error);
+    console.error('Error parsing filter from sessionStorage:', error);
   }
 }
 

@@ -47,7 +47,7 @@ function FilterItems() {
 
 
   useEffect(()=>{
-    localStorage.setItem('filter', JSON.stringify(filters))
+    sessionStorage.setItem('filter', JSON.stringify(filters))
   },[filters])
 
 

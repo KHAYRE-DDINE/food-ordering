@@ -20,10 +20,10 @@ type CartState = {
 
 let initialCartItems: CartItem[] = [];
 
-// Safely get cart items from localStorage
+// Safely get cart items from sessionStorage
 if (typeof window !== 'undefined') {
   try {
-    const storedItems = window.localStorage.getItem("cartItems");
+    const storedItems = window.sessionStorage.getItem("cartItems");
     if (storedItems) {
       const parsed = JSON.parse(storedItems);
       if (Array.isArray(parsed)) {
@@ -31,7 +31,7 @@ if (typeof window !== 'undefined') {
       }
     }
   } catch (error) {
-    console.error('Error parsing cart items from localStorage:', error);
+    console.error('Error parsing cart items from sessionStorage:', error);
   }
 }
 
