@@ -1,4 +1,3 @@
-import { Environments } from "@/constants/enums";
 import { configureStore } from '@reduxjs/toolkit'
 import cartReducer from './features/cart/cartSlice'
 import filterReducer from './features/filter/filterSlice'
