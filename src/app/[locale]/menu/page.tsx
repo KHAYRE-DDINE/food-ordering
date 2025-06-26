@@ -7,13 +7,6 @@ export default async function MenuPage() {
   // Fetch categories
   const categories = await getProductByCategory();
 
-  if (!categories || categories.length === 0) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>No categories found. Please try again later.</p>
-      </div>
-    );
-  }
 
   return (
     <div>
