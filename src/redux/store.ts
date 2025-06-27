@@ -1,4 +1,3 @@
-import { Environments } from "@/constants/enums";
 import { configureStore } from '@reduxjs/toolkit'
 import cartReducer from './features/cart/cartSlice'
 import filterReducer from './features/filter/filterSlice'
@@ -9,7 +8,6 @@ export const store = configureStore({
         cart: cartReducer,
         filter : filterReducer
     },
-    devTools: process.env.NODE_ENV === Environments.DEV
 })
 
 

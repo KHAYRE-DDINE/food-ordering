@@ -18,11 +18,25 @@ type CartState = {
     items: CartItem[]
 }
 
-// let initialCartItems = localStorage.getItem("cartItems");
+let initialCartItems: CartItem[] = [];
+
+// Safely get cart items from sessionStorage
+if (typeof window !== 'undefined') {
+  try {
+    const storedItems = window.sessionStorage.getItem("cartItems");
+    if (storedItems) {
+      const parsed = JSON.parse(storedItems);
+      if (Array.isArray(parsed)) {
+        initialCartItems = parsed;
+      }
+    }
+  } catch (error) {
+    console.error('Error parsing cart items from sessionStorage:', error);
+  }
+}
 
 const initialState: CartState = {
-    items: []
-    // items: initialCartItems ? JSON.parse(initialCartItems) : []
+    items: initialCartItems
 };
 
 export const cartSlice = createSlice({

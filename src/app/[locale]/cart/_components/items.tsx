@@ -14,7 +14,7 @@ const Items = () => {
     const subTotal = getSubTotal(cart)
 
     useEffect(() => {
-        localStorage.setItem('cartItems', JSON.stringify(cart));
+        sessionStorage.setItem('cartItems', JSON.stringify(cart));
     }, [cart]);
 
     return (

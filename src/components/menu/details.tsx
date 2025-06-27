@@ -47,7 +47,7 @@ const Details = ({ item }: { item: ProductWithRelations }) => {
     }, [])
 
     useEffect(() => {
-        localStorage.setItem('cartItems', JSON.stringify(cart));
+        sessionStorage.setItem('cartItems', JSON.stringify(cart));
     }, [cart]);
 
 

@@ -1,9 +1,5 @@
-'use client'
-import Menu from "@/components/menu";
-import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { ProductSizes, ExtraIngredients } from "@prisma/client";
+import MenuWrapper from "@/components/menu/MenuWrapper";
 
 interface Category {
   id: string;
@@ -39,23 +35,22 @@ interface Product {
   updatedAt: Date;
 }
 
-const Categories = ({ categories }: CategoriesProps) => {
-  const filters = useSelector((state: RootState) => state.filter)
+export default function Categories({ categories }: CategoriesProps) {
 
-  console.log(filters)
+  const products = categories.flatMap((categorie)=>  categorie.products );
+
+  console.log(products);
 
   return (
     <div>
-      {categories.map((category: Category) => (
+      {categories.map((category) => (
         <section key={category.id} className="section-gap">
           <h1 className="text-[#F44336] text-4xl font-bold italic text-center mb-6 mt-14">
             {category.name}
           </h1>
-          <Menu items={category.products} />
+          <MenuWrapper items={category.products} />
         </section>
       ))}
     </div>
   );
-};
-
-export default Categories;
+}
