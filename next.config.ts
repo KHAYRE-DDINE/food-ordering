@@ -15,6 +15,20 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizeCss: true, // Enable CSS optimization
   },
+  webpack: (config, { isServer }) => {
+    // Fixes npm packages that depend on `node:` protocol
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        dns: false,
+        child_process: false,
+      };
+    }
+    return config;
+  },
 };
 
 export default nextConfig;
