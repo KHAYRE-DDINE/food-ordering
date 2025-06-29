@@ -1,19 +1,35 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  distDir: 'build',
+  output: 'standalone',
+  distDir: '.next',
   images: {
     remotePatterns: [
       {
         protocol: "https",
         hostname: "**",
-        pathname: "/**", // Allow all paths
+        pathname: "/**",
       },
     ],
   },
   experimental: {
-    optimizeCss: true, // Enable CSS optimization
+    optimizeCss: true,
+    serverActions: {
+      bodySizeLimit: '2mb'
+    },
+  },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        dns: false,
+        child_process: false,
+      };
+    }
+    return config;
   },
 };
 

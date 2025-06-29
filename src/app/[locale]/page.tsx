@@ -7,6 +7,7 @@ import { IoShieldCheckmark } from "react-icons/io5";
 import { IoIosNotifications } from "react-icons/io";
 import { BsFillLightningFill } from "react-icons/bs";
 import { FaChevronRight } from "react-icons/fa6";
+import { db } from "@/lib/prisma";
 
 export default async function Home() {
   // await db.product.createMany({
@@ -131,7 +132,7 @@ export default async function Home() {
   //   ],
   // })
 
-  // const products = await db.product.findMany();
+  const products = await db.category.findMany();
 
   // for (const product of products) {
   //   await db.size.createMany({
@@ -153,15 +154,15 @@ export default async function Home() {
   // //   });
   // }
 
-  // await db.category.createMany({
-  //   data: [
-  //     { name: "Classic", order: 1 },
-  //     { name: "Vegetarian", order: 2 },
-  //     { name: "Meat", order: 3 },
-  //     { name: "Cheese", order: 4 },
-  //     { name: "Spicy", order: 5 },
-  //   ]
-  // })
+  await db.category.createMany({
+    data: [
+      { name: "Classic", order: 1 },
+      { name: "Vegetarian", order: 2 },
+      { name: "Meat", order: 3 },
+      { name: "Cheese", order: 4 },
+      { name: "Spicy", order: 5 },
+    ]
+  })
 
   // await db.product.update({
   //   where: {
@@ -196,7 +197,7 @@ export default async function Home() {
   //   }
   // });
 
-  // console.log(products)
+  console.log(products)
 
   return (
     <div>
