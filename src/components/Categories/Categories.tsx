@@ -36,8 +36,6 @@ interface Product {
 }
 
 export default function Categories({ categories }: CategoriesProps) {
-  const extras: ExtraIngredients[] = [];
-
   const filters =
     typeof window !== "undefined"
       ? JSON.parse(sessionStorage.getItem("filter") || "[]")
@@ -45,16 +43,15 @@ export default function Categories({ categories }: CategoriesProps) {
 
   const products = categories.flatMap((categorie) => categorie.products);
 
-  const dietaryFilter = filters?.find((e) => e.name === "dietary");
+  // const dietaryFilter = filters?.find((e) => e.name === "dietary");
 
-  console.log(dietaryFilter);
+  const filterProducts = products.filter((product) => {
+    const extrasPieces =  product.extras.filter((product) => ['onion','bacon','tomato','pepper',].includes(product.name));
 
-  // const filterProducts = products.filter((product) => {
-  //   // e.extras.filter((e) => dietaryFilter.includes(e.name));
-  //   console.log(product)
-  // });
+    return extrasPieces
+  });
 
-  // console.log(filterProducts);
+  console.log('product : ',filterProducts);
 
   return (
     <div>
