@@ -46,12 +46,20 @@ export default function Categories({ categories }: CategoriesProps) {
   // const dietaryFilter = filters?.find((e) => e.name === "dietary");
 
   const filterProducts = products.filter((product) => {
-    const extrasPieces =  product.extras.filter((product) => ['onion','bacon','tomato','pepper',].includes(product.name));
-
-    return extrasPieces
+    const hasOnion = product.extras.some((e) => e.name === "ONION");
+    const isPizza = product.name.includes("Pizza");
+    
+    // Find the category this product belongs to
+    const productCategory = categories.find(c => 
+      c.products.some(p => p.id === product.id)
+    );
+    
+    const isTheRealItem = productCategory?.name === "Meat";
+    
+    return hasOnion && isPizza && isTheRealItem;
   });
 
-  console.log('product : ',filterProducts);
+  console.log("product : ", filterProducts);
 
   return (
     <div>

@@ -12,7 +12,7 @@ const Header = async () => {
 
     return (
         <div
-            className='header fixed w-full h-[85px] bg-red z-[4356432] flex justify-center items-center' style={{
+            className='header fixed w-full h-[85px] bg-white z-[4356432] flex justify-center items-center' style={{
                 boxShadow: "-1px 5px 20px #ccc"
             }}>
             <div className={`container fixed top-0 h-[85px] z-[98765678] flex justify-between items-center py-2 px-5 ${locale == 'en' ? "pr-6" : "pl-6"} gap-2`}>
