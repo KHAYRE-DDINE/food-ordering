@@ -36,10 +36,30 @@ interface Product {
 }
 
 export default function Categories({ categories }: CategoriesProps) {
+  const filters =
+    typeof window !== "undefined"
+      ? JSON.parse(sessionStorage.getItem("filter") || "[]")
+      : [];
 
-  const products = categories.flatMap((categorie)=>  categorie.products );
+  const products = categories.flatMap((categorie) => categorie.products);
 
-  console.log(products);
+  // const dietaryFilter = filters?.find((e) => e.name === "dietary");
+
+  const filterProducts = products.filter((product) => {
+    const hasOnion = product.extras.some((e) => e.name === "ONION");
+    const isPizza = product.name.includes("Pizza");
+    
+    // Find the category this product belongs to
+    const productCategory = categories.find(c => 
+      c.products.some(p => p.id === product.id)
+    );
+    
+    const isTheRealItem = productCategory?.name === "Meat";
+    
+    return hasOnion && isPizza && isTheRealItem;
+  });
+
+  console.log("product : ", filterProducts);
 
   return (
     <div>

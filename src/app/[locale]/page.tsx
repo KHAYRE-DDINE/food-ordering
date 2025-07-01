@@ -19,7 +19,7 @@ export default async function Home() {
   //       image: 'https://images.unsplash.com/photo-1626804475297-41608ea09aeb?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   //       order: 1,
   //       basePrice: 12.99,
-  //       categoryId: 'a2050e98-6937-4a0c-94b1-5a35683fb0c2', // Meat
+  //       categoryId: 'ffe5a310-d9fd-46e8-8a25-3d1f133ff66f', // Meat
   //     },
   //     {
   //       id: 'meat002ae79fc8oijnebcybo',
@@ -28,17 +28,17 @@ export default async function Home() {
   //       image: 'https://images.unsplash.com/photo-1570461226513-e08b58a52c53?q=80&w=1474&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   //       order: 2,
   //       basePrice: 14.99,
-  //       categoryId: 'a2050e98-6937-4a0c-94b1-5a35683fb0c2', // Meat
+  //       categoryId: 'ffe5a310-d9fd-46e8-8a25-3d1f133ff66f', // Meat
   //     },
-      // {
-      //   id: 'meat003768oinjbvcxsr45678',
-      //   name: 'Lamb Biryani',
-      //   description: 'Fragrant basmati rice cooked with tender lamb pieces, aromatic spices, and garnished with fried onions and fresh herbs.',
-      //   image: 'https://cdn.pixabay.com/photo/2024/01/18/17/20/ai-generated-8517258_960_720.jpg',
-      //   order: 11,
-      //   basePrice: 15.99,
-      //   categoryId: 'a2050e98-6937-4a0c-94b1-5a35683fb0c2', // Meat
-      // },
+  //     {
+  //       id: 'meat003768oinjbvcxsr45678',
+  //       name: 'Lamb Biryani',
+  //       description: 'Fragrant basmati rice cooked with tender lamb pieces, aromatic spices, and garnished with fried onions and fresh herbs.',
+  //       image: 'https://cdn.pixabay.com/photo/2024/01/18/17/20/ai-generated-8517258_960_720.jpg',
+  //       order: 11,
+  //       basePrice: 15.99,
+  //       categoryId: 'ffe5a310-d9fd-46e8-8a25-3d1f133ff66f', // Meat
+  //     },
   //     {
   //       id: 'meat004a9kf9e0k687siahcunt',
   //       name: 'Chicken Tikka Masala',
@@ -46,7 +46,7 @@ export default async function Home() {
   //       image: 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   //       order: 12,
   //       basePrice: 13.99,
-  //       categoryId: 'a2050e98-6937-4a0c-94b1-5a35683fb0c2', // Meat
+  //       categoryId: 'ffe5a310-d9fd-46e8-8a25-3d1f133ff66f', // Meat
   //     },
   //     {
   //       id: 'meat005qazxsw7568agidun',
@@ -55,16 +55,16 @@ export default async function Home() {
   //       image: 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?q=80&w=1300&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   //       order: 13,
   //       basePrice: 14.99,
-  //       categoryId: 'a2050e98-6937-4a0c-94b1-5a35683fb0c2', // Meat
+  //       categoryId: 'ffe5a310-d9fd-46e8-8a25-3d1f133ff66f', // Meat
   //     },
   //     {
   //       id: 'cheese001qwertyuiopasd',
   //       name: 'Four-Cheese Mac and Cheese',
   //       description: 'Creamy macaroni baked with a blend of cheddar, mozzarella, Parmesan, and Gouda cheeses.',
-  //       image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  //       image: '#######',
   //       order: 3,
   //       basePrice: 9.99,
-  //       categoryId: '5d98e10c-45b0-4481-aebf-0312f505eb00', // Cheese
+  //       categoryId: 'fd2f22ee-8165-4720-b22c-75c3ecacb536', // Cheese
   //     },
   //     {
   //       id: 'cheese002lkjhgfdsazxcv',
@@ -73,7 +73,7 @@ export default async function Home() {
   //       image: 'https://img.freepik.com/free-photo/close-up-melted-cheese-recipe_23-2149286847.jpg?t=st=1740925740~exp=1740929340~hmac=1d92486f6508c94fa1ccfbeb9eded2a753fb6281e368ec7c27bde62ae879ae8b&w=1060',
   //       order: 4,
   //       basePrice: 14.99,
-  //       categoryId: '5d98e10c-45b0-4481-aebf-0312f505eb00', // Cheese
+  //       categoryId: 'fd2f22ee-8165-4720-b22c-75c3ecacb536', // Cheese
   //     },
   //     {
   //       id: 'veg001mnbvcxzlkjhgfds',
@@ -82,7 +82,7 @@ export default async function Home() {
   //       image: 'https://images.unsplash.com/photo-1590947132387-155cc02f3212?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   //       order: 5,
   //       basePrice: 9.99,
-  //       categoryId: '5093ae3b-b451-4142-b3a2-d5533e8aeb67', // Vegetarian
+  //       categoryId: 'fe34c855-42ee-468e-9211-f24c003e3f8d', // Vegetarian
   //     },
   //     {
   //       id: 'veg002poiuytrewqasdf',
@@ -91,7 +91,7 @@ export default async function Home() {
   //       image: 'https://images.unsplash.com/photo-1607532941433-304659e8198a?q=80&w=1378&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   //       order: 6,
   //       basePrice: 7.99,
-  //       categoryId: '5093ae3b-b451-4142-b3a2-d5533e8aeb67', // Vegetarian
+  //       categoryId: 'fe34c855-42ee-468e-9211-f24c003e3f8d', // Vegetarian
   //     },
   //     {
   //       id: 'classic001asdfghjklqwe',
@@ -100,7 +100,7 @@ export default async function Home() {
   //       image: 'https://plus.unsplash.com/premium_photo-1679924471091-f7cd7ad90ddf?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   //       order: 7,
   //       basePrice: 8.99,
-  //       categoryId: '0039b0a2-021a-4221-a519-89100f677db5', // Classic
+  //       categoryId: 'f8b1d784-4d2d-4a3b-947f-321b5c364f09', // Classic
   //     },
   //     {
   //       id: 'classic002zxcvbnmlkjhg',
@@ -109,7 +109,7 @@ export default async function Home() {
   //       image: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   //       order: 8,
   //       basePrice: 10.99,
-  //       categoryId: '0039b0a2-021a-4221-a519-89100f677db5', // Classic
+  //       categoryId: 'f8b1d784-4d2d-4a3b-947f-321b5c364f09', // Classic
   //     },
   //     {
   //       id: 'spicy001qazwsxedcrfvtg',
@@ -118,7 +118,7 @@ export default async function Home() {
   //       image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?q=80&w=1380&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   //       order: 9,
   //       basePrice: 11.99,
-  //       categoryId: '9709159b-ad4d-431c-9e13-953bc1a541b79', // Spicy
+  //       categoryId: 'ff443f25-09c3-4320-b619-bda6102445e4', // Spicy
   //     },
   //     {
   //       id: 'spicy002plokmijnuhbyg',
@@ -127,42 +127,42 @@ export default async function Home() {
   //       image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   //       order: 10,
   //       basePrice: 13.99,
-  //       categoryId: '9709159b-ad4d-431c-9e13-953bc1a541b79', // Spicy
+  //       categoryId: 'ff443f25-09c3-4320-b619-bda6102445e4', // Spicy
   //     },
   //   ],
   // })
 
-  const products = await db.category.findMany();
+  // const products = await db.product.findMany();
 
   // for (const product of products) {
   //   await db.size.createMany({
   //     data: [
   //       { name: "SMALL", price: product.basePrice, productId: product.id },
-  //       { name: "MEDIUM", price: product.basePrice + 4, productId: product.id },
-  //       { name: "LARGE", price: product.basePrice + 7, productId: product.id },
+  //       { name: "MEDIUM", price: product.basePrice * 1.4, productId: product.id },
+  //       { name: "LARGE", price: product.basePrice * 2.3, productId: product.id },
   //     ],
   //   });
 
-  // //   await db.extra.createMany({
-  // //     data: [
-  // //       { name: "CHEESE", price: 1.99, productId: product.id },
-  // //       { name: "PEPPER", price: 1.49, productId: product.id },
-  // //       { name: "TOMATO", price: 1.79, productId: product.id },
-  // //       { name: "BACON", price: 2.99, productId: product.id },
-  // //       { name: "ONION", price: 1.99, productId: product.id },
-  // //     ],
-  // //   });
+  //   await db.extra.createMany({
+  //     data: [
+  //       { name: "CHEESE", price: 1.99, productId: product.id },
+  //       { name: "PEPPER", price: 1.49, productId: product.id },
+  //       { name: "TOMATO", price: 1.79, productId: product.id },
+  //       { name: "BACON", price: 2.99, productId: product.id },
+  //       { name: "ONION", price: 1.99, productId: product.id },
+  //     ],
+  //   });
   // }
 
-  await db.category.createMany({
-    data: [
-      { name: "Classic", order: 1 },
-      { name: "Vegetarian", order: 2 },
-      { name: "Meat", order: 3 },
-      { name: "Cheese", order: 4 },
-      { name: "Spicy", order: 5 },
-    ]
-  })
+  // await db.category.createMany({
+  //   data: [
+  //     { name: "Classic", order: 1 },
+  //     { name: "Vegetarian", order: 2 },
+  //     { name: "Meat", order: 3 },
+  //     { name: "Cheese", order: 4 },
+  //     { name: "Spicy", order: 5 },
+  //   ]
+  // })
 
   // await db.product.update({
   //   where: {
@@ -170,6 +170,20 @@ export default async function Home() {
   //   },
   //   data: {
   //     image : 'https://plus.unsplash.com/premium_photo-1661677825991-caa232fea9da?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFjYXJvbmklMjBhbmQlMjBjaGVlc2V8ZW58MHx8MHx8fDA%3D'
+  //   },
+  // });
+  
+  // await db.product.create({
+  //   data: {
+  //     id: "cheese002lkjhgfdsazxcv",
+  //     name: "Cheese Fondue",
+  //     description:
+  //       "A rich blend of melted Swiss cheeses served with bread cubes, vegetables, and apple slices for dipping.",
+  //     image:
+  //       "https://img.freepik.com/free-photo/close-up-melted-cheese-recipe_23-2149286847.jpg?t=st=1740925740~exp=1740929340~hmac=1d92486f6508c94fa1ccfbeb9eded2a753fb6281e368ec7c27bde62ae879ae8b&w=1060",
+  //     order: 4,
+  //     basePrice: 14.99,
+  //     categoryId: "fd2f22ee-8165-4720-b22c-75c3ecacb536", // Cheese
   //   },
   // });
 
@@ -181,7 +195,7 @@ export default async function Home() {
   //   },
   // });
 
-  // const order = await db.order.create({
+  // await db.order.create({
   //   data: {
   //     id: "54678huns9ucuy786d5r456",
   //     paid: false,
@@ -193,11 +207,11 @@ export default async function Home() {
   //     streetAddress: "123 Main St",
   //     postalCode: "12345",
   //     city: "New York",
-  //     country: "USA"
-  //   }
+  //     country: "USA",
+  //   },
   // });
 
-  console.log(products)
+  // console.log(products);
 
   return (
     <div>
