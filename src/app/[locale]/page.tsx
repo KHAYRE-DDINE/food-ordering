@@ -7,7 +7,6 @@ import { IoShieldCheckmark } from "react-icons/io5";
 import { IoIosNotifications } from "react-icons/io";
 import { BsFillLightningFill } from "react-icons/bs";
 import { FaChevronRight } from "react-icons/fa6";
-import { db } from "@/lib/prisma";
 
 export default async function Home() {
   // await db.product.createMany({
@@ -132,7 +131,7 @@ export default async function Home() {
   //   ],
   // })
 
-  // const products = await db.product.findMany();
+  // const products = await db.order.findMany();
 
   // for (const product of products) {
   //   await db.size.createMany({
@@ -189,7 +188,7 @@ export default async function Home() {
 
   // await db.orderProduct.create({
   //   data: {
-  //     orderId: "54678huns9ucuy786d5r456",
+  //     orderId: "jh75fu985dml962asdftyui",
   //     productId: "cheese002lkjhgfdsazxcv",
   //     quantity: 4,
   //   },
@@ -197,7 +196,6 @@ export default async function Home() {
 
   // await db.order.create({
   //   data: {
-  //     id: "54678huns9ucuy786d5r456",
   //     paid: false,
   //     subTotal: 100.5,
   //     deliveryFee: 5.0,

@@ -35,40 +35,36 @@ interface Product {
   updatedAt: Date;
 }
 
+
+
 export default function Categories({ categories }: CategoriesProps) {
-  const filters =
-    typeof window !== "undefined"
-      ? JSON.parse(sessionStorage.getItem("filter") || "[]")
-      : [];
+  const storedFilters = typeof window !== 'undefined' 
+    ? window.sessionStorage.getItem("filter")
+    : null;
 
-  const products = categories.flatMap((categorie) => categorie.products);
-
-  // const dietaryFilter = filters?.find((e) => e.name === "dietary");
+  const products = categories.flatMap((category) => category.products);
 
   const filterProducts = products.filter((product) => {
     const hasOnion = product.extras.some((e) => e.name === "ONION");
     const isPizza = product.name.includes("Pizza");
     
-    // Find the category this product belongs to
     const productCategory = categories.find(c => 
       c.products.some(p => p.id === product.id)
     );
     
-    const isTheRealItem = productCategory?.name === "Meat";
+    const isTheRealItem = productCategory ? productCategory?.name === "Classic" : true;
     
     return hasOnion && isPizza && isTheRealItem;
   });
 
-  console.log("product : ", filterProducts);
-
   return (
     <div>
-      {categories.map((category) => (
-        <section key={category.id} className="section-gap">
+      {filterProducts.map((product) => (
+        <section key={product.id} className="section-gap">
           <h1 className="text-[#F44336] text-4xl font-bold italic text-center mb-6 mt-14">
-            {category.name}
+            {product.name}
           </h1>
-          <MenuWrapper items={category.products} />
+          <MenuWrapper items={filterProducts} />
         </section>
       ))}
     </div>
