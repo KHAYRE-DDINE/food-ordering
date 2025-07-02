@@ -36,30 +36,57 @@ interface Product {
 }
 
 export default function Categories({ categories }: CategoriesProps) {
-  const filters =
+  const storedFilters =
     typeof window !== "undefined"
-      ? JSON.parse(sessionStorage.getItem("filter") || "[]")
-      : [];
+      ? window.sessionStorage.getItem("filter")
+      : null;
 
-  const products = categories.flatMap((categorie) => categorie.products);
+  console.log(categories)
 
-  // const dietaryFilter = filters?.find((e) => e.name === "dietary");
+
+  if (storedFilters) {
+    try {
+      // Parse the stored JSON data
+      const filters = JSON.parse(storedFilters);
+
+      // Loop through the filter items
+      Object.entries(filters).forEach(([key, value]) => {
+        console.log(`Key: ${key}, Value:`, value);
+
+        // You can access specific properties like:
+        if (key === "filterObject") {
+          console.log("Filter object:", value);
+        }
+
+        // Or handle arrays
+        if (Array.isArray(value)) {
+          console.log("Array items:");
+          value.forEach((item) => console.log(item));
+        }
+      });
+    } catch (error) {
+      console.error("Error parsing stored filters:", error);
+    }
+  } else {
+    console.log("No filters found in sessionStorage");
+  }
+
+  const products = categories.flatMap((category) => category.products);
 
   const filterProducts = products.filter((product) => {
     const hasOnion = product.extras.some((e) => e.name === "ONION");
     const isPizza = product.name.includes("Pizza");
-    
-    // Find the category this product belongs to
-    const productCategory = categories.find(c => 
-      c.products.some(p => p.id === product.id)
+
+    const productCategory = categories.find((c) =>
+      c.products.some((p) => p.id === product.id)
     );
-    
-    const isTheRealItem = productCategory?.name === "Meat";
-    
+
+    const isTheRealItem = productCategory
+      ? productCategory?.name === "Classic"
+      : true;
+
     return hasOnion && isPizza && isTheRealItem;
   });
-
-  console.log("product : ", filterProducts);
 
   return (
     <div>
@@ -72,5 +99,16 @@ export default function Categories({ categories }: CategoriesProps) {
         </section>
       ))}
     </div>
+    
+    // <div>
+    //   {filterProducts.map((product) => (
+    //     <section key={product.id} className="section-gap">
+    //       <h1 className="text-[#F44336] text-4xl font-bold italic text-center mb-6 mt-14">
+    //         {product.name}
+    //       </h1>
+    //       <MenuWrapper items={filterProducts} />
+    //     </section>
+    //   ))}
+    // </div>
   );
 }

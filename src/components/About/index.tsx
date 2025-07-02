@@ -1,8 +1,18 @@
-import MainHead from "@/components/main-heading"
 import { Routes } from "@/constants/enums"
 import { getCurrentLocale } from "@/lib/getCurrentLocale"
 import getTrans from "@/lib/translation"
 import Image from "next/image"
+
+// Simple heading component since MainHead is not available
+const MainHead = ({ title, subTitle }: { title: string; subTitle: string }) => (
+  <div className="text-center mb-12">
+    <h1 className="text-5xl font-bold text-gray-900 mb-4 relative inline-block">
+      {title}
+      <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-primary rounded-full"></span>
+    </h1>
+    <p className="text-xl text-gray-600 max-w-3xl mx-auto">{subTitle}</p>
+  </div>
+)
 
 const About = async () => {
     const locale = await getCurrentLocale()
@@ -11,71 +21,121 @@ const About = async () => {
     const { ourStory, aboutUs, firstDescriptions, secondDescriptions, thirdDescriptions } = about
 
     return (
-        <div className="section-gap" id={Routes.ABOUT}>
-            <div className="text-center mb-4">
-                <MainHead title={aboutUs} subTitle={ourStory} />
+        <section className="py-20 bg-gradient-to-b from-gray-50 to-white" id={Routes.ABOUT}>
+      <div className="container mx-auto px-4">
+        <MainHead title={aboutUs} subTitle={ourStory} />
+        
+        {/* First Section */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 mb-24">
+          <div className="lg:w-1/2 relative group">
+            <div className="absolute -inset-4 bg-primary/10 rounded-3xl -z-10 transform rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
+            <Image
+              src='https://img.freepik.com/free-vector/boy-eating-vegetables-isolated-illustration_18591-83848.jpg'
+              alt="Gourmet Dining"
+              width={600}
+              height={500}
+              className="rounded-2xl shadow-xl transform group-hover:scale-105 transition-all duration-500"
+            />
+          </div>
+          <div className="lg:w-1/2">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">{about.firstTitle}</h2>
+            <p className="text-gray-600 mb-6">{firstDescriptions.beginning}</p>
+            <div className="space-y-4">
+              {[
+                { title: 'Gourmet Dining', desc: firstDescriptions.one },
+                { title: 'Catering Services', desc: firstDescriptions.two },
+                { title: 'Meal Prep & Delivery', desc: firstDescriptions.three },
+                { title: 'Cooking Classes', desc: firstDescriptions.four },
+                { title: 'Custom Menus', desc: firstDescriptions.five }
+              ].map((item, index) => (
+                <div key={index} className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                  <div className="bg-primary/10 p-2 rounded-lg">
+                    <span className="text-primary font-bold">{index + 1}.</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">{locale === 'en' ? item.title : ''}</h3>
+                    <p className="text-gray-600">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="container grid gap-10 mt-24">
-                <div className="flex items-center justify-around gap-5 flex-row-reverse">
-                    <div>
-                        <Image
-                            src='https://img.freepik.com/free-vector/boy-eating-vegetables-isolated-illustration_18591-83848.jpg?t=st=1738451704~exp=1738455304~hmac=04df03833ffcfaa37e5e49cd05921a794751d5faeae43ec09a6cbf3286c8d142&w=740'
-                            alt="img-1" width={500} height={400} className="hover:scale-110 transition-all duration-500" />
-                    </div>
-                    <div className="text-accent max-w-md mx-auto mt-4 flex flex-col gap-4">
-                        <h1 className="text-primary text-3xl font-bold uppercase tracking-wider">{about.firstTitle}</h1>
-                        <div className="text-[15px] grid gap-3">
-                            <p>{firstDescriptions.beginning}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Gourmet Dining: ' : ''}</span> {firstDescriptions.one}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Catering Services: ' : ''}</span>  {firstDescriptions.two}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Meal Prep & Delivery: ' : ''}</span>  {firstDescriptions.three}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Cooking Classes: ' : ''}</span>  {firstDescriptions.four}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Custom Menus: ' : ''}</span>  {firstDescriptions.five}</p>
-                            <span>{about.firstFoot}</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex items-center justify-around gap-5 ">
-                    <div>
-                        <Image
-                            src='https://img.freepik.com/free-vector/surprise-gift-concept-illustration_114360-30506.jpg?t=st=1738965026~exp=1738968626~hmac=e2f7e734a0911d6dfc8fbf3aab775aa6baf546d6ca58d5aa8ca87e80c2cd3ba8&w=740'
-                            alt="img-1" width={500} height={500} className="hover:scale-110 transition-all duration-500" />
-                    </div>
-                    <div className="text-accent max-w-md mx-auto mt-4 flex flex-col gap-4">
-                        <h1 className="tracking-wider text-primary text-3xl font-bold uppercase ">{about.secondTitle}</h1>
-                        <div className="text-[15px] grid gap-3">
-                            <p>{secondDescriptions.beginning}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'First-Time Discount: ' : ''}</span>  {secondDescriptions.one}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Family Feast Deals: ' : ''}</span> {secondDescriptions.two}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Seasonal Specials: ' : ''}</span>{secondDescriptions.three}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Loyalty Rewards: ' : ''}</span> {secondDescriptions.four}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Event Catering Discounts: ' : ''}</span> {secondDescriptions.five}</p>
-                            <span>{about.secondFoot}</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex items-center justify-around gap-5 flex-row-reverse">
-                    <div>
-                        <Image
-                            src='https://img.freepik.com/free-vector/chef-holding-tray-food_1020-664.jpg?t=st=1738964941~exp=1738968541~hmac=5b2271c112359cb0395791a9e30089bdcc8a927ba78d1bf11cd085fb06d857ce&w=740'
-                            alt="img-1" width={500} height={500} className="hover:scale-110 transition-all duration-500" />
-                    </div>
-                    <div className="text-accent max-w-md mx-auto mt-4 flex flex-col gap-4">
-                        <h1 className="tracking-wider text-primary text-3xl font-bold uppercase">{about.thirdTitle}</h1>
-                        <div className="text-[15px] grid gap-3">
-                            <p>{thirdDescriptions.beginning}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Farm to Table Freshness: ' : ''}</span> {thirdDescriptions.one}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Diverse Menu Options: ' : ''}</span> {thirdDescriptions.two}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Chef-Crafted Recipes: ' : ''}</span> {thirdDescriptions.three}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Fast & Reliable Delivery: ' : ''}</span> {thirdDescriptions.four}</p>
-                            <p><span className="font-bold text-gray-800">{locale == "en" ? 'Eco-Friendly Practices: ' : ''}</span> {thirdDescriptions.five}</p>
-                            <span>{about.thirdFoot}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <p className="mt-6 text-primary font-medium">{about.firstFoot}</p>
+          </div>
         </div>
-    )
+
+        {/* Second Section */}
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 mb-24">
+          <div className="lg:w-1/2">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">{about.secondTitle}</h2>
+            <p className="text-gray-600 mb-6">{secondDescriptions.beginning}</p>
+            <div className="grid md:grid-cols-2 gap-6">
+              {[
+                { title: 'First-Time Discount', desc: secondDescriptions.one },
+                { title: 'Family Feast Deals', desc: secondDescriptions.two },
+                { title: 'Seasonal Specials', desc: secondDescriptions.three },
+                { title: 'Loyalty Rewards', desc: secondDescriptions.four },
+                { title: 'Event Catering', desc: secondDescriptions.five }
+              ].map((item, index) => (
+                <div key={index} className="bg-white p-5 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 border-l-4 border-primary">
+                  <h3 className="font-semibold text-gray-900 mb-2">{locale === 'en' ? item.title : ''}</h3>
+                  <p className="text-gray-600 text-sm">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-primary font-medium">{about.secondFoot}</p>
+          </div>
+          <div className="lg:w-1/2 relative group">
+            <div className="absolute -inset-4 bg-primary/10 rounded-3xl -z-10 transform -rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
+            <Image
+              src='https://img.freepik.com/free-vector/surprise-gift-concept-illustration_114360-30506.jpg'
+              alt="Special Offers"
+              width={600}
+              height={500}
+              className="rounded-2xl shadow-xl transform group-hover:scale-105 transition-all duration-500"
+            />
+          </div>
+        </div>
+
+        {/* Third Section */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+          <div className="lg:w-1/2 relative group">
+            <div className="absolute -inset-4 bg-primary/10 rounded-3xl -z-10 transform rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
+            <Image
+              src='https://img.freepik.com/free-vector/chef-holding-tray-food_1020-664.jpg'
+              alt="Our Promise"
+              width={600}
+              height={500}
+              className="rounded-2xl shadow-xl transform group-hover:scale-105 transition-all duration-500"
+            />
+          </div>
+          <div className="lg:w-1/2">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">{about.thirdTitle}</h2>
+            <p className="text-gray-600 mb-6">{thirdDescriptions.beginning}</p>
+            <div className="space-y-4">
+              {[
+                { title: 'Farm to Table Freshness', desc: thirdDescriptions.one },
+                { title: 'Diverse Menu Options', desc: thirdDescriptions.two },
+                { title: 'Chef-Crafted Recipes', desc: thirdDescriptions.three },
+                { title: 'Fast & Reliable Delivery', desc: thirdDescriptions.four },
+                { title: 'Eco-Friendly Practices', desc: thirdDescriptions.five }
+              ].map((item, index) => (
+                <div key={index} className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                  <div className="bg-primary/10 p-2 rounded-lg">
+                    <span className="text-primary font-bold">{index + 1}.</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">{locale === 'en' ? item.title : ''}</h3>
+                    <p className="text-gray-600 text-sm">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-primary font-medium">{about.thirdFoot}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }
 
 export default About

@@ -1,5 +1,5 @@
 "use client";
-import { SearchIcon } from "lucide-react";
+import { SearchIcon, Pizza, Salad, IceCream, Sandwich, Apple, Beef, Carrot } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import DropDown from "../SelectDropDown";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,26 +52,30 @@ function FilterItems() {
 
 
   return (
-    <div className="filter container bg-[#80808029] h-[200px] rounded-xl py-5 px-16 mt-10 m">
-      <div className="top flex items-center justify-center gap-12">
-        <div>
-          <label className="text-[15px] ">Search menu</label>
-          <div className="relative flex justify-start items-center mt-1 gap-2">
-            <SearchIcon className="absolute left-[10px] w-[19px] " />
+    <>
+      <div className="filter container bg-white rounded-2xl shadow-lg p-6 mt-10 border border-gray-100 transition-all duration-300 hover:shadow-xl">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-6">
+        <div className="w-full md:w-auto">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Search menu</label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <SearchIcon className="h-5 w-5 text-gray-400" />
+            </div>
             <input
               type="search"
               name="search"
               placeholder="Search by name or keyword..."
-              className="px-9 py-[9px] w-[300px] rounded-lg shadow-inner shadow-gray-200 placeholder:text-[15px] focus-visible:!border-primary"
+              className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 text-gray-700 placeholder-gray-400"
               onChange={(e) =>
                 dispatch(addToFilter({ name: "search", value: e.target.value }))
               }
             />
           </div>
         </div>
-        <div>
-          <label className="text-[15px] ">Filter by Category</label>
-          <div className="category_filter flex justify-start items-center gap-2">
+        
+        <div className="w-full md:w-auto">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Filter by Category</label>
+          <div className="relative">
             <DropDown
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
@@ -80,28 +84,64 @@ function FilterItems() {
           </div>
         </div>
       </div>
-      <div className="bottom mt-5 mx-auto w-[640px]">
-        <label className="text-[15px] ">Dietary Options</label>
-        <div className="flex items-center justify-between mt-2 ">
+      
+      <div className="relative py-5 border-t border-gray-100">
+        <div className="absolute inset-0 overflow-hidden opacity-10">
+          <div className="flex items-center justify-center h-full animate-marquee whitespace-nowrap">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="inline-flex items-center mx-8">
+                <Pizza className="h-8 w-8 mx-4 text-primary-500" />
+                <Salad className="h-8 w-8 mx-4 text-green-500" />
+                <IceCream className="h-8 w-8 mx-4 text-pink-300" />
+                <Sandwich className="h-8 w-8 mx-4 text-yellow-600" />
+                <Apple className="h-8 w-8 mx-4 text-red-400" />
+                <Beef className="h-8 w-8 mx-4 text-amber-700" />
+                <Carrot className="h-8 w-8 mx-4 text-orange-500" />
+              </div>
+            ))}
+          </div>
+        </div>
+        <h3 className="text-sm font-medium text-gray-700 mb-3">Dietary Options</h3>
+        <div className="flex flex-wrap gap-4">
           {add.map((e) => (
-            <div key={e.id} className="gap-1 flex items-center">
+            <div key={e.id} className="flex items-center">
               <input
-                className="border-primary "
                 type="checkbox"
                 name={e.name}
                 id={e.name}
+                className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded transition-all duration-200"
                 onChange={(event) =>
                   handleCheckedBoxes(event, { name: e.name, value: e.name })
                 }
               />
-              <label className="capitalize" htmlFor={e.name}>
+              <label 
+                htmlFor={e.name}
+                className="ml-2 text-sm text-gray-700 capitalize cursor-pointer hover:text-gray-900 transition-colors duration-200"
+              >
                 {e.name}
               </label>
             </div>
           ))}
         </div>
       </div>
-    </div>
+      </div>
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .animate-marquee {
+            animation: marquee 30s linear infinite;
+            display: inline-block;
+          }
+          .animate-marquee:hover {
+            animation-play-state: paused;
+          }
+        `
+      }} />
+    </>
   );
 }
 
