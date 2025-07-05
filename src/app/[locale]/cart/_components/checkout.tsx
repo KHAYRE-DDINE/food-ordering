@@ -9,8 +9,7 @@ import { selectCartItems } from "@/redux/features/cart/cartSlice";
 import { useAppSelector } from "@/redux/hooks";
 import { CreditCard, MapPin, Phone, ShoppingBag, Mail } from "lucide-react";
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
 
 const Checkpoint = () => {
   const cart = useAppSelector(selectCartItems);
@@ -86,7 +85,7 @@ const Checkpoint = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-6 sticky top-6">
-
+  
       <div className="flex items-center gap-2 mb-6">
         <ShoppingBag className="h-6 w-6 text-primary" />
         <h2 className="text-2xl font-bold text-gray-900">Order Summary</h2>
@@ -207,24 +206,23 @@ const Checkpoint = () => {
         </div>
 
         <div className="pt-2">
-          <Button
-            type="submit"
+            <Button
+              type="submit"
             className="w-full h-12 text-base font-medium bg-primary hover:bg-primary/90 transition-colors"
-            disabled={isSubmitting}
-          >
+              disabled={isSubmitting}
+            >
             <CreditCard className="mr-2 h-5 w-5" />
             {isSubmitting
               ? "Processing..."
               : `Pay ${FormatCurrency(totalAmount)}`}
-          </Button>
-        </div>
+            </Button>
+          </div>
 
         <p className="text-xs text-gray-500 text-center mt-4">
           By placing this order, you agree to our Terms of Service and Privacy
           Policy
         </p>
       </form>
-      <ToastContainer />
     </div>
   );
 };
