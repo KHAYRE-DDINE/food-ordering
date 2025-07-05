@@ -132,7 +132,7 @@ export default async function Home() {
   //   ],
   // })
 
-  // const products = await db.order.findMany();
+  // const products = await db.product.findMany();
 
   // for (const product of products) {
   //   await db.size.createMany({

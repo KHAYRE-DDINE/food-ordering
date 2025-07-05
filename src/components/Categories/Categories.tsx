@@ -1,5 +1,9 @@
+"use client";
+
 import { ProductSizes, ExtraIngredients } from "@prisma/client";
-import MenuWrapper from "@/components/menu/MenuWrapper";
+import Menu from "@/components/menu";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 interface Category {
   id: string;
@@ -36,79 +40,61 @@ interface Product {
 }
 
 export default function Categories({ categories }: CategoriesProps) {
-  const storedFilters =
-    typeof window !== "undefined"
-      ? window.sessionStorage.getItem("filter")
-      : null;
-
-  console.log(categories)
-
-
-  if (storedFilters) {
-    try {
-      // Parse the stored JSON data
-      const filters = JSON.parse(storedFilters);
-
-      // Loop through the filter items
-      Object.entries(filters).forEach(([key, value]) => {
-        console.log(`Key: ${key}, Value:`, value);
-
-        // You can access specific properties like:
-        if (key === "filterObject") {
-          console.log("Filter object:", value);
-        }
-
-        // Or handle arrays
-        if (Array.isArray(value)) {
-          console.log("Array items:");
-          value.forEach((item) => console.log(item));
-        }
-      });
-    } catch (error) {
-      console.error("Error parsing stored filters:", error);
-    }
-  } else {
-    console.log("No filters found in sessionStorage");
-  }
+  const filters = useSelector((state: RootState) => state.filter.items);
 
   const products = categories.flatMap((category) => category.products);
 
+  console.log(categories)
+
+  // Get filter values
+  const searchFilter =
+    (filters.find((f) => f.name === "search")?.value as string) || "";
+  const categoryFilter =
+    (filters.find((f) => f.name === "category")?.value as string) ||
+    "Choose a Category";
+  const dietaryFilters =
+    (filters.find((f) => f.name === "dietary")?.value as string[]) || [];
+
   const filterProducts = products.filter((product) => {
-    const hasOnion = product.extras.some((e) => e.name === "ONION");
-    const isPizza = product.name.includes("Pizza");
+    // Search text filter
+    const matchesSearch =
+      searchFilter === "" ||
+      product.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchFilter.toLowerCase());
 
-    const productCategory = categories.find((c) =>
-      c.products.some((p) => p.id === product.id)
-    );
+    // Category filter
+    const matchesCategory =
+      categoryFilter === "Choose a Category" ||
+      categories
+        .find((c) => c.products.includes(product))
+        ?.name.toLowerCase() === categoryFilter.toLowerCase();
 
-    const isTheRealItem = productCategory
-      ? productCategory?.name === "Classic"
-      : true;
+    // Dietary filter
+    const matchesDietary =
+      dietaryFilters.length === 0 ||
+      dietaryFilters.every((diet) =>
+        product.extras.some(
+          (extra) => extra.name.toLowerCase() === diet.toUpperCase()
+        )
+      );
 
-    return hasOnion && isPizza && isTheRealItem;
+    console.log(matchesSearch && matchesCategory && matchesDietary);
+
+    return matchesSearch && matchesCategory && matchesDietary;
   });
 
   return (
     <div>
-      {categories.map((category) => (
-        <section key={category.id} className="section-gap">
-          <h1 className="text-[#F44336] text-4xl font-bold italic text-center mb-6 mt-14">
-            {category.name}
-          </h1>
-          <MenuWrapper items={category.products} />
-        </section>
-      ))}
+      {
+        categories.map((category) => (
+          <section key={category.id} className="section-gap">
+            <h1 className="text-[#F44336] text-4xl font-bold italic text-center mb-6 mt-14">
+              {category.name}
+            </h1>
+            <Menu items={filterProducts} />
+          </section>
+        ))
+      }
     </div>
-    
-    // <div>
-    //   {filterProducts.map((product) => (
-    //     <section key={product.id} className="section-gap">
-    //       <h1 className="text-[#F44336] text-4xl font-bold italic text-center mb-6 mt-14">
-    //         {product.name}
-    //       </h1>
-    //       <MenuWrapper items={filterProducts} />
-    //     </section>
-    //   ))}
-    // </div>
   );
 }

@@ -86,7 +86,7 @@ function FilterItems() {
       </div>
       
       <div className="relative py-5 border-t border-gray-100">
-        <div className="absolute inset-0 overflow-hidden opacity-10">
+        <div className="absolute inset-0 overflow-hidden opacity-10 h-[43px]">
           <div className="flex items-center justify-center h-full animate-marquee whitespace-nowrap">
             {[...Array(3)].map((_, i) => (
               <div key={i} className="inline-flex items-center mx-8">

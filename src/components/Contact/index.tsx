@@ -47,7 +47,7 @@ const Contact = async () => {
                 <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
                     <div className="md:flex">
                         {/* Contact Information */}
-                        <div className="md:w-2/5 bg-gradient-to-br from-primary to-primary/90 text-white p-12">
+                        <div className="md:w-2/5 text-white p-12" style={{ background: 'var(--primary-gradient)' }}>
                             <h2 className="text-3xl font-bold mb-8">Get in Touch</h2>
                             <p className="text-white/90 mb-10">
                                 Have questions or feedback? We&apos;d love to hear from you. Reach out to us through any of these channels.
