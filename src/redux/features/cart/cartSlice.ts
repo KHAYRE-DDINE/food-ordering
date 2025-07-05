@@ -1,4 +1,3 @@
-
 import { RootState } from "@/redux/store";
 import { Extra, Size } from "@prisma/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -45,13 +44,19 @@ export const cartSlice = createSlice({
     reducers: {
         AddToCart: (state, action: PayloadAction<CartItem>) => {
             const existingItem = state.items.find((item) => item.id === action.payload.id)
+            console.log('🛒 Adding to cart:', action.payload)
+            console.log('🔍 Existing item found:', existingItem)
+            
             if (existingItem) {
                 existingItem.quantity = (existingItem.quantity || 0) + 1
                 existingItem.size = action.payload.size
                 existingItem.extra = action.payload.extra
             } else {
                 state.items.push({ ...action.payload, quantity: 1 })
+                console.log('🆕 New item added with quantity: 1')
             }
+            
+            console.log('📦 Current cart state:', state.items)
         },
         RemoveCartItem: (state, action: PayloadAction<{ id: string }>) => {
             const item = state.items.find((e) => e.id === action.payload.id)

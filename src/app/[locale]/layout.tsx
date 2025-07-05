@@ -7,7 +7,7 @@ import "./globals.css";
 import ReduxProvider from "@/provider/ReduxProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ChatAi } from "@/components/Chat/ChatAi";
+import { ToastProvider } from "@/components/ToastProvider";
 
 export async function generateStaticParams() {
   return [{ locale: Languages.ARABIC }, { locale: Languages.ENGLISH }];
@@ -56,9 +56,9 @@ export default async function RootLayout({
           <div className="pt-[80px]" style={{ minHeight: 'calc(100vh - 95px)' }}>
             {children}
           </div>
+          {/* <ChatAi /> */}
           <Footer />
-          <ChatAi />
-          {/* <div className="w-full h-3 shadow-[0_5px_15px_rgba(0,0,255,0.5)]"></div> */}
+          <ToastProvider />
         </ReduxProvider>
       </body>
     </html>
