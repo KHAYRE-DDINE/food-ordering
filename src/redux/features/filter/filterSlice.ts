@@ -1,3 +1,4 @@
+import { db } from "@/lib/prisma";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface FilterItems {

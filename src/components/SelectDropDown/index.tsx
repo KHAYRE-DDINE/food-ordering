@@ -32,7 +32,7 @@ function DropDown({
         {selectedCategory}
       </h2>
       {isActive && (
-        <ul className="absolute w-full left-0 p-2 mt-[7px] rounded-lg bg-white border-[2px] border-[hsl(0, 0%, 76.9%)] shadow-inner">
+        <ul className="absolute w-full left-0 p-2 mt-[7px] rounded-lg z-50 bg-white border-[2px] border-[hsl(0, 0%, 76.9%)] shadow-inner">
           {categories.map((e) => (
             <li
               key={e}

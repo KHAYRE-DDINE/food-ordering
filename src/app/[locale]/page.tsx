@@ -132,7 +132,7 @@ export default async function Home() {
   //   ],
   // })
 
-  // const products = await db.order.findMany();
+  // const products = await db.product.findMany();
 
   // for (const product of products) {
   //   await db.size.createMany({
@@ -256,8 +256,8 @@ export default async function Home() {
       
       {/* Special Offers Section */}
       <section className="section-gap">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-[#F44336] italic">
+        <div className="container">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 italic bg-clip-text text-transparent" style={{ backgroundImage: 'var(--primary-gradient)' }}>
             Special Offers
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -293,13 +293,13 @@ export default async function Home() {
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 text-gray-800">{offer.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-primary">{offer.title}</h3>
                   <p className="text-gray-600 mb-4">{offer.description}</p>
                   <div className="flex justify-between items-center">
-                    <span className="px-3 py-1 bg-[#F44336] text-white text-sm font-medium rounded-full">
+                    <span className="px-3 py-1 bg-primary text-white text-sm font-medium rounded-full">
                       {offer.code}
                     </span>
-                    <button className="text-[#F44336] font-medium hover:underline">
+                    <button className="text-primary font-medium hover:underline">
                       Order Now
                     </button>
                   </div>
