@@ -5,16 +5,17 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    console.log('Order API received body:', body);
     
     const order = await db.order.create({
       data: {
         paid: true,
-        subTotal: body.subTotal,
+        subTotal: Number(body.subTotal),
         deliveryFee: 5.00,
-        totalPrice: body.totalPrice,
+        totalPrice: Number(body.totalPrice),
         userEmail: body.userEmail,
         phone: body.phone,
-        streetAddress: body.address,
+        streetAddress: body.streetAddress,
         postalCode: body.postalCode,
         city: body.city,
         country: body.country,

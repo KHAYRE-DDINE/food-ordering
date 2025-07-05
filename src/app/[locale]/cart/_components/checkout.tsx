@@ -10,6 +10,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { CreditCard, MapPin, Phone, ShoppingBag, Mail } from "lucide-react";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Checkpoint = () => {
   const cart = useAppSelector(selectCartItems);
@@ -28,9 +29,9 @@ const Checkpoint = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-  
+
     try {
-      const response = await fetch('/src/app/api/orders', {  
+      const response = await fetch('/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,26 +41,35 @@ const Checkpoint = () => {
           totalPrice: totalAmount.toString(),
           userEmail: form.userEmail,
           phone: form.phone,
-          address: form.address,
+          streetAddress: form.address,
           postalCode: form.postalCode,
           city: form.city,
           country: form.country,
         }),
       });
-  
+
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to create order');
       }
-  
+
       const data = await response.json();
       toast.success("Order submitted successfully!");
       console.log("Order created:", data);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Order error:", error);
       toast.error(error.message || "Failed to submit order");
     } finally {
       setIsSubmitting(false);
+       setForm({
+        userEmail: "",
+        phone: "",
+        address: "",
+        postalCode: "",
+        city: "",
+        country: "",
+    });
     }
   };
 
@@ -76,7 +86,7 @@ const Checkpoint = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-6 sticky top-6">
-      <ToastContainer />
+
       <div className="flex items-center gap-2 mb-6">
         <ShoppingBag className="h-6 w-6 text-primary" />
         <h2 className="text-2xl font-bold text-gray-900">Order Summary</h2>
@@ -96,6 +106,7 @@ const Checkpoint = () => {
             placeholder="your@email.com"
             type="email"
             name="userEmail"
+            value={form.userEmail}
             required
             className="focus-visible:ring-2 focus-visible:ring-primary/50 h-11"
             onChange={(e) => handleForm(e)}
@@ -114,6 +125,7 @@ const Checkpoint = () => {
             placeholder="+1 (555) 000-0000"
             type="tel"
             name="phone"
+            value={form.phone}
             required
             className="focus-visible:ring-2 focus-visible:ring-primary/50 h-11"
             onChange={(e) => handleForm(e)}
@@ -132,6 +144,7 @@ const Checkpoint = () => {
             id="address"
             placeholder="Enter your full address"
             name="address"
+            value={form.address}
             required
             rows={3}
             className="resize-none focus-visible:ring-2 focus-visible:ring-primary/50 min-h-[100px]"
@@ -154,6 +167,7 @@ const Checkpoint = () => {
               id="postal-code"
               placeholder="12345"
               name="postalCode"
+              value={form.postalCode}
               required
               className="focus-visible:ring-2 focus-visible:ring-primary/50 h-10"
               onChange={(e) => handleForm(e)}
@@ -168,6 +182,7 @@ const Checkpoint = () => {
               id="city"
               placeholder="New York"
               name="city"
+              value={form.city}
               required
               className="focus-visible:ring-2 focus-visible:ring-primary/50 h-10"
               onChange={(e) => handleForm(e)}
@@ -184,6 +199,7 @@ const Checkpoint = () => {
             id="country"
             placeholder="United States"
             name="country"
+            value={form.country}
             required
             className="focus-visible:ring-2 focus-visible:ring-primary/50 h-10"
             onChange={(e) => handleForm(e)}
@@ -208,6 +224,7 @@ const Checkpoint = () => {
           Policy
         </p>
       </form>
+      <ToastContainer />
     </div>
   );
 };
