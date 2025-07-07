@@ -39,6 +39,7 @@ interface Category {
 
 export const getProductByCategory = cache(
     async (): Promise<Category[]> => {
+        // First, get all categories with their products
         const categories = await db.category.findMany({
             include: {
                 products: {
@@ -49,13 +50,14 @@ export const getProductByCategory = cache(
                     orderBy: {
                         order: 'asc'
                     }
-                },
+                }
             },
             orderBy: {
                 order: 'asc'
             }
         });
-        return categories as unknown as Category[];
+
+        return categories;
     },
     ['product'],
     { revalidate: 3600 }
@@ -81,6 +83,23 @@ export const getBestSellers = cache(
         return product as unknown as ProductWithRelations[];
     }, ['best-seller'], { revalidate: 3600 }
 )
+
+export const getCategories = cache(
+    async (): Promise<{ id: string; name: string }[]> => {
+        const categories = await db.category.findMany({
+            select: {
+                id: true,
+                name: true,
+            },
+            orderBy: {
+                order: 'asc'
+            }
+        });
+        return categories;
+    },
+    ['categories'],
+    { revalidate: 3600 }
+);
 
 
 
