@@ -7,7 +7,11 @@ import { addToFilter } from "@/redux/features/filter/filterSlice";
 import { FilterItems as FilterCheckout } from "@/redux/features/filter/filterSlice";
 import { RootState } from "@/redux/store";
 
-function FilterItems() {
+interface FilterItemsProps {
+  categoryOptions: { id: string; name: string }[];
+}
+
+function FilterItems({ categoryOptions }: FilterItemsProps) {
   const add = [
     {
       id: 1,
@@ -34,7 +38,7 @@ function FilterItems() {
   const filters = useSelector((state: RootState) => state.filter);
 
   const [selectedCategory, setSelectedCategory] =
-    useState<string>("Choose a Category");
+    useState<string>("All Categories");
 
   const handleCheckedBoxes = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -76,11 +80,12 @@ function FilterItems() {
         <div className="w-full md:w-auto">
           <label className="block text-sm font-medium text-gray-700 mb-1">Filter by Category</label>
           <div className="relative">
-            <DropDown
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-              dispatch={dispatch}
-            />
+                      <DropDown
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            dispatch={dispatch}
+            categoryOptions={categoryOptions}
+          />
           </div>
         </div>
       </div>

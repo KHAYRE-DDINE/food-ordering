@@ -42,16 +42,22 @@ interface Product {
 export default function Categories({ categories }: CategoriesProps) {
   const filters = useSelector((state: RootState) => state.filter.items);
 
+  console.log('Categories received in component:', categories.map(c => ({
+    id: c.id,
+    name: c.name,
+    productCount: c.products.length
+  })));
+
   const products = categories.flatMap((category) => category.products);
 
-  console.log(categories)
+
 
   // Get filter values
   const searchFilter =
     (filters.find((f) => f.name === "search")?.value as string) || "";
   const categoryFilter =
     (filters.find((f) => f.name === "category")?.value as string) ||
-    "Choose a Category";
+    "All Categories";
   const dietaryFilters =
     (filters.find((f) => f.name === "dietary")?.value as string[]) || [];
 
@@ -62,12 +68,12 @@ export default function Categories({ categories }: CategoriesProps) {
       product.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
       product.description.toLowerCase().includes(searchFilter.toLowerCase());
 
-    // Category filter
-    const matchesCategory =
-      categoryFilter === "Choose a Category" ||
-      categories
-        .find((c) => c.products.includes(product))
-        ?.name.toLowerCase() === categoryFilter.toLowerCase();
+      // Category filter
+  const matchesCategory =
+    categoryFilter === "All Categories" ||
+    categories
+      .find((c) => c.products.some(p => p.id === product.id))
+      ?.name.toLowerCase() === categoryFilter.toLowerCase();
 
     // Dietary filter
     const matchesDietary =
@@ -78,23 +84,20 @@ export default function Categories({ categories }: CategoriesProps) {
         )
       );
 
-    console.log(matchesSearch && matchesCategory && matchesDietary);
-
     return matchesSearch && matchesCategory && matchesDietary;
   });
 
+
   return (
     <div>
-      {
-        categories.map((category) => (
-          <section key={category.id} className="section-gap">
-            <h1 className="text-[#F44336] text-4xl font-bold italic text-center mb-6 mt-14">
-              {category.name}
-            </h1>
-            <Menu items={filterProducts} />
-          </section>
-        ))
-      }
+      {categories.map((category) => (
+        <section key={category.id} className="section-gap">
+          <h1 className="text-[#F44336] text-4xl font-bold italic text-center mb-6 mt-14">
+            {category.name}
+          </h1>
+          <Menu items={category.products} />
+        </section>
+      ))}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { getBestSellers } from '@/server/db/products';
 import { ProductWithRelations } from '@/types/product';
 
 const BestSellers = async () => {
-    const bestSellers: ProductWithRelations[] = await getBestSellers(4)
+    const bestSellers: ProductWithRelations[] = await getBestSellers(3)
     const locale = await getCurrentLocale()
     const { home } = await getTrans(locale) 
     const { bestSeller } = home
