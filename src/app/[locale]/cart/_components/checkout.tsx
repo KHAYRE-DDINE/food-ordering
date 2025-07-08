@@ -30,10 +30,10 @@ const Checkpoint = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/orders', {
-        method: 'POST',
+      const response = await fetch("/api/orders", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           subTotal: subTotal.toString(),
@@ -47,10 +47,9 @@ const Checkpoint = () => {
         }),
       });
 
-
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to create order');
+        throw new Error(errorData.error || "Failed to create order");
       }
 
       const data = await response.json();
@@ -61,14 +60,14 @@ const Checkpoint = () => {
       toast.error("Failed to submit order");
     } finally {
       setIsSubmitting(false);
-       setForm({
+      setForm({
         userEmail: "",
         phone: "",
         address: "",
         postalCode: "",
         city: "",
         country: "",
-    });
+      });
     }
   };
 
@@ -85,7 +84,6 @@ const Checkpoint = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-6 sticky top-6">
-  
       <div className="flex items-center gap-2 mb-6">
         <ShoppingBag className="h-6 w-6 text-primary" />
         <h2 className="text-2xl font-bold text-gray-900">Order Summary</h2>
@@ -206,17 +204,17 @@ const Checkpoint = () => {
         </div>
 
         <div className="pt-2">
-            <Button
-              type="submit"
+          <Button
+            type="submit"
             className="w-full h-12 text-base font-medium bg-primary hover:bg-primary/90 transition-colors"
-              disabled={isSubmitting}
-            >
+            disabled={isSubmitting}
+          >
             <CreditCard className="mr-2 h-5 w-5" />
             {isSubmitting
               ? "Processing..."
               : `Pay ${FormatCurrency(totalAmount)}`}
-            </Button>
-          </div>
+          </Button>
+        </div>
 
         <p className="text-xs text-gray-500 text-center mt-4">
           By placing this order, you agree to our Terms of Service and Privacy
