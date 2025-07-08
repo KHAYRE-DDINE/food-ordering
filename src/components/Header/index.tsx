@@ -16,7 +16,7 @@ const Header = async () => {
                 boxShadow: "-1px 5px 20px #ccc"
             }}>
             <div className={`container fixed top-0 h-[85px] z-[98765678] flex justify-between items-center py-2 px-5 ${locale == 'en' ? "pr-6" : "pl-6"} gap-2`}>
-                <Link href={`/${locale}`} className="logo text-primary font-bold text-2xl">
+                <Link href={`/${locale}`} prefetch={false} className="logo text-primary font-bold text-2xl">
                     <span className='animate-bounce'>🍕</span> {translation.logo}
                 </Link>
                 <Navbar translation={translation} />

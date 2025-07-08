@@ -31,7 +31,7 @@ const Navbar = ({ translation }: { translation: Translations }) => {
                     <XIcon className='!w-6 !h-6' />
                 </Button>
                 {Links.map((link) => (
-                    <Link href={`/${locale}/${link.href}`} prefetch key={link.id}
+                    <Link href={`/${locale}/${link.href}`} prefetch={false} key={link.id}
                         className={`${link.href === `${Routes.AUTH}/${Pages.LOGIN}` ? `
                             ${buttonVariants({ size: 'lg' })} !px-8 !rounded-full capitalize`
                             : 'text-accent hover:text-primary capitalize duration-200 '}

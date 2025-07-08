@@ -88,7 +88,7 @@ export default function Categories({ categories }: CategoriesProps) {
     <div>
       {filteredCategories.map((category) => (
         <section key={category.id} className="section-gap">
-          <h1 className="text-[#F44336] text-4xl font-bold italic text-center mb-6 mt-14">
+          <h1 className="text-primary text-4xl font-bold italic text-center mb-6 mt-14">
             {category.name}
           </h1>
           <Menu items={category.products} />
