@@ -53,11 +53,16 @@ const Checkpoint = () => {
       }
 
       const data = await response.json();
-      toast.success("Order submitted successfully!");
+      toast.success("Order submitted successfully!", {
+        position: "bottom-left",
+      });
+      sessionStorage.clear()
       console.log("Order created:", data);
     } catch (error: unknown) {
       console.error("Order error:", error);
-      toast.error("Failed to submit order");
+      toast.error("Failed to submit order", {
+        position: "bottom-left",
+      });
     } finally {
       setIsSubmitting(false);
       setForm({

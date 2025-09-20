@@ -1,13 +1,9 @@
 import BestSellers from "./_components/BestSellers";
 import Hero from "./_components/Hero";
-import { GrSecure } from "react-icons/gr";
-import { GoCreditCard } from "react-icons/go";
-import { TbTruckDelivery } from "react-icons/tb";
-import Image from "next/image";
-import { IoShieldCheckmark } from "react-icons/io5";
-import { IoIosNotifications } from "react-icons/io";
-import { BsFillLightningFill } from "react-icons/bs";
-import { FaChevronRight } from "react-icons/fa6";
+
+import { db } from "@/lib/prisma";
+import { Offers } from "./_components/Offers";
+import Specials from "./_components/Specials";
 
 export default async function Home() {
   // await db.product.createMany({
@@ -132,7 +128,7 @@ export default async function Home() {
   //   ],
   // })
 
-  // const products = await db.product.findMany();
+  const products = await db.product.findMany();
 
   // for (const product of products) {
   //   await db.size.createMany({
@@ -172,7 +168,7 @@ export default async function Home() {
   //     image : 'https://plus.unsplash.com/premium_photo-1661677825991-caa232fea9da?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFjYXJvbmklMjBhbmQlMjBjaGVlc2V8ZW58MHx8MHx8fDA%3D'
   //   },
   // });
-  
+
   // await db.product.create({
   //   data: {
   //     id: "cheese002lkjhgfdsazxcv",
@@ -210,105 +206,14 @@ export default async function Home() {
   //   },
   // });
 
-  // console.log(products);
+  console.log(products);
 
   return (
     <div>
-      <div className="container">
-        <div className="why mt-12 border border-1 border-[#0a8800] rounded-md">
-          <div className="resons flex justify-between items-center p-3 rounded-md bg-[#0a8800] text-white hover:opacity-80">
-            <h2 className="flex justify-center items-center gap-1 text-[14px]">
-              <IoShieldCheckmark size={20} /> Why Choose Us?
-            </h2>
-            <div className="flex justify-center items-center gap-3">
-              <p className="flex justify-center items-center gap-1 text-[14px]">
-                <GrSecure size={20} /> Secure privacy
-              </p>
-              <p className="flex justify-center items-center gap-1 text-[14px]">
-                <GoCreditCard size={20} /> Safe payments
-              </p>
-              <p className="flex justify-center items-center gap-1 text-[14px]">
-                <TbTruckDelivery size={20} /> Delivery guarantee
-              </p>
-            </div>
-          </div>
-          <div className="description">
-            <p className="flex justify-start items-center gap-1 text-[#0a8800] py-[10px] px-[4px] text-[15px]">
-              <IoIosNotifications size={25} className="animate-bounce" />
-              Security reminder: Please be wary of scam messages and links. Temu
-              won&apos;t ask for extra fees via SMS or email.
-            </p>
-          </div>
-        </div>
-        <div className="lighting animate-pulse text-white bg-gradient-to-r from-[#f5a153] to-[#d63d00] flex justify-center items-center gap-3 p-3 rounded-md mt-5">
-          <div className="flex justify-center items-center gap-2">
-            <BsFillLightningFill size={25} />
-            <span className="font-bold text-[20px]">Lightning deals</span>
-          </div>
-          <div className="flex justify-center items-center gap-1 opacity-80">
-            <span className="text-[14px] ">Limited time offer</span>
-            <FaChevronRight size={14} />
-          </div>
-        </div>
-      </div>
+      <Offers />
       <Hero />
       <BestSellers />
-      
-      {/* Special Offers Section */}
-      <section className="section-gap">
-        <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 italic bg-clip-text text-transparent" style={{ backgroundImage: 'var(--primary-gradient)' }}>
-            Special Offers
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'Family Feast',
-                description: 'Perfect for family gatherings. Get 20% off on orders above $50',
-                image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1398&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                code: 'FAMILY20'
-              },
-              {
-                title: 'Weekend Special',
-                description: 'Enjoy 15% off on all orders during weekends',
-                image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                code: 'WEEKEND15'
-              },
-              {
-                title: 'First Order',
-                description: 'New customer? Get 25% off on your first order',
-                image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=1527&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                code: 'NEW25'
-              }
-            ].map((offer, index) => (
-              <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="h-48 overflow-hidden">
-                  <Image 
-                    src={offer.image} 
-                    alt={offer.title}
-                    width={400}
-                    height={192}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    priority={index < 2} // Optional: prioritize loading first 2 images
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 text-primary">{offer.title}</h3>
-                  <p className="text-gray-600 mb-4">{offer.description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="px-3 py-1 bg-primary text-white text-sm font-medium rounded-full">
-                      {offer.code}
-                    </span>
-                    <button className="text-primary font-medium hover:underline">
-                      Order Now
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Specials />
     </div>
   );
 }
