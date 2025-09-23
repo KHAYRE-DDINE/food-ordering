@@ -44,6 +44,7 @@ const Checkpoint = () => {
           postalCode: form.postalCode,
           city: form.city,
           country: form.country,
+          products: cart,
         }),
       });
 
@@ -56,7 +57,7 @@ const Checkpoint = () => {
       toast.success("Order submitted successfully!", {
         position: "bottom-left",
       });
-      sessionStorage.clear()
+      sessionStorage.removeItem("cartItems");
       console.log("Order created:", data);
     } catch (error: unknown) {
       console.error("Order error:", error);

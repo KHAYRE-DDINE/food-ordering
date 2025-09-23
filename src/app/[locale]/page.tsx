@@ -128,7 +128,7 @@ export default async function Home() {
   //   ],
   // })
 
-  const products = await db.product.findMany();
+  const products = await db.extra.findMany();
 
   // for (const product of products) {
   //   await db.size.createMany({
