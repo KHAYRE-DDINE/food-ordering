@@ -132,7 +132,7 @@ export const ChatAi = () => {
                 type="text"
                 name="message"
                 id="message"
-                className="h-[40px] w-full bg-grey-500 rounded-full shadow-lg pr-12"
+                className="h-[40px] w-full bg-grey-500 rounded-full shadow-lg pr-12 focus-visible:ring-primary focus-visible:ring-2"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyPress}
