@@ -31,7 +31,7 @@ if (typeof window !== 'undefined') {
         console.log("nothing find")
       }
     }else{
-        console.log("nothind")
+        console.log("nothing")
     }
   } catch (error) {
     console.error('Error parsing cart items from sessionStorage:', error);

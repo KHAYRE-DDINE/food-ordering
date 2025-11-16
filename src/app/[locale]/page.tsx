@@ -1,7 +1,7 @@
+import { ChatAi } from "@/components/Chat/ChatAi";
 import BestSellers from "./_components/BestSellers";
 import Hero from "./_components/Hero";
 
-import { db } from "@/lib/prisma";
 import { Offers } from "./_components/Offers";
 import Specials from "./_components/Specials";
 
@@ -57,7 +57,7 @@ export default async function Home() {
   //       id: 'cheese001qwertyuiopasd',
   //       name: 'Four-Cheese Mac and Cheese',
   //       description: 'Creamy macaroni baked with a blend of cheddar, mozzarella, Parmesan, and Gouda cheeses.',
-  //       image: '#######',
+  //       image: 'https://plus.unsplash.com/premium_photo-1661677825991-caa232fea9da?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFjYXJvbmklMjBhbmQlMjBjaGVlc2V8ZW58MHx8MHx8fDA%3D',
   //       order: 3,
   //       basePrice: 9.99,
   //       categoryId: 'fd2f22ee-8165-4720-b22c-75c3ecacb536', // Cheese
@@ -128,7 +128,7 @@ export default async function Home() {
   //   ],
   // })
 
-  const products = await db.extra.findMany();
+  // const products = await db.extra.findMany();
 
   // for (const product of products) {
   //   await db.size.createMany({
@@ -159,15 +159,6 @@ export default async function Home() {
   //     { name: "Spicy", order: 5 },
   //   ]
   // })
-
-  // await db.product.update({
-  //   where: {
-  //     id: "cheese001qwertyuiopasd",
-  //   },
-  //   data: {
-  //     image : 'https://plus.unsplash.com/premium_photo-1661677825991-caa232fea9da?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFjYXJvbmklMjBhbmQlMjBjaGVlc2V8ZW58MHx8MHx8fDA%3D'
-  //   },
-  // });
 
   // await db.product.create({
   //   data: {
@@ -206,7 +197,7 @@ export default async function Home() {
   //   },
   // });
 
-  console.log(products);
+  // console.log(products);
 
   return (
     <div>
@@ -214,6 +205,7 @@ export default async function Home() {
       <Hero />
       <BestSellers />
       <Specials />
+      <ChatAi/>
     </div>
   );
 }

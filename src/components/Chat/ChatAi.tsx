@@ -1,75 +1,167 @@
-'use client'
-import './chat.css'
-import { FolderClosed, LucideThumbsUp, MessageSquareIcon, RefreshCcw, SendIcon } from "lucide-react"
-import { useState } from "react"
-import { Input } from "../ui/input"
+"use client";
+import "./chat.css";
+import {
+  FolderClosed,
+  LucideThumbsUp,
+  MessageSquareIcon,
+  RefreshCcw,
+  SendIcon,
+} from "lucide-react";
+import { useState } from "react";
+import { Input } from "../ui/input";
+
+export interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+  timestamp?: Date;
+}
 
 export const ChatAi = () => {
-    const [isOpen, setIsOpen] = useState<boolean>(false)
-    // const { messages, error, reload, input, handleInputChanges, handleSubmit, isLoading, stop } = useChat({ api: '/api/gemini' })
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [input, setInput] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const sendMessage = async () => {
+    if (!input?.trim()) return;
 
-    /*
-         <div className='ai'>
-             <span className='text-[12px] ml-[36px] text-accent uppercase font-bold '>AI Khayreddine</span>
-             <div className=' flex items-center gap-2 '>
-                 <ScanFace />
-                 <p className='bg-[#ececec] rounded-xl px-2 py-2 text-[14px]'>pbsacn asdlicln jsuocan</p>
-             </div>
-         </div>
-         <div className='user flex justify-end gap-2 '>
-             <p className='bg-white border-black border-[1px] rounded-full px-2 py-2 text-[14px] mx-4 my-2'>pbsacn asdlicln jsuocan</p>
-         </div>
-    */
+    const userMessage: ChatMessage = {
+      role: "user" as const,
+      content: input.trim(),
+    };
 
-    return (
-        <div className="cover fixed right-20 bottom-11 bg-white shadow-2xl">
-            {isOpen && (
-                <div className="h-[500px] w-[400px]">
-                    <div className="head border-b-2 border-accent p-3 flex justify-between items-center">
-                        <h1 className="text-primary text-xl font-bold italic flex gap-1"><LucideThumbsUp /> Khirdin ai</h1>
-                        <div className='flex items-center gap-2'>
-                            <RefreshCcw size={14} className='cursor-pointer' />
-                            <FolderClosed size={14} className='cursor-pointer' />
-                        </div>
-                    </div>
-                    <div className="relative p-3 mx-auto h-[382px] custom-scrollbar">
-                        {/* <div className="message ">
-                            {messages.length == 0 && 'no message now'}
-                            {messages?.map((message) => )}
-                            {error && (
-                                <div>
-                                    <span>an error occur</span>
-                                    <button onClick={reload()}>
-                                        <RefreshCcwDot />
-                                    </button>
-                                </div>
-                            )}
-                            {isLoading && (
-                                <div>
-                                    <span>stop generating</span>
-                                    <button onClick={stop()}>
-                                        <Square />
-                                    </button>
-                                </div>
-                            )}
-                        </div> */}
-                    </div>
-                    <form action="" className="absolute w-[90%] left-2/4 -translate-x-2/4 bottom-3 ">
-                        <fieldset>
-                            <Input type="text" name='message' id="message" className="h-[40px] focus-visible:!ring-offset-[0px]  bg-[#f0f0f0] rounded-full shadow-lg" />
-                        </fieldset>
-                        <fieldset>
-                            <button type="submit" className="btn-send absolute cursor-pointer w-[40px] h-[46px] rounded-full" >
-                                <SendIcon className='text-primary' />
-                            </button>
-                        </fieldset>
-                    </form>
-                </div>
-            )}
-            <div onClick={() => setIsOpen(!isOpen)} className="icon bg-primary p-3 w-14 h-14 flex items-center justify-center cursor-pointer rounded-full hover:opacity-90">
-                <MessageSquareIcon color="white" />
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
+    setInput("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/openai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ messages: newMessages }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      // Handle both streamed and non-streamed responses
+      if (data.content) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content: data.content,
+          },
+        ]);
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "Sorry, I encountered an error. Please try again.",
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
+  return (
+    <div className="cover fixed right-20 bottom-11 bg-white shadow-2xl rounded-xl shadow-[#ababab]">
+      {isOpen && (
+        <div className="h-[500px] w-[400px] flex flex-col">
+          <div className="head bg-primary border-b-2 border-accent p-3 flex justify-between items-center">
+            <h1 className="text-xl font-bold flex gap-2 items-center">
+              <LucideThumbsUp />
+              <div className="title flex flex-col text-black">
+                <h3 className="capitalize">Khirdin AI</h3>
+                <p className="capitalize text-sm">Chat with Khirdin AI</p>
+              </div>
+            </h1>
+            <div className="flex items-center gap-2">
+              <RefreshCcw size={14} className="cursor-pointer" />
+              <FolderClosed size={14} className="cursor-pointer" />
             </div>
+          </div>
+
+          <div className="flex-1 overflow-y-auto p-3 custom-scrollbar">
+            {messages.length === 0 ? (
+              <div className="text-center text-gray-500 mt-4">
+                No messages yet. Start a conversation!
+              </div>
+            ) : (
+              messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`message mb-3 p-2 rounded-lg ${
+                    message.role === "user"
+                      ? "bg-blue-100 text-blue-900 rounded-lg rounded-r-none ml-8 flex justify-end"
+                      : "bg-white text-gray-900 rounded-lg rounded-l-none mr-8 flex justify-start"
+                  }`}
+                >
+                  {/* <strong className="capitalize">{message.role}: </strong> */}
+                  <span>{message.content}</span>
+                </div>
+              ))
+            )}
+            {isLoading && (
+              <div className="message mb-3 p-2 rounded-lg bg-white rounded-l-none mr-8">
+                {/* <strong>assistant: </strong> */}
+                <span className="italic">Thinking...</span>
+              </div>
+            )}
+          </div>
+
+          <div className="p-3 border-t border-accent">
+            <div className="relative">
+              <Input
+                type="text"
+                name="message"
+                id="message"
+                className="h-[40px] w-full bg-grey-500 rounded-full shadow-lg pr-12"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyPress}
+                placeholder="Type your message..."
+                disabled={isLoading}
+              />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer w-8 h-8 flex items-center justify-center "
+                onClick={sendMessage}
+                disabled={isLoading || !input.trim()}
+              >
+                <SendIcon
+                  className={`${
+                    isLoading || !input.trim() ? "text-gray-400" : "text-primary"
+                  } w-5 h-5`}
+                />
+              </button>
+            </div>
+          </div>
         </div>
-    )
-}
+      )}
+
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="icon bg-primary p-3 w-14 h-14 flex items-center justify-center cursor-pointer rounded-full hover:opacity-90 mt-2"
+      >
+        <MessageSquareIcon color="white" />
+      </div>
+    </div>
+  );
+};

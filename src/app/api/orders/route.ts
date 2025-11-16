@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       }
     }
 
-    //fetch teh complete order with products
+    //fetch the complete order with products
     const completeOrder = await db.order.findUnique({
       where: { id: order.id },
       include: {

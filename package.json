@@ -33,7 +33,7 @@
     "motion": "^12.4.3",
     "negotiator": "^1.0.0",
     "next": "^15.3.3",
-    "openai": "^4.83.0",
+    "openai": "^4.104.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icon": "^1.0.0",
