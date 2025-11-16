@@ -65,39 +65,47 @@ export async function POST(request: Request) {
       content: assistantMessage.content
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("6. ERROR DETAILS:");
-    console.error("   - Error name:", error.name);
-    console.error("   - Error message:", error.message);
-    console.error("   - Error code:", error.code);
-    console.error("   - Error status:", error.status);
-    console.error("   - Full error:", error);
-
-    // Specific error handling
+    
+    // Type-safe error handling
     let errorMessage = "An unexpected error occurred";
     let statusCode = 500;
+    
+    // Log error details safely
+    if (error instanceof Error) {
+      console.error("   - Error name:", error.name);
+      console.error("   - Error message:", error.message);
+    }
+    
+    // Type assertion for API error with code and status
+    const apiError = error as { code?: string; status?: number; message?: string };
+    
+    console.error("   - Error code:", apiError.code);
+    console.error("   - Error status:", apiError.status);
+    console.error("   - Full error:", error);
 
-    if (error?.code === 'invalid_api_key') {
+    if (apiError.code === 'invalid_api_key') {
       errorMessage = "Invalid OpenAI API key. Please check your API key.";
       statusCode = 401;
-    } else if (error?.status === 429) {
+    } else if (apiError.status === 429) {
       errorMessage = "Rate limit exceeded. Please try again later.";
       statusCode = 429;
-    } else if (error?.status === 401) {
+    } else if (apiError.status === 401) {
       errorMessage = "Authentication error. Please check your API key.";
       statusCode = 401;
-    } else if (error?.message?.includes('quota')) {
+    } else if (apiError.message?.includes('quota')) {
       errorMessage = "API quota exceeded. Please check your OpenAI account billing.";
       statusCode = 402;
     } else {
-      errorMessage = error?.message || "Internal server error";
+      errorMessage = apiError.message || "Internal server error";
     }
 
     return NextResponse.json(
       { 
         error: errorMessage,
-        code: error?.code,
-        status: error?.status
+        code: apiError.code,
+        status: apiError.status
       },
       { status: statusCode }
     );
