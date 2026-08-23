@@ -5,11 +5,10 @@ const nextConfig: NextConfig = {
   distDir: '.next',
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-        pathname: "/**",
-      },
+      { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "img.freepik.com" },
+      { protocol: "https", hostname: "cdn.pixabay.com" },
+      { protocol: "https", hostname: "plus.unsplash.com" }
     ],
   },
   experimental: {
