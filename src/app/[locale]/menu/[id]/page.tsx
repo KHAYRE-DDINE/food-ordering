@@ -9,7 +9,7 @@ interface PageProps {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string, locale: string }> }) {
   const awaitedParams = await params;
   return {
     title: `Menu Item ${awaitedParams.id}`,
