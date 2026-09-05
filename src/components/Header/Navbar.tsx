@@ -15,10 +15,11 @@ const Navbar = ({ translation }: { translation: Translations }) => {
     const { navbar } = translation
 
     const Links = [
-        { id: crypto.randomUUID(), href: Routes.MENU, title: navbar.menu },
-        { id: crypto.randomUUID(), href: Routes.ABOUT, title: navbar.about },
-        { id: crypto.randomUUID(), href: Routes.CONTACT, title: navbar.contact },
-        { id: crypto.randomUUID(), href: `${Routes.AUTH}/${Pages.LOGIN}`, title: navbar.login },
+        { id: 'menu', href: Routes.MENU, title: navbar.menu },
+        { id: 'about', href: Routes.ABOUT, title: navbar.about },
+        { id: 'contact', href: Routes.CONTACT, title: navbar.contact },
+        { id: 'admin', href: Routes.ADMIN, title: navbar.admin },
+        { id: 'login', href: `${Routes.AUTH}/${Pages.LOGIN}`, title: navbar.login },
     ]
 
     return (
@@ -26,14 +27,14 @@ const Navbar = ({ translation }: { translation: Translations }) => {
             <Button variant={'secondary'} size='sm' className='md:hidden absolute top-6 left-1/2' onClick={() => setOpenMenu(!openMenu)}>
                 <Menu className='!w-6 !h-6 ' />
             </Button>
-            <ul className={`${openMenu ? 'left-0 z-[1000]' : '!-left-full'} navbar w-full h-full left-0 top-0 px-10 py-20 md:py-0 md:px-3 flex flex-col md:flex-row justify-start md:justify-end items-start md:items-center gap-6 lg:gap-10 fixed md:static bg-background rounded-full`}>
+            <ul className={`${openMenu ? 'left-0 z-[1000]' : '!-left-full'} navbar w-full h-full left-0 top-0 px-10 py-20 md:py-0 md:px-3 flex flex-col md:flex-row justify-start md:justify-end items-start md:items-center gap-4 lg:gap-6 fixed md:static bg-background md:bg-transparent rounded-none md:rounded-full`}>
                 <Button variant={'secondary'} size='sm' className='md:hidden absolute top-10 right-10 ' onClick={() => setOpenMenu(!openMenu)}>
                     <XIcon className='!w-6 !h-6' />
                 </Button>
                 {Links.map((link) => (
                     <Link href={`/${locale}/${link.href}`} key={link.id}
                         className={`${link.href === `${Routes.AUTH}/${Pages.LOGIN}` ? `
-                            ${buttonVariants({ size: 'lg' })} !px-8 !rounded-full capitalize`
+                            ${buttonVariants({ size: 'lg' })} !px-7 capitalize`
                             : 'text-accent hover:text-primary capitalize duration-200 '}
                             font-semibold ${pathname.startsWith(`/${locale}/${link.href}`) ? 'text-primary ' : 'text-accent'}`}
                     >

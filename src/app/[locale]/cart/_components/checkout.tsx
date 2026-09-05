@@ -5,24 +5,30 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { getSubTotal, getTotalAmount } from "@/lib/cart";
 import { FormatCurrency } from "@/lib/Formatter";
-import { selectCartItems } from "@/redux/features/cart/cartSlice";
-import { useAppSelector } from "@/redux/hooks";
-import { CreditCard, MapPin, Phone, ShoppingBag, Mail } from "lucide-react";
+import { ClearCartItems, selectCartItems } from "@/redux/features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { CreditCard, MapPin, Phone, ShoppingBag, Mail, User } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 const Checkpoint = () => {
+  const dispatch = useAppDispatch();
   const cart = useAppSelector(selectCartItems);
+  const router = useRouter();
+  const { locale } = useParams<{ locale: string }>();
   const totalAmount = getTotalAmount(cart);
   const subTotal = getSubTotal(cart);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
+    customerName: "",
     userEmail: "",
     phone: "",
     address: "",
     postalCode: "",
     city: "",
     country: "",
+    notes: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,12 +44,14 @@ const Checkpoint = () => {
         body: JSON.stringify({
           subTotal: subTotal.toString(),
           totalPrice: totalAmount.toString(),
+          customerName: form.customerName,
           userEmail: form.userEmail,
           phone: form.phone,
           streetAddress: form.address,
           postalCode: form.postalCode,
           city: form.city,
           country: form.country,
+          notes: form.notes,
           products: cart,
         }),
       });
@@ -58,7 +66,8 @@ const Checkpoint = () => {
         position: "bottom-left",
       });
       sessionStorage.removeItem("cartItems");
-      console.log("Order created:", data);
+      dispatch(ClearCartItems());
+      router.push(`/${locale}/orders/${data.id}`);
     } catch (error: unknown) {
       console.error("Order error:", error);
       toast.error("Failed to submit order", {
@@ -66,14 +75,6 @@ const Checkpoint = () => {
       });
     } finally {
       setIsSubmitting(false);
-      setForm({
-        userEmail: "",
-        phone: "",
-        address: "",
-        postalCode: "",
-        city: "",
-        country: "",
-      });
     }
   };
 
@@ -96,6 +97,26 @@ const Checkpoint = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="space-y-1">
+          <Label
+            htmlFor="customerName"
+            className="text-gray-700 flex items-center gap-2"
+          >
+            <User className="h-4 w-4 text-gray-500" />
+            Full Name
+          </Label>
+          <Input
+            id="customerName"
+            placeholder="Your name"
+            type="text"
+            name="customerName"
+            value={form.customerName}
+            required
+            className="focus-visible:ring-2 focus-visible:ring-primary/50 h-11"
+            onChange={(e) => handleForm(e)}
+          />
+        </div>
+
         <div className="space-y-1">
           <Label
             htmlFor="email"
@@ -206,6 +227,26 @@ const Checkpoint = () => {
             required
             className="focus-visible:ring-2 focus-visible:ring-primary/50 h-10"
             onChange={(e) => handleForm(e)}
+          />
+        </div>
+
+        <div className="space-y-1">
+          <Label htmlFor="notes" className="text-gray-700 text-sm">
+            Delivery notes
+          </Label>
+          <Textarea
+            id="notes"
+            placeholder="Door code, preferred handoff, allergies, or anything helpful"
+            name="notes"
+            value={form.notes}
+            rows={3}
+            className="resize-none focus-visible:ring-2 focus-visible:ring-primary/50"
+            onChange={(e) =>
+              setForm({
+                ...form,
+                [e.currentTarget.name]: e.currentTarget.value,
+              })
+            }
           />
         </div>
 

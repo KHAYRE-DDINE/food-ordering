@@ -1,6 +1,8 @@
 import Details from "@/components/menu/details";
 import { db } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   params: Promise<{
     id: string;

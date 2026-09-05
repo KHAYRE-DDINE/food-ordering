@@ -1,9 +1,11 @@
 import React from 'react'
 import Items from './_components/items'
-import Checkpoint from './_components/checkout'
-import { ShoppingBag } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { ShoppingBag, CreditCard } from 'lucide-react'
+import Link from 'next/link'
 
-const CartPage = () => {
+const CartPage = async ({ params }: { params: Promise<{ locale: string }> }) => {
+    const { locale } = await params
     return (
         <main className="min-h-[calc(100vh-193px)] bg-gray-50 py-12">
             <div className="container mx-auto px-4">
@@ -15,12 +17,21 @@ const CartPage = () => {
                 </div>
                 
                 <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-                    <div className='lg:col-span-2 bg-white rounded-xl shadow-sm p-6'>
+                    <div className='lg:col-span-2 bg-white rounded-lg border border-gray-100 shadow-sm p-6'>
                         <h2 className='text-2xl font-semibold text-gray-800 mb-6'>Order Summary</h2>
                         <Items />
                     </div>
-                    <div className='lg:sticky lg:top-8 h-fit'>
-                        <Checkpoint />
+                    <div className='lg:sticky lg:top-28 h-fit rounded-lg border border-gray-100 bg-white p-6 shadow-sm'>
+                        <h2 className='text-2xl font-bold text-gray-900'>Ready to order?</h2>
+                        <p className='mt-2 text-sm leading-6 text-gray-500'>
+                            Continue to checkout to add delivery details and place your order.
+                        </p>
+                        <Button asChild className='mt-6 h-12 w-full text-base font-semibold'>
+                            <Link href={`/${locale}/checkout`}>
+                                <CreditCard className='mr-2 h-5 w-5' />
+                                Continue to checkout
+                            </Link>
+                        </Button>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,8 @@ import Categories from "@/components/Categories/Categories";
 import { getProductByCategory } from "@/server/db/products";
 import FilterItems from "@/components/Filter";
 
+export const dynamic = "force-dynamic";
+
 export default async function MenuPage() {
   // Fetch categories
   const categories = await getProductByCategory();

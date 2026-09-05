@@ -1,18 +1,14 @@
 .navbar a:not(:last-of-type) {
-    width: 80px;
-    height: 35px;
-    line-height: 35px;
+    min-width: 72px;
+    height: 36px;
+    line-height: 36px;
     text-align: center;
     position: relative;
     overflow: hidden;
-    border-radius: 15px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.navbar a:last-of-type {
-    box-shadow: 3px -4px 0px 8px #ffffff, -1px 4px 0px 4px hsl(var(--primary));
 }
 
 .navbar a:not(:last-of-type) span {

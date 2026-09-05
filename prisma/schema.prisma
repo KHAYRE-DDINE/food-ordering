@@ -72,6 +72,9 @@ model Category {
 model Order {
   id            String         @id @default(uuid())
   paid          Boolean        @default(false)
+  status        OrderStatus    @default(PLACED)
+  customerName  String?
+  notes         String?
   subTotal      Float
   deliveryFee   Float
   totalPrice    Float
@@ -114,4 +117,13 @@ enum ExtraIngredients {
 enum UserRole {
   USER
   ADMIN
+}
+
+enum OrderStatus {
+  PLACED
+  CONFIRMED
+  PREPARING
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
 }

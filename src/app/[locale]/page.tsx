@@ -5,6 +5,8 @@ import Hero from "./_components/Hero";
 import { Offers } from "./_components/Offers";
 import Specials from "./_components/Specials";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   // await db.product.createMany({
   //   data: [

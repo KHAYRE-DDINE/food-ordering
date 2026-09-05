@@ -2,6 +2,29 @@
 import { db } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+export async function GET() {
+  try {
+    const orders = await db.order.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        products: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+
+    return NextResponse.json(orders);
+  } catch (error) {
+    console.error("Order list error:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch orders" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -10,6 +33,8 @@ export async function POST(request: Request) {
     const order = await db.order.create({
       data: {
         paid: true,
+        customerName: body.customerName || null,
+        notes: body.notes || null,
         subTotal: Number(body.subTotal),
         deliveryFee: 5.0,
         totalPrice: Number(body.totalPrice),
@@ -38,7 +63,11 @@ export async function POST(request: Request) {
     const completeOrder = await db.order.findUnique({
       where: { id: order.id },
       include: {
-        products: true,
+        products: {
+          include: {
+            product: true,
+          },
+        },
       },
     });
 
