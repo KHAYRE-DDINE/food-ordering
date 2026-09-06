@@ -3,7 +3,7 @@ import './Header.css'
 import { Pages, Routes } from '@/constants/enums'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { Menu, XIcon } from 'lucide-react';
 import { useParams, usePathname } from 'next/navigation'
 import { Translations } from '@/types/translations'
@@ -33,13 +33,10 @@ const Navbar = ({ translation }: { translation: Translations }) => {
                 </Button>
                 {Links.map((link) => (
                     <Link href={`/${locale}/${link.href}`} key={link.id}
-                        className={`${link.href === `${Routes.AUTH}/${Pages.LOGIN}` ? `
-                            ${buttonVariants({ size: 'lg' })} !px-7 capitalize`
-                            : 'text-accent hover:text-primary capitalize duration-200 '}
-                            font-semibold ${pathname.startsWith(`/${locale}/${link.href}`) ? 'text-primary ' : 'text-accent'}`}
+                        className={`nav-link ${link.href === `${Routes.AUTH}/${Pages.LOGIN}` ? 'nav-link-cta' : ''}
+                            ${pathname.startsWith(`/${locale}/${link.href}`) ? 'nav-link-active' : ''}`}
+                        onClick={() => setOpenMenu(false)}
                     >
-                        <span></span>
-                        <span></span>
                         {link.title}
                     </Link>
                 ))}

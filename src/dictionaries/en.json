@@ -2,52 +2,95 @@
   "logo": "Fasty Food",
   "home": {
     "hero": {
+      "badge": "Fast delivery, fresh every day",
       "title": "Slice into Happiness",
-      "description": "Craving pizza? We've got you covered with fresh ingredients, endless flavors, and the fastest delivery. Your perfect slice is just a tap away!",
+      "description": "Craving pizza? We've got you covered with fresh ingredients, endless flavors, and fast delivery. Your perfect meal is just a tap away.",
       "orderNow": "Order now",
-      "learnMore": "Learn more"
+      "learnMore": "Learn more",
+      "statOne": "25 min delivery",
+      "statTwo": "4.9 customer rating",
+      "statThree": "Fresh daily menu"
+    },
+    "offers": {
+      "whyTitle": "Why choose us?",
+      "securePrivacy": "Secure privacy",
+      "safePayments": "Safe payments",
+      "deliveryGuarantee": "Delivery guarantee",
+      "reminder": "Security reminder: we never ask for extra fees through SMS or email.",
+      "dealsTitle": "Lightning deals",
+      "limitedTime": "Limited time offer"
     },
     "bestSeller": {
-      "checkOut": "check out",
+      "checkOut": "Check out",
       "OurBestSellers": "Our Best Sellers"
+    },
+    "specials": {
+      "title": "Special Offers",
+      "orderNow": "Order now",
+      "items": [
+        { "title": "Family Feast", "description": "Perfect for family gatherings. Get 20% off on orders above $50.", "code": "FAMILY20" },
+        { "title": "Weekend Special", "description": "Enjoy 15% off on all orders during weekends.", "code": "WEEKEND15" },
+        { "title": "First Order", "description": "New customer? Get 25% off on your first order.", "code": "NEW25" }
+      ]
     },
     "about": {
       "ourStory": "Know us",
       "aboutUs": "About us",
       "firstTitle": "Our Services",
+      "firstItems": ["Gourmet Dining", "Catering Services", "Meal Prep & Delivery", "Cooking Classes", "Custom Menus"],
       "firstDescriptions": {
-        "beginning": "At Pizza Restaurant, we’re passionate about creating unforgettable culinary experiences. From savory dishes to sweet delights, our services are designed to satisfy every craving. Here’s what we bring to the table:",
-        "one": "Exquisite meals crafted with fresh, high-quality ingredients.",
-        "two": "Perfectly tailored menus for weddings, corporate events, and private parties.",
+        "beginning": "At Fasty Food, we create memorable food experiences for everyday cravings, family nights, and special moments.",
+        "one": "Fresh meals crafted with high-quality ingredients.",
+        "two": "Flexible menus for gatherings, events, and office lunches.",
         "three": "Healthy, delicious meals delivered straight to your door.",
-        "four": "Learn the secrets behind our signature dishes with hands-on cooking sessions.",
-        "five": "Personalized dining experiences to suit your taste and dietary needs."
+        "four": "Signature recipes prepared with care by our kitchen team.",
+        "five": "Personalized dining choices for different tastes and needs."
       },
-      "firstFoot": "Let us take care of the cooking—you just enjoy the feast!",
+      "firstFoot": "We handle the kitchen work so you can enjoy the meal.",
       "secondTitle": "Our Offers",
+      "secondItems": ["First-Time Discount", "Family Feast Deals", "Seasonal Specials", "Loyalty Rewards", "Event Catering"],
       "secondDescriptions": {
-        "beginning": "We believe good food should be accessible to everyone. That’s why we’ve prepared special offers to make your dining experience even sweeter:",
-        "one": "Enjoy 10% off your first order with us!",
-        "two": "Special packages for family-sized meals at unbeatable prices.",
-        "three": " Limited-time dishes featuring the freshest seasonal ingredients.",
-        "four": "Earn points with every order and redeem them for free meals.",
-        "five": "Book your next event with us and receive exclusive perks."
+        "beginning": "Good food should feel easy to order and worth coming back for. Our offers make every order feel a little better.",
+        "one": "Enjoy a first-order discount when you try us.",
+        "two": "Family-sized bundles at friendly prices.",
+        "three": "Limited-time dishes made with seasonal ingredients.",
+        "four": "Earn rewards with repeat orders.",
+        "five": "Book events and get exclusive catering perks."
       },
-      "secondFoot": "Indulge in flavor without breaking the bank—explore our offers today!",
+      "secondFoot": "Explore great flavor without stretching your budget.",
       "thirdTitle": "Our Features",
+      "thirdItems": ["Fresh Ingredients", "Diverse Menu", "Chef-Crafted Recipes", "Fast Delivery", "Reliable Support"],
       "thirdDescriptions": {
-        "beginning": "What makes us the go-to choice for food lovers? It’s our dedication to quality, creativity, and customer satisfaction. Here’s what sets us apart:",
-        "one": "We source our ingredients locally to ensure the highest quality.",
-        "two": "From vegan and gluten-free to hearty comfort food, there’s something for everyone.",
-        "three": "Every dish is a masterpiece, created by our talented culinary team.",
-        "four": "Hot, fresh meals delivered right to your doorstep.",
-        "five": "We’re committed to sustainability, from packaging to kitchen operations."
+        "beginning": "The platform is designed to make food ordering fast, clear, and enjoyable from the first click to delivery.",
+        "one": "Ingredients are selected for quality and freshness.",
+        "two": "The menu covers comfort food, lighter choices, and crowd favorites.",
+        "three": "Each recipe is built for consistent taste.",
+        "four": "Orders move through clear preparation and delivery stages.",
+        "five": "The team is ready to help when customers need support."
       },
-      "thirdFoot": "Taste the difference with a dining experience that’s as unique as you are."
+      "thirdFoot": "Taste the difference in a smoother ordering experience."
     },
     "contact": {
       "Don't Hesitate": "Don't hesitate",
-      "contactUs": "Contact us"
+      "contactUs": "Contact us",
+      "getInTouch": "Get in touch",
+      "intro": "Have questions or feedback? We would love to hear from you.",
+      "location": "Our location",
+      "emailUs": "Email us",
+      "callUs": "Call us",
+      "workingHoursLabel": "Working hours",
+      "followUs": "Follow us",
+      "sendMessage": "Send us a message",
+      "formIntro": "Fill out the form below and we will get back to you as soon as possible.",
+      "name": "Your name",
+      "email": "Your email",
+      "subject": "Subject",
+      "message": "Your message",
+      "submit": "Send message",
+      "address": "123 Food Street, Cuisine City",
+      "emailValue": "contact@foodordering.com",
+      "phone": "+1 (555) 123-4567",
+      "workingHours": "Mon - Fri: 9:00 AM - 10:00 PM"
     }
   },
   "navbar": {
@@ -64,47 +107,20 @@
   "auth": {
     "login": {
       "title": "Welcome Back",
-      "name": {
-        "label": "Name",
-        "placeholder": "Enter your name"
-      },
-      "email": {
-        "label": "Email",
-        "placeholder": "Enter your email"
-      },
-      "password": {
-        "label": "Password",
-        "placeholder": "Enter your password"
-      },
+      "name": { "label": "Name", "placeholder": "Enter your name" },
+      "email": { "label": "Email", "placeholder": "Enter your email" },
+      "password": { "label": "Password", "placeholder": "Enter your password" },
       "submit": "Login",
-      "authPrompt": {
-        "message": "Don't have an account? ",
-        "signUpLinkText": "Sign Up"
-      }
+      "authPrompt": { "message": "Don't have an account? ", "signUpLinkText": "Sign Up" }
     },
     "register": {
       "title": "Register",
-      "name": {
-        "label": "Name",
-        "placeholder": "Enter your name"
-      },
-      "email": {
-        "label": "Email",
-        "placeholder": "Enter your email"
-      },
-      "password": {
-        "label": "Password",
-        "placeholder": "Enter your password"
-      },
-      "confirmPassword": {
-        "label": "Confirm Password",
-        "placeholder": "Re-enter your password"
-      },
+      "name": { "label": "Name", "placeholder": "Enter your name" },
+      "email": { "label": "Email", "placeholder": "Enter your email" },
+      "password": { "label": "Password", "placeholder": "Enter your password" },
+      "confirmPassword": { "label": "Confirm Password", "placeholder": "Re-enter your password" },
       "submit": "Register",
-      "authPrompt": {
-        "message": "Already have an account? ",
-        "loginLinkText": "Login"
-      }
+      "authPrompt": { "message": "Already have an account? ", "loginLinkText": "Login" }
     }
   },
   "validation": {
@@ -122,130 +138,174 @@
     "unexpectedError": "An unexpected error occurred",
     "userAlreadyExists": "User already exists.",
     "accountCreated": "Account created successfully",
-    "updateProfileSucess": "Profile updated successfull",
+    "updateProfileSucess": "Profile updated successfully",
     "categoryAdded": "Category added successfully",
-    "updatecategorySucess": "Category updated successfull",
-    "deleteCategorySucess": "Category deleted successfull",
+    "updatecategorySucess": "Category updated successfully",
+    "deleteCategorySucess": "Category deleted successfully",
     "productAdded": "Product added successfully",
-    "updateProductSucess": "Product updated successfull",
-    "deleteProductSucess": "Product deleted successfull",
-    "updateUserSucess": "User updated successfull",
-    "deleteUserSucess": "User deleted successfull"
+    "updateProductSucess": "Product updated successfully",
+    "deleteProductSucess": "Product deleted successfully",
+    "updateUserSucess": "User updated successfully",
+    "deleteUserSucess": "User deleted successfully"
   },
   "menuItem": {
-    "addToCart": "Add to cart"
+    "addToCart": "Add to cart",
+    "addToCartWithPrice": "Add to cart",
+    "customize": "Customize",
+    "pickSize": "Pick your size",
+    "anyExtra": "Any extras?",
+    "inCart": "in cart",
+    "remove": "Remove",
+    "size": "Size",
+    "extras": "Extras"
+  },
+  "menu": {
+    "title": "Choose your meal",
+    "subtitle": "Fresh picks, quick filters, and favorites ready to order",
+    "searchMenu": "Search menu",
+    "searchPlaceholder": "Search by name or keyword...",
+    "filterByCategory": "Filter by category",
+    "allCategories": "All Categories",
+    "dietaryOptions": "Dietary options",
+    "productNotFound": "Product not found",
+    "productLoadError": "Error loading product. Please try again later.",
+    "categoryLabels": {
+      "All Categories": "All Categories",
+      "Classic": "Classic",
+      "Vegetarian": "Vegetarian",
+      "Meat": "Meat",
+      "Cheese": "Cheese",
+      "Spicy": "Spicy"
+    },
+    "ingredientLabels": {
+      "onion": "Onion",
+      "tomato": "Tomato",
+      "bacon": "Bacon",
+      "cheese": "Cheese",
+      "pepper": "Pepper"
+    },
+    "empty": "No menu items match your filters yet."
   },
   "profile": {
     "title": "Profile",
     "form": {
-      "name": {
-        "label": "Name",
-        "placeholder": "Enter your name"
-      },
-      "email": {
-        "label": "Email",
-        "placeholder": "Enter your email"
-      },
-      "phone": {
-        "label": "Phone",
-        "placeholder": "Enter your phone number",
-        "validation": {
-          "required": "Phone number is required",
-          "invalid": "Please enter a valid phone number"
-        }
-      },
-      "address": {
-        "label": "Street Address",
-        "placeholder": "Enter your address",
-        "validation": {
-          "required": "Address is required"
-        }
-      },
-      "postalCode": {
-        "label": "Postal Code",
-        "placeholder": "Enter your postal code",
-        "validation": {
-          "required": "Postal code is required",
-          "invalid": "Please enter a valid postal code"
-        }
-      },
-      "city": {
-        "label": "City",
-        "placeholder": "Enter your city",
-        "validation": {
-          "required": "City is required"
-        }
-      },
-      "country": {
-        "label": "Country",
-        "placeholder": "Enter your country",
-        "validation": {
-          "required": "Country is required"
-        }
-      }
+      "name": { "label": "Name", "placeholder": "Enter your name" },
+      "email": { "label": "Email", "placeholder": "Enter your email" },
+      "phone": { "label": "Phone", "placeholder": "Enter your phone number", "validation": { "required": "Phone number is required", "invalid": "Please enter a valid phone number" } },
+      "address": { "label": "Street Address", "placeholder": "Enter your address", "validation": { "required": "Address is required" } },
+      "postalCode": { "label": "Postal Code", "placeholder": "Enter your postal code", "validation": { "required": "Postal code is required", "invalid": "Please enter a valid postal code" } },
+      "city": { "label": "City", "placeholder": "Enter your city", "validation": { "required": "City is required" } },
+      "country": { "label": "Country", "placeholder": "Enter your country", "validation": { "required": "Country is required" } }
     }
   },
   "admin": {
-    "tabs": {
-      "profile": "Profile",
-      "categories": "Categories",
-      "menuItems": "Menu Items",
-      "users": "Users",
-      "orders": "Orders"
+    "tabs": { "profile": "Profile", "categories": "Categories", "menuItems": "Menu Items", "users": "Users", "orders": "Orders" },
+    "dashboard": {
+      "accessTitle": "Admin access",
+      "accessDescription": "Enter an admin email to open the operations dashboard. Phase one uses a simple role gate until full authentication is added.",
+      "emailLabel": "Admin email",
+      "emailPlaceholder": "owner@example.com",
+      "openDashboard": "Open dashboard",
+      "brand": "Fasty Food",
+      "operations": "Operations",
+      "overview": "Overview",
+      "settings": "Settings",
+      "adminDashboard": "Admin dashboard",
+      "controlCenter": "Order control center",
+      "signedInAs": "Signed in as",
+      "totalOrders": "Total orders",
+      "activeOrders": "Active orders",
+      "averageOrder": "Average order",
+      "liveOrders": "Live orders",
+      "liveDescription": "Update customer-facing status from the operations queue.",
+      "inProgress": "in progress",
+      "order": "Order",
+      "customer": "Customer",
+      "items": "Items",
+      "total": "Total",
+      "status": "Status",
+      "update": "Update",
+      "guestCustomer": "Guest customer",
+      "empty": "No orders yet. New checkout orders will appear here.",
+      "statusUpdated": "Order status updated",
+      "statusError": "Could not update order status"
     },
-    "categories": {
-      "form": {
-        "editName": "Change Category Name",
-        "name": {
-          "label": "Category Name",
-          "placeholder": "Enter category name",
-          "validation": {
-            "required": "Category Name is required"
-          }
-        }
-      }
-    },
+    "categories": { "form": { "editName": "Change Category Name", "name": { "label": "Category Name", "placeholder": "Enter category name", "validation": { "required": "Category Name is required" } } } },
     "menu-items": {
       "createNewMenuItem": "Create new menu item",
       "addItemSize": "Add item size",
       "addExtraItem": "Add extra item",
-      "menuOption": {
-        "name": "Name",
-        "extraPrice": "Extra Price"
-      },
+      "menuOption": { "name": "Name", "extraPrice": "Extra Price" },
       "form": {
-        "name": {
-          "label": "Item Name",
-          "placeholder": "Enter item name",
-          "validation": {
-            "required": "Item Name is required"
-          }
-        },
-        "description": {
-          "label": "Description Name",
-          "placeholder": "Enter description name",
-          "validation": {
-            "required": "description Name is required"
-          }
-        },
-        "basePrice": {
-          "label": "Base Price",
-          "placeholder": "Enter base price",
-          "validation": {
-            "required": "Base Price is required"
-          }
-        },
-        "category": {
-          "validation": {
-            "required": "Category is required"
-          }
-        },
-        "image": {
-          "validation": {
-            "required": "Product image is required"
-          }
-        }
+        "name": { "label": "Item Name", "placeholder": "Enter item name", "validation": { "required": "Item Name is required" } },
+        "description": { "label": "Description Name", "placeholder": "Enter description name", "validation": { "required": "Description Name is required" } },
+        "basePrice": { "label": "Base Price", "placeholder": "Enter base price", "validation": { "required": "Base Price is required" } },
+        "category": { "validation": { "required": "Category is required" } },
+        "image": { "validation": { "required": "Product image is required" } }
       }
+    }
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "orderSummary": "Order summary",
+    "noItemsInCart": "There are no items in your cart. Add some",
+    "emptyTitle": "Your cart is empty",
+    "emptyDescription": "Start adding some delicious items to your cart.",
+    "subtotal": "Subtotal",
+    "delivery": "Delivery",
+    "total": "Total",
+    "readyTitle": "Ready to order?",
+    "readyDescription": "Continue to checkout to add delivery details and place your order.",
+    "continueCheckout": "Continue to checkout",
+    "removeItem": "Remove item"
+  },
+  "checkout": {
+    "title": "Secure Checkout",
+    "reviewTitle": "Review your order",
+    "summaryTitle": "Order Summary",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Your name",
+    "email": "Email Address",
+    "emailPlaceholder": "your@email.com",
+    "phone": "Phone Number",
+    "phonePlaceholder": "+1 (555) 000-0000",
+    "address": "Delivery Address",
+    "addressPlaceholder": "Enter your full address",
+    "postalCode": "Postal Code",
+    "postalCodePlaceholder": "12345",
+    "city": "City",
+    "cityPlaceholder": "New York",
+    "country": "Country",
+    "countryPlaceholder": "United States",
+    "notes": "Delivery notes",
+    "notesPlaceholder": "Door code, preferred handoff, allergies, or anything helpful",
+    "processing": "Processing...",
+    "pay": "Pay",
+    "terms": "By placing this order, you agree to our Terms of Service and Privacy Policy",
+    "success": "Order submitted successfully!",
+    "error": "Failed to submit order"
+  },
+  "orders": {
+    "tracking": {
+      "label": "Order",
+      "title": "Track your order",
+      "backToMenu": "Back to menu",
+      "deliveryStatus": "Delivery status",
+      "description": "Updates appear here as the restaurant moves your order forward.",
+      "currentStep": "Current step",
+      "completed": "Completed",
+      "waiting": "Waiting for restaurant update",
+      "cancelled": "This order was cancelled. Contact the restaurant if you need help.",
+      "summary": "Order summary",
+      "guest": "Guest customer"
+    },
+    "status": {
+      "PLACED": "Placed",
+      "CONFIRMED": "Confirmed",
+      "PREPARING": "Preparing",
+      "OUT_FOR_DELIVERY": "Out for delivery",
+      "DELIVERED": "Delivered",
+      "CANCELLED": "Cancelled"
     }
   },
   "category": "Category",
@@ -256,11 +316,7 @@
   "sizes": "Sizes",
   "extrasIngredients": "Extras Ingredients",
   "create": "Create",
-  "cart": {
-    "title": "Shopping Cart",
-    "noItemsInCart": "There are no items in your cart. Add some"
-  },
-  "copyRight": "© 2025 All rights reserved",
+  "copyRight": "© 2026 All rights reserved",
   "noProductsFound": "No products found",
   "noCategoriesFound": "No categories found"
 }

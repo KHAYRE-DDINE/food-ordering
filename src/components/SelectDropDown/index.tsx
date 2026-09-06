@@ -8,19 +8,23 @@ function DropDown({
   selectedCategory,
   setSelectedCategory,
   dispatch,
+  allCategoriesLabel,
+  categoryLabels,
 }: {
   selectedCategory: string;
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
   dispatch: AppDispatch;
+  allCategoriesLabel: string;
+  categoryLabels: Record<string, string>;
 }) {
   const [isActive, setIsActive] = useState<boolean>(false);
   const categories = [
-    "All Categories",
-    "Classic",
-    "Vegetarian",
-    "Meat",
-    "Cheese",
-    "Spicy",
+    { value: "All Categories", label: allCategoriesLabel },
+    { value: "Classic", label: categoryLabels.Classic },
+    { value: "Vegetarian", label: categoryLabels.Vegetarian },
+    { value: "Meat", label: categoryLabels.Meat },
+    { value: "Cheese", label: categoryLabels.Cheese },
+    { value: "Spicy", label: categoryLabels.Spicy },
   ];
 
   return (
@@ -35,28 +39,29 @@ function DropDown({
         <ul className="absolute w-full left-0 p-2 mt-[7px] rounded-lg z-50 bg-white border-[2px] border-[hsl(0, 0%, 76.9%)] shadow-inner">
           {categories.map((e) => (
             <li
-              key={e}
+              key={e.value}
               onClick={(e:React.MouseEvent<HTMLElement>) => {
-                const target = e.currentTarget;
-                const category = target.textContent || '';
                 setIsActive(!isActive);
-                setSelectedCategory(category);
+                const category = e.currentTarget.dataset.value || "All Categories";
+                const label = e.currentTarget.textContent || allCategoriesLabel;
+                setSelectedCategory(label);
                 dispatch(
                   addToFilter({ name: "category", value: category })
                 );
               }}
+              data-value={e.value}
               className={`${
-                selectedCategory == e
+                selectedCategory == e.label
                   ? "px-1 bg-primary rounded-md text-white py-[3px]"
                   : "px-9 py-[3px]"
               }`}
             >
-              {selectedCategory == e ? (
+              {selectedCategory == e.label ? (
                 <span className="flex items-center justify-start gap-2">
-                  <CheckIcon size={20} /> {e}
+                  <CheckIcon size={20} /> {e.label}
                 </span>
               ) : (
-                <span>{e}</span>
+                <span>{e.label}</span>
               )}
             </li>
           ))}

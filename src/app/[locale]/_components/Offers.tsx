@@ -1,50 +1,43 @@
-import React from 'react'
-import { GrSecure } from "react-icons/gr";
-import { GoCreditCard } from "react-icons/go";
-import { TbTruckDelivery } from "react-icons/tb";
-import { IoShieldCheckmark } from "react-icons/io5";
-import { IoIosNotifications } from "react-icons/io";
-import { BsFillLightningFill } from "react-icons/bs";
-import { FaChevronRight } from "react-icons/fa6";
+import getTrans from "@/lib/translation";
+import { getCurrentLocale } from "@/lib/getCurrentLocale";
+import { CreditCard, ShieldCheck, Truck, Zap } from "lucide-react";
 
-export const Offers = () => {
+export const Offers = async () => {
+  const locale = await getCurrentLocale();
+  const { home } = await getTrans(locale);
+  const { offers } = home;
+
   return (
-    <div className="container">
-    <div className="why mt-12 border border-1 border-[#0a8800] rounded-md">
-      <div className="resons flex justify-between items-center p-3 rounded-md bg-[#0a8800] text-white hover:opacity-80">
-        <h2 className="flex justify-center items-center gap-1 text-[14px]">
-          <IoShieldCheckmark size={20} /> Why Choose Us?
-        </h2>
-        <div className="flex justify-center items-center gap-3">
-          <p className="flex justify-center items-center gap-1 text-[14px]">
-            <GrSecure size={20} /> Secure privacy
-          </p>
-          <p className="flex justify-center items-center gap-1 text-[14px]">
-            <GoCreditCard size={20} /> Safe payments
-          </p>
-          <p className="flex justify-center items-center gap-1 text-[14px]">
-            <TbTruckDelivery size={20} /> Delivery guarantee
-          </p>
+    <section className="bg-white py-5">
+      <div className="container">
+        <div className="grid gap-3 rounded-lg border border-zinc-200 bg-zinc-950 p-4 text-white shadow-sm md:grid-cols-[1.1fr_2fr] md:items-center">
+          <h2 className="flex items-center gap-2 text-sm font-bold uppercase tracking-normal">
+            <ShieldCheck className="h-5 w-5 text-primary" />
+            {offers.whyTitle}
+          </h2>
+          <div className="grid gap-3 text-sm sm:grid-cols-3">
+            <p className="flex items-center gap-2">
+              <ShieldCheck className="h-4 w-4 text-primary" />
+              {offers.securePrivacy}
+            </p>
+            <p className="flex items-center gap-2">
+              <CreditCard className="h-4 w-4 text-primary" />
+              {offers.safePayments}
+            </p>
+            <p className="flex items-center gap-2">
+              <Truck className="h-4 w-4 text-primary" />
+              {offers.deliveryGuarantee}
+            </p>
+          </div>
+        </div>
+        <div className="mt-3 grid gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 md:grid-cols-[1fr_auto] md:items-center">
+          <p>{offers.reminder}</p>
+          <div className="inline-flex w-fit items-center gap-2 rounded-md bg-accent px-3 py-2 font-bold text-white">
+            <Zap className="h-4 w-4" />
+            {offers.dealsTitle} · {offers.limitedTime}
+          </div>
         </div>
       </div>
-      <div className="description">
-        <p className="flex justify-start items-center gap-1 text-[#0a8800] py-[10px] px-[4px] text-[15px]">
-          <IoIosNotifications size={25} className="animate-bounce" />
-          Security reminder: Please be wary of scam messages and links. Temu
-          won&apos;t ask for extra fees via SMS or email.
-        </p>
-      </div>
-    </div>
-    <div className="lighting animate-pulse text-white bg-gradient-to-r from-[#f5a153] to-[#d63d00] flex justify-center items-center gap-3 p-3 rounded-md mt-5">
-      <div className="flex justify-center items-center gap-2">
-        <BsFillLightningFill size={25} />
-        <span className="font-bold text-[20px]">Lightning deals</span>
-      </div>
-      <div className="flex justify-center items-center gap-1 opacity-80">
-        <span className="text-[14px] ">Limited time offer</span>
-        <FaChevronRight size={14} />
-      </div>
-    </div>
-  </div>
-  )
-}
+    </section>
+  );
+};

@@ -8,21 +8,21 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 45 33% 97%;
+    --foreground: 60 4% 9%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 60 4% 9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 48 97% 54%;
-    --primary-foreground: 210 40% 98%;
-    --primary-gradient: linear-gradient(90deg, hsl(48, 97%, 54%) 0%, hsl(43, 100%, 66%) 100%);
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 220 9% 46%;
-    --accent-foreground: 215 14% 34%;
+    --popover-foreground: 60 4% 9%;
+    --primary: 22 86% 52%;
+    --primary-foreground: 45 33% 97%;
+    --primary-gradient: linear-gradient(90deg, hsl(22, 86%, 52%) 0%, hsl(35, 96%, 56%) 100%);
+    --secondary: 32 58% 92%;
+    --secondary-foreground: 22 86% 22%;
+    --muted: 40 28% 93%;
+    --muted-foreground: 60 3% 44%;
+    --accent: 18 79% 43%;
+    --accent-foreground: 32 58% 96%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
@@ -71,7 +71,8 @@ body {
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    scroll-behavior: smooth;
   }
 
   .container {
@@ -102,5 +103,16 @@ body {
 
   .custom-scrollbar::-webkit-scrollbar-track {
     @apply bg-orange-500
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -2,20 +2,28 @@ import MainHead from "@/components/main-heading";
 import Categories from "@/components/Categories/Categories";
 import { getProductByCategory } from "@/server/db/products";
 import FilterItems from "@/components/Filter";
+import { getCurrentLocale } from "@/lib/getCurrentLocale";
+import getTrans from "@/lib/translation";
 
 export const dynamic = "force-dynamic";
 
 export default async function MenuPage() {
-  // Fetch categories
+  const locale = await getCurrentLocale();
+  const translation = await getTrans(locale);
   const categories = await getProductByCategory();
 
   return (
-    <div>
-      <div className="text-center pt-[66px]">
-        <MainHead title="Choose Your Meal" subTitle="Enjoy with it" />
+    <div className="bg-zinc-50 pb-16">
+      <div className="container pt-[66px] text-center">
+        <MainHead title={translation.menu.title} subTitle={translation.menu.subtitle} />
       </div>
-      <FilterItems />
-      <Categories categories={categories} />
+      <FilterItems menu={translation.menu} />
+      <Categories
+        categories={categories}
+        labels={translation.menuItem}
+        categoryLabels={translation.menu.categoryLabels}
+        emptyText={translation.menu.empty}
+      />
     </div>
   );
 }

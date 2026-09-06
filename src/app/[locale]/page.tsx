@@ -203,8 +203,8 @@ export default async function Home() {
 
   return (
     <div>
-      <Offers />
       <Hero />
+      <Offers />
       <BestSellers />
       <Specials />
       <ChatAi/>

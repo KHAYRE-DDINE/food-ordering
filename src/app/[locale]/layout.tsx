@@ -8,6 +8,7 @@ import ReduxProvider from "@/provider/ReduxProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ToastProvider } from "@/components/ToastProvider";
+import PageTransition from "@/components/PageTransition";
 
 export async function generateStaticParams() {
   return [{ locale: Languages.ARABIC }, { locale: Languages.ENGLISH }];
@@ -54,7 +55,7 @@ export default async function RootLayout({
         <ReduxProvider>
           <Header />
           <div className="pt-[80px]" style={{ minHeight: 'calc(100vh - 95px)' }}>
-            {children}
+            <PageTransition>{children}</PageTransition>
           </div>
           {/* <ChatAi /> */}
           <Footer />

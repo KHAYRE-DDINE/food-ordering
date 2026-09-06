@@ -1,6 +1,5 @@
 "use client";
 
-import { orderStatusLabels } from "@/lib/orders";
 import { OrderStatus } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -12,12 +11,19 @@ type AdminStatusSelectProps = {
   adminEmail: string;
   orderId: string;
   currentStatus: OrderStatus;
+  labels: Record<OrderStatus, string>;
+  messages: {
+    success: string;
+    error: string;
+  };
 };
 
 export default function AdminStatusSelect({
   adminEmail,
   orderId,
   currentStatus,
+  labels,
+  messages,
 }: AdminStatusSelectProps) {
   const router = useRouter();
   const [status, setStatus] = useState(currentStatus);
@@ -41,11 +47,11 @@ export default function AdminStatusSelect({
         throw new Error("Failed to update status");
       }
 
-      toast.success("Order status updated", { position: "bottom-left" });
+      toast.success(messages.success, { position: "bottom-left" });
       router.refresh();
     } catch {
       setStatus(currentStatus);
-      toast.error("Could not update order status", { position: "bottom-left" });
+      toast.error(messages.error, { position: "bottom-left" });
     } finally {
       setIsSaving(false);
     }
@@ -60,7 +66,7 @@ export default function AdminStatusSelect({
     >
       {statuses.map((option) => (
         <option key={option} value={option}>
-          {orderStatusLabels[option]}
+          {labels[option]}
         </option>
       ))}
     </select>

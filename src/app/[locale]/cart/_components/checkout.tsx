@@ -11,8 +11,9 @@ import { CreditCard, MapPin, Phone, ShoppingBag, Mail, User } from "lucide-react
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { Translations } from "@/types/translations";
 
-const Checkpoint = () => {
+const Checkpoint = ({ labels }: { labels: Translations["checkout"] }) => {
   const dispatch = useAppDispatch();
   const cart = useAppSelector(selectCartItems);
   const router = useRouter();
@@ -62,7 +63,7 @@ const Checkpoint = () => {
       }
 
       const data = await response.json();
-      toast.success("Order submitted successfully!", {
+      toast.success(labels.success, {
         position: "bottom-left",
       });
       sessionStorage.removeItem("cartItems");
@@ -70,7 +71,7 @@ const Checkpoint = () => {
       router.push(`/${locale}/orders/${data.id}`);
     } catch (error: unknown) {
       console.error("Order error:", error);
-      toast.error("Failed to submit order", {
+      toast.error(labels.error, {
         position: "bottom-left",
       });
     } finally {
@@ -93,7 +94,7 @@ const Checkpoint = () => {
     <div className="bg-white rounded-xl shadow-sm p-6 sticky top-6">
       <div className="flex items-center gap-2 mb-6">
         <ShoppingBag className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-bold text-gray-900">Order Summary</h2>
+        <h2 className="text-2xl font-bold text-gray-900">{labels.summaryTitle}</h2>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -103,11 +104,11 @@ const Checkpoint = () => {
             className="text-gray-700 flex items-center gap-2"
           >
             <User className="h-4 w-4 text-gray-500" />
-            Full Name
+            {labels.fullName}
           </Label>
           <Input
             id="customerName"
-            placeholder="Your name"
+            placeholder={labels.fullNamePlaceholder}
             type="text"
             name="customerName"
             value={form.customerName}
@@ -123,11 +124,11 @@ const Checkpoint = () => {
             className="text-gray-700 flex items-center gap-2"
           >
             <Mail className="h-4 w-4 text-gray-500" />
-            Email Address
+            {labels.email}
           </Label>
           <Input
             id="email"
-            placeholder="your@email.com"
+            placeholder={labels.emailPlaceholder}
             type="email"
             name="userEmail"
             value={form.userEmail}
@@ -142,11 +143,11 @@ const Checkpoint = () => {
             className="text-gray-700 flex items-center gap-2"
           >
             <Phone className="h-4 w-4 text-gray-500" />
-            Phone Number
+            {labels.phone}
           </Label>
           <Input
             id="phone"
-            placeholder="+1 (555) 000-0000"
+            placeholder={labels.phonePlaceholder}
             type="tel"
             name="phone"
             value={form.phone}
@@ -162,11 +163,11 @@ const Checkpoint = () => {
             className="text-gray-700 flex items-center gap-2"
           >
             <MapPin className="h-4 w-4 text-gray-500" />
-            Delivery Address
+            {labels.address}
           </Label>
           <Textarea
             id="address"
-            placeholder="Enter your full address"
+            placeholder={labels.addressPlaceholder}
             name="address"
             value={form.address}
             required
@@ -184,12 +185,12 @@ const Checkpoint = () => {
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
             <Label htmlFor="postal-code" className="text-gray-700 text-sm">
-              Postal Code
+              {labels.postalCode}
             </Label>
             <Input
               type="text"
               id="postal-code"
-              placeholder="12345"
+              placeholder={labels.postalCodePlaceholder}
               name="postalCode"
               value={form.postalCode}
               required
@@ -199,12 +200,12 @@ const Checkpoint = () => {
           </div>
           <div className="space-y-1">
             <Label htmlFor="city" className="text-gray-700 text-sm">
-              City
+              {labels.city}
             </Label>
             <Input
               type="text"
               id="city"
-              placeholder="New York"
+              placeholder={labels.cityPlaceholder}
               name="city"
               value={form.city}
               required
@@ -216,12 +217,12 @@ const Checkpoint = () => {
 
         <div className="space-y-1">
           <Label htmlFor="country" className="text-gray-700 text-sm">
-            Country
+            {labels.country}
           </Label>
           <Input
             type="text"
             id="country"
-            placeholder="United States"
+            placeholder={labels.countryPlaceholder}
             name="country"
             value={form.country}
             required
@@ -232,11 +233,11 @@ const Checkpoint = () => {
 
         <div className="space-y-1">
           <Label htmlFor="notes" className="text-gray-700 text-sm">
-            Delivery notes
+            {labels.notes}
           </Label>
           <Textarea
             id="notes"
-            placeholder="Door code, preferred handoff, allergies, or anything helpful"
+            placeholder={labels.notesPlaceholder}
             name="notes"
             value={form.notes}
             rows={3}
@@ -258,14 +259,13 @@ const Checkpoint = () => {
           >
             <CreditCard className="mr-2 h-5 w-5" />
             {isSubmitting
-              ? "Processing..."
-              : `Pay ${FormatCurrency(totalAmount)}`}
+              ? labels.processing
+              : `${labels.pay} ${FormatCurrency(totalAmount)}`}
           </Button>
         </div>
 
         <p className="text-xs text-gray-500 text-center mt-4">
-          By placing this order, you agree to our Terms of Service and Privacy
-          Policy
+          {labels.terms}
         </p>
       </form>
     </div>

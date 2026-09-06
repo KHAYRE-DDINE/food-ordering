@@ -7,8 +7,9 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Trash2, ShoppingCart } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect } from 'react'
+import { Translations } from '@/types/translations'
 
-const Items = () => {
+const Items = ({ labels, menuLabels }: { labels: Translations["cart"]; menuLabels: Translations["menuItem"] }) => {
     const cart = useAppSelector(selectCartItems)
     const dispatch = useAppDispatch()
     const subTotal = getSubTotal(cart)
@@ -21,8 +22,8 @@ const Items = () => {
         return (
             <div className='text-center py-12'>
                 <ShoppingCart className='mx-auto h-12 w-12 text-gray-400' />
-                <h3 className='mt-2 text-sm font-medium text-gray-900'>Your cart is empty</h3>
-                <p className='mt-1 text-sm text-gray-500'>Start adding some delicious items to your cart.</p>
+                <h3 className='mt-2 text-sm font-medium text-gray-900'>{labels.emptyTitle}</h3>
+                <p className='mt-1 text-sm text-gray-500'>{labels.emptyDescription}</p>
             </div>
         )
     }
@@ -48,12 +49,12 @@ const Items = () => {
                                     <div className='mt-1 space-y-1'>
                                         {item.size && (
                                             <p className='text-sm text-gray-600'>
-                                                Size: <span className='font-medium'>{item.size.name}</span>
+                                                {menuLabels.size}: <span className='font-medium'>{item.size.name}</span>
                                             </p>
                                         )}
                                         {item.extra && item.extra.length > 0 && (
                                             <div className='text-sm'>
-                                                <p className='text-gray-600'>Extras:</p>
+                                                <p className='text-gray-600'>{menuLabels.extras}:</p>
                                                 <ul className='space-y-1 mt-1'>
                                                     {item.extra.map((extra) => (
                                                         <li key={extra.id} className='text-gray-600 flex items-center gap-1'>
@@ -79,7 +80,7 @@ const Items = () => {
                                     variant='ghost'
                                     size='icon'
                                     className='text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full'
-                                    aria-label='Remove item'
+                                    aria-label={labels.removeItem}
                                 >
                                     <Trash2 className='h-4 w-4' />
                                 </Button>
@@ -91,15 +92,15 @@ const Items = () => {
 
             <div className='mt-8 pt-6 border-t border-gray-200 space-y-3'>
                 <div className='flex justify-between text-base'>
-                    <span className='text-gray-600'>Subtotal</span>
+                    <span className='text-gray-600'>{labels.subtotal}</span>
                     <span className='font-medium text-gray-900'>{FormatCurrency(subTotal)}</span>
                 </div>
                 <div className='flex justify-between text-base'>
-                    <span className='text-gray-600'>Delivery</span>
+                    <span className='text-gray-600'>{labels.delivery}</span>
                     <span className='font-medium text-gray-900'>{FormatCurrency(deliveryFee)}</span>
                 </div>
                 <div className='flex justify-between text-lg font-bold mt-4 pt-4 border-t border-gray-200'>
-                    <span>Total</span>
+                    <span>{labels.total}</span>
                     <span className='text-primary'>{FormatCurrency(deliveryFee + subTotal)}</span>
                 </div>
             </div>

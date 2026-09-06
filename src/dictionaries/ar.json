@@ -1,119 +1,135 @@
 {
-  "logo": "مطعمك",
+  "logo": "فاستي فود",
   "home": {
     "hero": {
-      "title": "قطعة من السعادة",
-      "description": "تشعر برغبة في البيتزا؟ لدينا ما يلبي رغبتك مع المكونات الطازجة، والنكهات التي لا تنتهي، والتوصيل الأسرع. قطعتك المثالية على بعد نقرة واحدة!",
+      "badge": "توصيل سريع وطعام طازج كل يوم",
+      "title": "وجبتك المفضلة تصل بسلاسة",
+      "description": "تشتهي بيتزا أو وجبة شهية؟ نجهزها بمكونات طازجة ونوصلها بسرعة مع تجربة طلب واضحة وممتعة.",
       "orderNow": "اطلب الآن",
-      "learnMore": "اعرف المزيد"
+      "learnMore": "اعرف المزيد",
+      "statOne": "توصيل خلال 25 دقيقة",
+      "statTwo": "تقييم العملاء 4.9",
+      "statThree": "قائمة طازجة يوميا"
+    },
+    "offers": {
+      "whyTitle": "لماذا تختارنا؟",
+      "securePrivacy": "خصوصية آمنة",
+      "safePayments": "دفع آمن",
+      "deliveryGuarantee": "ضمان التوصيل",
+      "reminder": "تنبيه أمني: لا نطلب أي رسوم إضافية عبر الرسائل أو البريد الإلكتروني.",
+      "dealsTitle": "عروض سريعة",
+      "limitedTime": "عرض لفترة محدودة"
     },
     "bestSeller": {
       "checkOut": "اكتشف",
-      "OurBestSellers": "أفضل مبيعاتنا"
+      "OurBestSellers": "الأكثر طلبا"
+    },
+    "specials": {
+      "title": "عروض خاصة",
+      "orderNow": "اطلب الآن",
+      "items": [
+        { "title": "وليمة العائلة", "description": "مثالية للتجمعات العائلية. احصل على خصم 20٪ للطلبات فوق 50 دولارا.", "code": "FAMILY20" },
+        { "title": "عرض نهاية الأسبوع", "description": "استمتع بخصم 15٪ على جميع الطلبات خلال نهاية الأسبوع.", "code": "WEEKEND15" },
+        { "title": "أول طلب", "description": "عميل جديد؟ احصل على خصم 25٪ على أول طلب.", "code": "NEW25" }
+      ]
     },
     "about": {
-      "ourStory": "قصتنا",
-      "aboutUs": "معلومات عنا",
-      "firstTitle": "Our Services",
+      "ourStory": "تعرف علينا",
+      "aboutUs": "من نحن",
+      "firstTitle": "خدماتنا",
+      "firstItems": ["تجربة طعام مميزة", "خدمات المناسبات", "تحضير وتوصيل الوجبات", "وصفاتنا الخاصة", "قوائم مخصصة"],
       "firstDescriptions": {
-        "beginning": "At Pizza Restaurant, we’re passionate about creating unforgettable culinary experiences. From savory dishes to sweet delights, our services are designed to satisfy every craving. Here’s what we bring to the table:",
-        "one": "Exquisite meals crafted with fresh, high-quality ingredients.",
-        "two": "Perfectly tailored menus for weddings, corporate events, and private parties.",
-        "three": "Healthy, delicious meals delivered straight to your door.",
-        "four": "Learn the secrets behind our signature dishes with hands-on cooking sessions.",
-        "five": "Personalized dining experiences to suit your taste and dietary needs."
+        "beginning": "في فاستي فود نصنع تجربة طعام سهلة ولذيذة تناسب الطلب اليومي والجمعات والمناسبات.",
+        "one": "وجبات طازجة محضرة بمكونات عالية الجودة.",
+        "two": "قوائم مرنة للتجمعات والمناسبات وغداء العمل.",
+        "three": "وجبات صحية ولذيذة تصل مباشرة إلى بابك.",
+        "four": "وصفات مميزة يعدها فريق المطبخ بعناية.",
+        "five": "اختيارات مخصصة تناسب الأذواق والاحتياجات المختلفة."
       },
-      "firstFoot": "Let us take care of the cooking—you just enjoy the feast!",
-      "secondTitle": "Our Offers",
+      "firstFoot": "نحن نهتم بالمطبخ لتستمتع أنت بالوجبة.",
+      "secondTitle": "عروضنا",
+      "secondItems": ["خصم أول طلب", "عروض العائلة", "أطباق موسمية", "مكافآت الولاء", "تموين المناسبات"],
       "secondDescriptions": {
-        "beginning": "We believe good food should be accessible to everyone. That’s why we’ve prepared special offers to make your dining experience even sweeter:",
-        "one": "Enjoy 10% off your first order with us!",
-        "two": "Special packages for family-sized meals at unbeatable prices.",
-        "three": " Limited-time dishes featuring the freshest seasonal ingredients.",
-        "four": "Earn points with every order and redeem them for free meals.",
-        "five": "Book your next event with us and receive exclusive perks."
+        "beginning": "نؤمن أن الطعام الجيد يجب أن يكون سهلا ومناسبا للعودة إليه دائما، لذلك نقدم عروضا تجعل كل طلب أفضل.",
+        "one": "استمتع بخصم عند تجربة أول طلب.",
+        "two": "وجبات عائلية بحجم مناسب وسعر لطيف.",
+        "three": "أطباق لفترة محدودة بمكونات موسمية.",
+        "four": "اكسب مكافآت مع الطلبات المتكررة.",
+        "five": "احجز مناسبتك واحصل على مزايا خاصة."
       },
-      "secondFoot": "Indulge in flavor without breaking the bank—explore our offers today!",
-      "thirdTitle": "Our Features",
+      "secondFoot": "استمتع بنكهات رائعة دون إرهاق ميزانيتك.",
+      "thirdTitle": "مميزاتنا",
+      "thirdItems": ["مكونات طازجة", "قائمة متنوعة", "وصفات احترافية", "توصيل سريع", "دعم موثوق"],
       "thirdDescriptions": {
-        "beginning": "What makes us the go-to choice for food lovers? It’s our dedication to quality, creativity, and customer satisfaction. Here’s what sets us apart:",
-        "one": "We source our ingredients locally to ensure the highest quality.",
-        "two": "From vegan and gluten-free to hearty comfort food, there’s something for everyone.",
-        "three": "Every dish is a masterpiece, created by our talented culinary team.",
-        "four": "Hot, fresh meals delivered right to your doorstep.",
-        "five": "We’re committed to sustainability, from packaging to kitchen operations."
+        "beginning": "صممت المنصة لتجعل طلب الطعام أسرع وأوضح وأكثر متعة من أول نقرة حتى وصول الطلب.",
+        "one": "نختار المكونات بعناية للجودة والطزاجة.",
+        "two": "القائمة تجمع الوجبات المريحة والاختيارات الخفيفة والمفضلة للجميع.",
+        "three": "كل وصفة مصممة لتقديم مذاق ثابت.",
+        "four": "الطلبات تمر بمراحل تحضير وتوصيل واضحة.",
+        "five": "الفريق جاهز للمساعدة عندما يحتاج العميل إلى دعم."
       },
-      "thirdFoot": "Taste the difference with a dining experience that’s as unique as you are."
+      "thirdFoot": "اختبر الفرق في تجربة طلب أكثر سلاسة."
     },
     "contact": {
       "Don't Hesitate": "لا تتردد",
-      "contactUs": "اتصل بنا"
+      "contactUs": "تواصل معنا",
+      "getInTouch": "ابق على تواصل",
+      "intro": "لديك سؤال أو ملاحظة؟ يسعدنا أن نسمع منك.",
+      "location": "موقعنا",
+      "emailUs": "راسلنا",
+      "callUs": "اتصل بنا",
+      "workingHoursLabel": "ساعات العمل",
+      "followUs": "تابعنا",
+      "sendMessage": "أرسل لنا رسالة",
+      "formIntro": "املأ النموذج وسنعود إليك في أقرب وقت ممكن.",
+      "name": "اسمك",
+      "email": "بريدك الإلكتروني",
+      "subject": "الموضوع",
+      "message": "رسالتك",
+      "submit": "إرسال الرسالة",
+      "address": "123 شارع الطعام، مدينة المذاق",
+      "emailValue": "contact@foodordering.com",
+      "phone": "+1 (555) 123-4567",
+      "workingHours": "من الاثنين إلى الجمعة: 9:00 صباحا - 10:00 مساء"
     }
   },
   "navbar": {
-    "home": "الصفحة الرئيسية",
-    "about": "معلومات عنا",
+    "home": "الرئيسية",
+    "about": "من نحن",
     "menu": "القائمة",
     "contact": "تواصل معنا",
     "login": "تسجيل الدخول",
-    "register": "انشاء حساب",
+    "register": "إنشاء حساب",
     "signOut": "تسجيل الخروج",
     "profile": "الملف الشخصي",
-    "admin": "المسؤول"
+    "admin": "الإدارة"
   },
   "auth": {
     "login": {
-      "title": "مرحبًا بعودتك",
-      "name": {
-        "label": "الاسم",
-        "placeholder": "أدخل اسمك"
-      },
-      "email": {
-        "label": "البريد الإلكتروني",
-        "placeholder": "أدخل بريدك الإلكتروني"
-      },
-      "password": {
-        "label": "كلمة المرور",
-        "placeholder": "أدخل كلمة المرور"
-      },
+      "title": "مرحبا بعودتك",
+      "name": { "label": "الاسم", "placeholder": "أدخل اسمك" },
+      "email": { "label": "البريد الإلكتروني", "placeholder": "أدخل بريدك الإلكتروني" },
+      "password": { "label": "كلمة المرور", "placeholder": "أدخل كلمة المرور" },
       "submit": "تسجيل الدخول",
-      "authPrompt": {
-        "message": "ليس لديك حساب؟ ",
-        "signUpLinkText": "سجل الآن"
-      }
+      "authPrompt": { "message": "ليس لديك حساب؟ ", "signUpLinkText": "سجل الآن" }
     },
     "register": {
       "title": "إنشاء حساب",
-      "name": {
-        "label": "الاسم",
-        "placeholder": "أدخل اسمك"
-      },
-      "email": {
-        "label": "البريد الإلكتروني",
-        "placeholder": "أدخل بريدك الإلكتروني"
-      },
-      "password": {
-        "label": "كلمة المرور",
-        "placeholder": "أدخل كلمة المرور"
-      },
-      "confirmPassword": {
-        "label": "تأكيد كلمة المرور",
-        "placeholder": "أعد إدخال كلمة المرور"
-      },
+      "name": { "label": "الاسم", "placeholder": "أدخل اسمك" },
+      "email": { "label": "البريد الإلكتروني", "placeholder": "أدخل بريدك الإلكتروني" },
+      "password": { "label": "كلمة المرور", "placeholder": "أدخل كلمة المرور" },
+      "confirmPassword": { "label": "تأكيد كلمة المرور", "placeholder": "أعد إدخال كلمة المرور" },
       "submit": "إنشاء حساب",
-      "authPrompt": {
-        "message": "هل لديك حساب؟ ",
-        "loginLinkText": "تسجيل الدخول"
-      }
+      "authPrompt": { "message": "هل لديك حساب؟ ", "loginLinkText": "تسجيل الدخول" }
     }
   },
   "validation": {
     "nameRequired": "الاسم مطلوب",
-    "validEmail": "يجب أن يكون بريد إلكتروني صالح",
-    "passwordMinLength": "يجب أن تكون كلمة المرور على الأقل 6 أحرف",
-    "passwordMaxLength": "يجب أن تكون كلمة المرور على الأكثر 40 حرفًا",
+    "validEmail": "يجب إدخال بريد إلكتروني صالح",
+    "passwordMinLength": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "passwordMaxLength": "يجب ألا تتجاوز كلمة المرور 40 حرفا",
     "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
-    "passwordMismatch": "كلمة المرور غير متطابقة"
+    "passwordMismatch": "كلمتا المرور غير متطابقتين"
   },
   "messages": {
     "userNotFound": "المستخدم غير موجود",
@@ -123,145 +139,184 @@
     "userAlreadyExists": "المستخدم موجود بالفعل",
     "accountCreated": "تم إنشاء الحساب بنجاح",
     "updateProfileSucess": "تم تحديث الملف الشخصي بنجاح",
-    "categoryAdded": "تم اضافة الفئة بنجاح",
+    "categoryAdded": "تمت إضافة الفئة بنجاح",
     "updatecategorySucess": "تم تحديث الفئة بنجاح",
     "deleteCategorySucess": "تم حذف الفئة بنجاح",
-    "productAdded": "تم اضافة المنتج بنجاح",
+    "productAdded": "تمت إضافة المنتج بنجاح",
     "updateProductSucess": "تم تحديث المنتج بنجاح",
     "deleteProductSucess": "تم حذف المنتج بنجاح",
     "updateUserSucess": "تم تحديث المستخدم بنجاح",
     "deleteUserSucess": "تم حذف المستخدم بنجاح"
   },
   "menuItem": {
-    "addToCart": "أضف الي العربة"
+    "addToCart": "أضف إلى السلة",
+    "addToCartWithPrice": "أضف إلى السلة",
+    "customize": "تخصيص الطلب",
+    "pickSize": "اختر الحجم",
+    "anyExtra": "إضافات أخرى؟",
+    "inCart": "في السلة",
+    "remove": "إزالة",
+    "size": "الحجم",
+    "extras": "الإضافات"
+  },
+  "menu": {
+    "title": "اختر وجبتك",
+    "subtitle": "اختيارات طازجة وفلاتر سريعة ووجبات جاهزة للطلب",
+    "searchMenu": "ابحث في القائمة",
+    "searchPlaceholder": "ابحث بالاسم أو الكلمة المفتاحية...",
+    "filterByCategory": "تصفية حسب الفئة",
+    "allCategories": "كل الفئات",
+    "dietaryOptions": "خيارات الإضافات",
+    "productNotFound": "لم يتم العثور على المنتج",
+    "productLoadError": "تعذر تحميل المنتج. يرجى المحاولة لاحقا.",
+    "categoryLabels": {
+      "All Categories": "كل الفئات",
+      "Classic": "كلاسيك",
+      "Vegetarian": "نباتي",
+      "Meat": "لحوم",
+      "Cheese": "جبن",
+      "Spicy": "حار"
+    },
+    "ingredientLabels": {
+      "onion": "بصل",
+      "tomato": "طماطم",
+      "bacon": "لحم مقدد",
+      "cheese": "جبن",
+      "pepper": "فلفل"
+    },
+    "empty": "لا توجد عناصر تطابق عوامل التصفية حاليا."
   },
   "profile": {
     "title": "الملف الشخصي",
     "form": {
-      "name": {
-        "label": "الاسم",
-        "placeholder": "أدخل اسمك"
-      },
-      "email": {
-        "label": "البريد الإلكتروني",
-        "placeholder": "أدخل بريدك الإلكتروني"
-      },
-      "phone": {
-        "label": "الهاتف",
-        "placeholder": "أدخل رقم هاتفك",
-        "validation": {
-          "required": "رقم الهاتف مطلوب",
-          "invalid": "يرجى إدخال رقم هاتف صالح"
-        }
-      },
-      "address": {
-        "label": "العنوان",
-        "placeholder": "أدخل عنوانك",
-        "validation": {
-          "required": "العنوان مطلوب"
-        }
-      },
-      "postalCode": {
-        "label": "الرمز البريدي",
-        "placeholder": "أدخل الرمز البريدي",
-        "validation": {
-          "required": "الرمز البريدي مطلوب",
-          "invalid": "يرجى إدخال رمز بريدي صالح"
-        }
-      },
-      "city": {
-        "label": "المدينة",
-        "placeholder": "أدخل مدينتك",
-        "validation": {
-          "required": "المدينة مطلوبة"
-        }
-      },
-      "country": {
-        "label": "الدولة",
-        "placeholder": "أدخل دولتك",
-        "validation": {
-          "required": "الدولة مطلوبة"
-        }
-      }
+      "name": { "label": "الاسم", "placeholder": "أدخل اسمك" },
+      "email": { "label": "البريد الإلكتروني", "placeholder": "أدخل بريدك الإلكتروني" },
+      "phone": { "label": "الهاتف", "placeholder": "أدخل رقم هاتفك", "validation": { "required": "رقم الهاتف مطلوب", "invalid": "يرجى إدخال رقم هاتف صالح" } },
+      "address": { "label": "العنوان", "placeholder": "أدخل عنوانك", "validation": { "required": "العنوان مطلوب" } },
+      "postalCode": { "label": "الرمز البريدي", "placeholder": "أدخل الرمز البريدي", "validation": { "required": "الرمز البريدي مطلوب", "invalid": "يرجى إدخال رمز بريدي صالح" } },
+      "city": { "label": "المدينة", "placeholder": "أدخل مدينتك", "validation": { "required": "المدينة مطلوبة" } },
+      "country": { "label": "الدولة", "placeholder": "أدخل دولتك", "validation": { "required": "الدولة مطلوبة" } }
     }
   },
   "admin": {
-    "tabs": {
-      "profile": "الملف الشخصي",
-      "categories": "الفئات",
-      "menuItems": "عناصر القائمة",
-      "users": "المستخدمون",
-      "orders": "الطلبات"
+    "tabs": { "profile": "الملف الشخصي", "categories": "الفئات", "menuItems": "عناصر القائمة", "users": "المستخدمون", "orders": "الطلبات" },
+    "dashboard": {
+      "accessTitle": "دخول الإدارة",
+      "accessDescription": "أدخل بريد المدير لفتح لوحة العمليات. تستخدم المرحلة الأولى حماية بسيطة إلى أن تتم إضافة تسجيل الدخول الكامل.",
+      "emailLabel": "بريد المدير",
+      "emailPlaceholder": "owner@example.com",
+      "openDashboard": "فتح اللوحة",
+      "brand": "فاستي فود",
+      "operations": "العمليات",
+      "overview": "نظرة عامة",
+      "settings": "الإعدادات",
+      "adminDashboard": "لوحة الإدارة",
+      "controlCenter": "مركز التحكم بالطلبات",
+      "signedInAs": "تم الدخول باسم",
+      "totalOrders": "إجمالي الطلبات",
+      "activeOrders": "طلبات نشطة",
+      "averageOrder": "متوسط الطلب",
+      "liveOrders": "الطلبات المباشرة",
+      "liveDescription": "حدّث حالة الطلب التي تظهر للعميل من قائمة العمليات.",
+      "inProgress": "قيد التنفيذ",
+      "order": "الطلب",
+      "customer": "العميل",
+      "items": "العناصر",
+      "total": "الإجمالي",
+      "status": "الحالة",
+      "update": "تحديث",
+      "guestCustomer": "عميل زائر",
+      "empty": "لا توجد طلبات بعد. ستظهر طلبات الدفع الجديدة هنا.",
+      "statusUpdated": "تم تحديث حالة الطلب",
+      "statusError": "تعذر تحديث حالة الطلب"
     },
-    "categories": {
-      "form": {
-        "editName": "تعديل اسم الفئة",
-        "name": {
-          "label": "اسم الفئة",
-          "placeholder": "أدخل اسم الفئة",
-          "validation": {
-            "required": "اسم الفئة مطلوب"
-          }
-        }
-      }
-    },
+    "categories": { "form": { "editName": "تعديل اسم الفئة", "name": { "label": "اسم الفئة", "placeholder": "أدخل اسم الفئة", "validation": { "required": "اسم الفئة مطلوب" } } } },
     "menu-items": {
       "createNewMenuItem": "إنشاء عنصر قائمة جديد",
-      "addItemSize": "إضافة حجم العنصر",
+      "addItemSize": "إضافة حجم للعنصر",
       "addExtraItem": "إضافة عنصر إضافي",
-      "menuOption": {
-        "name": "الاسم",
-        "extraPrice": "السعر الاضافي"
-      },
+      "menuOption": { "name": "الاسم", "extraPrice": "السعر الإضافي" },
       "form": {
-        "name": {
-          "label": "اسم العنصر",
-          "placeholder": "أدخل اسم العنصر",
-          "validation": {
-            "required": "اسم العنصر مطلوب"
-          }
-        },
-        "description": {
-          "label": "اسم الوصف",
-          "placeholder": "أدخل اسم الوصف",
-          "validation": {
-            "required": "اسم الوصف مطلوب"
-          }
-        },
-        "basePrice": {
-          "label": "السعر الأساسي",
-          "placeholder": "أدخل السعر الأساسي",
-          "validation": {
-            "required": "السعر الأساسي مطلوب"
-          }
-        },
-        "category": {
-          "validation": {
-            "required": "اختيار الفئة مطلوب"
-          }
-        },
-        "image": {
-          "validation": {
-            "required": "صورة المنتج مطلوبة"
-          }
-        }
+        "name": { "label": "اسم العنصر", "placeholder": "أدخل اسم العنصر", "validation": { "required": "اسم العنصر مطلوب" } },
+        "description": { "label": "الوصف", "placeholder": "أدخل الوصف", "validation": { "required": "الوصف مطلوب" } },
+        "basePrice": { "label": "السعر الأساسي", "placeholder": "أدخل السعر الأساسي", "validation": { "required": "السعر الأساسي مطلوب" } },
+        "category": { "validation": { "required": "اختيار الفئة مطلوب" } },
+        "image": { "validation": { "required": "صورة المنتج مطلوبة" } }
       }
+    }
+  },
+  "cart": {
+    "title": "سلة التسوق",
+    "orderSummary": "ملخص الطلب",
+    "noItemsInCart": "لا توجد عناصر في سلة التسوق. أضف بعض الوجبات",
+    "emptyTitle": "سلتك فارغة",
+    "emptyDescription": "ابدأ بإضافة بعض الوجبات الشهية إلى السلة.",
+    "subtotal": "المجموع الفرعي",
+    "delivery": "التوصيل",
+    "total": "الإجمالي",
+    "readyTitle": "جاهز لإتمام الطلب؟",
+    "readyDescription": "انتقل إلى الدفع لإضافة تفاصيل التوصيل وتأكيد الطلب.",
+    "continueCheckout": "المتابعة إلى الدفع",
+    "removeItem": "إزالة العنصر"
+  },
+  "checkout": {
+    "title": "دفع آمن",
+    "reviewTitle": "راجع طلبك",
+    "summaryTitle": "ملخص الطلب",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "اسمك",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "your@email.com",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "+1 (555) 000-0000",
+    "address": "عنوان التوصيل",
+    "addressPlaceholder": "أدخل عنوانك الكامل",
+    "postalCode": "الرمز البريدي",
+    "postalCodePlaceholder": "12345",
+    "city": "المدينة",
+    "cityPlaceholder": "نيويورك",
+    "country": "الدولة",
+    "countryPlaceholder": "الولايات المتحدة",
+    "notes": "ملاحظات التوصيل",
+    "notesPlaceholder": "رمز الباب، طريقة التسليم المفضلة، حساسية طعام أو أي ملاحظة مفيدة",
+    "processing": "جاري المعالجة...",
+    "pay": "ادفع",
+    "terms": "بتأكيد الطلب، فإنك توافق على شروط الخدمة وسياسة الخصوصية.",
+    "success": "تم إرسال الطلب بنجاح!",
+    "error": "فشل إرسال الطلب"
+  },
+  "orders": {
+    "tracking": {
+      "label": "طلب",
+      "title": "تتبع طلبك",
+      "backToMenu": "العودة إلى القائمة",
+      "deliveryStatus": "حالة التوصيل",
+      "description": "تظهر التحديثات هنا عندما ينقل المطعم طلبك إلى المرحلة التالية.",
+      "currentStep": "المرحلة الحالية",
+      "completed": "مكتملة",
+      "waiting": "بانتظار تحديث المطعم",
+      "cancelled": "تم إلغاء هذا الطلب. تواصل مع المطعم إذا احتجت إلى مساعدة.",
+      "summary": "ملخص الطلب",
+      "guest": "عميل زائر"
+    },
+    "status": {
+      "PLACED": "تم الاستلام",
+      "CONFIRMED": "تم التأكيد",
+      "PREPARING": "قيد التحضير",
+      "OUT_FOR_DELIVERY": "في الطريق",
+      "DELIVERED": "تم التوصيل",
+      "CANCELLED": "ملغى"
     }
   },
   "category": "الفئة",
   "save": "حفظ",
   "edit": "تعديل",
   "delete": "حذف",
-  "create": "انشاء",
+  "cancel": "إلغاء",
   "sizes": "الأحجام",
-  "extrasIngredients": "عناصر اضافية",
-  "cancel": "الغاء",
-  "cart": {
-    "title": "عربة التسوق",
-    "noItemsInCart": "لا توجد عناصر في سلة التسوق الخاصة بك. أضف بعضًا"
-  },
-
-  "copyRight": "© 2025 جميع الحقوق محفوظة",
+  "extrasIngredients": "الإضافات",
+  "create": "إنشاء",
+  "copyRight": "© 2026 جميع الحقوق محفوظة",
   "noProductsFound": "لم يتم العثور على منتجات",
-  "noCategoriesFound": "لم يتم العثور على الفئات"
+  "noCategoriesFound": "لم يتم العثور على فئات"
 }

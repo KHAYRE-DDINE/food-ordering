@@ -1,231 +1,146 @@
-import { Routes } from "@/constants/enums"
-import { getCurrentLocale } from "@/lib/getCurrentLocale"
-import getTrans from "@/lib/translation"
-import { Mail, MapPin, Phone, Send, Clock, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
-
-// Simple heading component since MainHead is not available
-const MainHead = ({ title, subTitle }: { title: string; subTitle: string }) => (
-  <div className="text-center mb-12">
-    <h1 className="text-5xl font-bold text-gray-900 mb-4 relative inline-block">
-      {title}
-      <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-primary rounded-full"></span>
-    </h1>
-    <p className="text-xl text-gray-600 max-w-3xl mx-auto">{subTitle}</p>
-  </div>
-)
-
-interface ContactInfo {
-  contactUs: string;
-  "Don't Hesitate": string;
-  address: string;
-  email: string;
-  phone: string;
-  workingHours: string;
-}
+import { Routes } from "@/constants/enums";
+import { getCurrentLocale } from "@/lib/getCurrentLocale";
+import getTrans from "@/lib/translation";
+import {
+  Clock,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Send,
+  Twitter,
+  User,
+} from "lucide-react";
+import type { ElementType } from "react";
 
 const Contact = async () => {
-    const locale = await getCurrentLocale();
-    const { home } = await getTrans(locale);
-    const contact = home.contact as unknown as ContactInfo;
-    
-    // Default values in case translations are missing
-    const contactDetails = {
-        address: contact?.address || '123 Food Street, Cuisine City',
-        email: contact?.email || 'contact@foodordering.com',
-        phone: contact?.phone || '+1 (555) 123-4567',
-        workingHours: contact?.workingHours || 'Mon - Fri: 9:00 AM - 10:00 PM',
-    };
-    
-    // Destructure for easier access
-    const { address, email, phone, workingHours } = contactDetails;
+  const locale = await getCurrentLocale();
+  const { home } = await getTrans(locale);
+  const { contact } = home;
 
-    return (
-        <section className="py-20 bg-gradient-to-b from-white to-gray-50" id={Routes.CONTACT}>
-            <div className="container mx-auto px-4">
-                <MainHead title={contact.contactUs} subTitle={contact["Don't Hesitate"]} />
-                
-                <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
-                    <div className="md:flex">
-                        {/* Contact Information */}
-                        <div className="md:w-2/5 text-white p-12" style={{ background: 'var(--primary-gradient)' }}>
-                            <h2 className="text-3xl font-bold mb-8">Get in Touch</h2>
-                            <p className="text-white/90 mb-10">
-                                Have questions or feedback? We&apos;d love to hear from you. Reach out to us through any of these channels.
-                            </p>
-                            
-                            <div className="space-y-8">
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-white/20 p-3 rounded-full flex-shrink-0">
-                                        <MapPin className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-semibold">Our Location</h3>
-                                        <p className="text-white/90">{address}</p>
-                                    </div>
-                                </div>
-                                
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-white/20 p-3 rounded-full flex-shrink-0">
-                                        <Mail className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-semibold">Email Us</h3>
-                                        <a href={`mailto:${email}`} className="text-white/90 hover:text-white transition-colors">
-                                            {email}
-                                        </a>
-                                    </div>
-                                </div>
-                                
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-white/20 p-3 rounded-full flex-shrink-0">
-                                        <Phone className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-semibold">Call Us</h3>
-                                        <a href={`tel:${phone.replace(/\D/g, '')}`} className="text-white/90 hover:text-white transition-colors">
-                                            {phone}
-                                        </a>
-                                    </div>
-                                </div>
-                                
-                                <div className="flex items-start gap-4">
-                                    <div className="bg-white/20 p-3 rounded-full flex-shrink-0">
-                                        <Clock className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-semibold">Working Hours</h3>
-                                        <p className="text-white/90">{workingHours}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div className="mt-12 pt-8 border-t border-white/20">
-                                <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-                                <div className="flex gap-4">
-                                    {['facebook', 'twitter', 'instagram', 'linkedin'].map((social) => (
-                                        <a
-                                            key={social}
-                                            href={`#`}
-                                            className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-                                            aria-label={social}
-                                        >
-                                            <span className="sr-only">{social}</span>
-                                            {social === 'facebook' && <Facebook className="w-5 h-5" />}
-                                            {social === 'twitter' && <Twitter className="w-5 h-5" />}
-                                            {social === 'instagram' && <Instagram className="w-5 h-5" />}
-                                            {social === 'linkedin' && <Linkedin className="w-5 h-5" />}
-                                        </a>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                        
-                        {/* Contact Form */}
-                        <div className="md:w-3/5 p-12">
-                            <h2 className="text-3xl font-bold text-gray-900 mb-2">Send Us a Message</h2>
-                            <p className="text-gray-600 mb-8">Fill out the form below and we&apos;ll get back to you as soon as possible.</p>
-                            
-                            <form className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="group">
-                                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-primary transition-colors">
-                                            Your Name <span className="text-red-500">*</span>
-                                        </label>
-                                        <div className="relative">
-                                            <input
-                                                type="text"
-                                                id="name"
-                                                required
-                                                className="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 peer"
-                                                placeholder="John Doe"
-                                            />
-                                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 peer-focus:text-primary transition-colors">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="group">
-                                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-primary transition-colors">
-                                            Your Email <span className="text-red-500">*</span>
-                                        </label>
-                                        <div className="relative">
-                                            <input
-                                                type="email"
-                                                id="email"
-                                                required
-                                                className="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 peer"
-                                                placeholder="john@example.com"
-                                            />
-                                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 peer-focus:text-primary transition-colors">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div className="group">
-                                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-primary transition-colors">
-                                        Subject <span className="text-red-500">*</span>
-                                    </label>
-                                    <div className="relative">
-                                        <input
-                                            type="text"
-                                            id="subject"
-                                            required
-                                            className="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 peer"
-                                            placeholder="How can we help you?"
-                                        />
-                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 peer-focus:text-primary transition-colors">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div className="group">
-                                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-primary transition-colors">
-                                        Your Message <span className="text-red-500">*</span>
-                                    </label>
-                                    <div className="relative">
-                                        <textarea
-                                            id="message"
-                                            rows={5}
-                                            required
-                                            className="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 peer"
-                                            placeholder="Your message here..."
-                                        ></textarea>
-                                        <div className="absolute left-4 top-4 text-gray-400 peer-focus:text-primary transition-colors">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div className="pt-2">
-                                    <button
-                                        type="submit"
-                                        className="w-full bg-primary text-white py-4 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-3 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                                    >
-                                        <Send className="w-5 h-5" />
-                                        Send Message
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+  const details = [
+    { icon: MapPin, label: contact.location, value: contact.address },
+    { icon: Mail, label: contact.emailUs, value: contact.emailValue, href: `mailto:${contact.emailValue}` },
+    { icon: Phone, label: contact.callUs, value: contact.phone, href: `tel:${contact.phone.replace(/\D/g, "")}` },
+    { icon: Clock, label: contact.workingHoursLabel, value: contact.workingHours },
+  ];
+
+  return (
+    <section className="bg-zinc-50 py-20" id={Routes.CONTACT}>
+      <div className="container">
+        <div className="mx-auto mb-12 max-w-3xl text-center">
+          <p className="text-sm font-bold uppercase text-primary">{contact["Don't Hesitate"]}</p>
+          <h1 className="mt-2 text-4xl font-bold text-zinc-950 md:text-5xl">
+            {contact.contactUs}
+          </h1>
+        </div>
+
+        <div className="mx-auto grid max-w-6xl overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="bg-zinc-950 p-8 text-white md:p-10">
+            <h2 className="text-3xl font-bold">{contact.getInTouch}</h2>
+            <p className="mt-3 text-sm leading-6 text-zinc-300">{contact.intro}</p>
+
+            <div className="mt-8 grid gap-5">
+              {details.map((item) => (
+                <div key={item.label} className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-white/10">
+                    <item.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">{item.label}</h3>
+                    {item.href ? (
+                      <a href={item.href} className="text-sm text-zinc-300 transition hover:text-white">
+                        {item.value}
+                      </a>
+                    ) : (
+                      <p className="text-sm text-zinc-300">{item.value}</p>
+                    )}
+                  </div>
                 </div>
+              ))}
             </div>
-        </section>
-    );
+
+            <div className="mt-10 border-t border-white/10 pt-6">
+              <h3 className="mb-4 font-semibold">{contact.followUs}</h3>
+              <div className="flex gap-3">
+                {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
+                  <a
+                    key={index}
+                    href="#"
+                    className="flex h-10 w-10 items-center justify-center rounded-md bg-white/10 transition hover:bg-white/20"
+                  >
+                    <Icon className="h-5 w-5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="p-8 md:p-10">
+            <h2 className="text-3xl font-bold text-zinc-950">{contact.sendMessage}</h2>
+            <p className="mt-2 text-sm leading-6 text-zinc-600">{contact.formIntro}</p>
+
+            <form className="mt-8 space-y-5">
+              <div className="grid gap-5 md:grid-cols-2">
+                <ContactInput icon={User} label={contact.name} type="text" placeholder={contact.name} />
+                <ContactInput icon={Mail} label={contact.email} type="email" placeholder={contact.emailValue} />
+              </div>
+              <ContactInput icon={MessageCircle} label={contact.subject} type="text" placeholder={contact.subject} />
+              <div>
+                <label htmlFor="message" className="mb-1 block text-sm font-medium text-zinc-700">
+                  {contact.message}
+                </label>
+                <textarea
+                  id="message"
+                  rows={5}
+                  required
+                  placeholder={contact.message}
+                  className="w-full rounded-md border border-zinc-300 px-4 py-3 text-sm outline-none ring-primary/30 transition focus:ring-2"
+                />
+              </div>
+              <button
+                type="submit"
+                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-primary px-6 font-bold text-white transition hover:bg-primary/90"
+              >
+                <Send className="h-5 w-5" />
+                {contact.submit}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
+
+function ContactInput({
+  icon: Icon,
+  label,
+  type,
+  placeholder,
+}: {
+  icon: ElementType;
+  label: string;
+  type: string;
+  placeholder: string;
+}) {
+  return (
+    <div>
+      <label className="mb-1 block text-sm font-medium text-zinc-700">{label}</label>
+      <div className="relative">
+        <Icon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+        <input
+          type={type}
+          required
+          placeholder={placeholder}
+          className="h-11 w-full rounded-md border border-zinc-300 px-4 pl-10 text-sm outline-none ring-primary/30 transition focus:ring-2"
+        />
+      </div>
+    </div>
+  );
+}
 
 export default Contact;

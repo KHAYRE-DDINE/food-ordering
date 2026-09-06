@@ -9,7 +9,8 @@ import { ProductWithRelations } from '@/types/product';
 const BestSellers = async () => {
     const bestSellers: ProductWithRelations[] = await getBestSellers(3)
     const locale = await getCurrentLocale()
-    const { home } = await getTrans(locale) 
+    const translation = await getTrans(locale) 
+    const { home } = translation
     const { bestSeller } = home
 
     return (
@@ -18,7 +19,7 @@ const BestSellers = async () => {
                 <div className='text-center mb-4'>
                     <MainHead title={bestSeller.checkOut} subTitle={bestSeller.OurBestSellers} />
                 </div>
-                <Menu items={bestSellers} />
+                <Menu items={bestSellers} labels={translation.menuItem} />
             </div>
         </section>
     )

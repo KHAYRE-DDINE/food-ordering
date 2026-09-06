@@ -1,141 +1,107 @@
-import { Routes } from "@/constants/enums"
-import { getCurrentLocale } from "@/lib/getCurrentLocale"
-import getTrans from "@/lib/translation"
-import Image from "next/image"
+import { Routes } from "@/constants/enums";
+import { getCurrentLocale } from "@/lib/getCurrentLocale";
+import getTrans from "@/lib/translation";
+import { CheckCircle2 } from "lucide-react";
+import Image from "next/image";
 
-// Simple heading component since MainHead is not available
-const MainHead = ({ title, subTitle }: { title: string; subTitle: string }) => (
-  <div className="text-center mb-12">
-    <h1 className="text-5xl font-bold text-gray-900 mb-4 relative inline-block">
-      {title}
-      <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-primary rounded-full"></span>
-    </h1>
-    <p className="text-xl text-gray-600 max-w-3xl mx-auto">{subTitle}</p>
-  </div>
-)
+const images = [
+  "https://img.freepik.com/free-vector/boy-eating-vegetables-isolated-illustration_18591-83848.jpg",
+  "https://img.freepik.com/free-vector/surprise-gift-concept-illustration_114360-30506.jpg",
+  "https://img.freepik.com/free-vector/chef-holding-tray-food_1020-664.jpg",
+];
 
 const About = async () => {
-    const locale = await getCurrentLocale()
-    const { home } = await getTrans(locale)
-    const { about } = home
-    const { ourStory, aboutUs, firstDescriptions, secondDescriptions, thirdDescriptions } = about
+  const locale = await getCurrentLocale();
+  const { home } = await getTrans(locale);
+  const { about } = home;
 
-    return (
-        <section className="py-20 bg-gradient-to-b from-gray-50 to-white" id={Routes.ABOUT}>
-      <div className="container mx-auto px-4">
-        <MainHead title={aboutUs} subTitle={ourStory} />
-        
-        {/* First Section */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 mb-24">
-          <div className="lg:w-1/2 relative group">
-            <div className="absolute -inset-4 bg-primary/10 rounded-3xl -z-10 transform rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
-            <Image
-              src='https://img.freepik.com/free-vector/boy-eating-vegetables-isolated-illustration_18591-83848.jpg'
-              alt="Gourmet Dining"
-              width={600}
-              height={500}
-              className="rounded-2xl shadow-xl transform group-hover:scale-105 transition-all duration-500"
-            />
-          </div>
-          <div className="lg:w-1/2">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">{about.firstTitle}</h2>
-            <p className="text-gray-600 mb-6">{firstDescriptions.beginning}</p>
-            <div className="space-y-4">
-              {[
-                { title: 'Gourmet Dining', desc: firstDescriptions.one },
-                { title: 'Catering Services', desc: firstDescriptions.two },
-                { title: 'Meal Prep & Delivery', desc: firstDescriptions.three },
-                { title: 'Cooking Classes', desc: firstDescriptions.four },
-                { title: 'Custom Menus', desc: firstDescriptions.five }
-              ].map((item, index) => (
-                <div key={index} className="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
-                  <div className="bg-primary/10 p-2 rounded-lg">
-                    <span className="text-primary font-bold">{index + 1}.</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">{locale === 'en' ? item.title : ''}</h3>
-                    <p className="text-gray-600">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="mt-6 text-primary font-medium">{about.firstFoot}</p>
-          </div>
+  const sections = [
+    {
+      title: about.firstTitle,
+      intro: about.firstDescriptions.beginning,
+      foot: about.firstFoot,
+      image: images[0],
+      items: about.firstItems.map((title, index) => ({
+        title,
+        desc: Object.values(about.firstDescriptions).slice(1)[index],
+      })),
+    },
+    {
+      title: about.secondTitle,
+      intro: about.secondDescriptions.beginning,
+      foot: about.secondFoot,
+      image: images[1],
+      items: about.secondItems.map((title, index) => ({
+        title,
+        desc: Object.values(about.secondDescriptions).slice(1)[index],
+      })),
+    },
+    {
+      title: about.thirdTitle,
+      intro: about.thirdDescriptions.beginning,
+      foot: about.thirdFoot,
+      image: images[2],
+      items: about.thirdItems.map((title, index) => ({
+        title,
+        desc: Object.values(about.thirdDescriptions).slice(1)[index],
+      })),
+    },
+  ];
+
+  return (
+    <section className="bg-white py-20" id={Routes.ABOUT}>
+      <div className="container">
+        <div className="mx-auto mb-14 max-w-3xl text-center">
+          <p className="text-sm font-bold uppercase text-primary">{about.ourStory}</p>
+          <h1 className="mt-2 text-4xl font-bold text-zinc-950 md:text-5xl">
+            {about.aboutUs}
+          </h1>
         </div>
 
-        {/* Second Section */}
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 mb-24">
-          <div className="lg:w-1/2">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">{about.secondTitle}</h2>
-            <p className="text-gray-600 mb-6">{secondDescriptions.beginning}</p>
-            <div className="grid md:grid-cols-2 gap-6">
-              {[
-                { title: 'First-Time Discount', desc: secondDescriptions.one },
-                { title: 'Family Feast Deals', desc: secondDescriptions.two },
-                { title: 'Seasonal Specials', desc: secondDescriptions.three },
-                { title: 'Loyalty Rewards', desc: secondDescriptions.four },
-                { title: 'Event Catering', desc: secondDescriptions.five }
-              ].map((item, index) => (
-                <div key={index} className="bg-white p-5 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 border-l-4 border-primary">
-                  <h3 className="font-semibold text-gray-900 mb-2">{locale === 'en' ? item.title : ''}</h3>
-                  <p className="text-gray-600 text-sm">{item.desc}</p>
+        <div className="space-y-16">
+          {sections.map((section, index) => (
+            <div
+              key={section.title}
+              className={`grid items-center gap-10 lg:grid-cols-2 ${
+                index % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""
+              }`}
+            >
+              <div className="relative min-h-[320px] overflow-hidden rounded-lg border border-zinc-200 bg-zinc-50 shadow-sm">
+                <Image
+                  src={section.image}
+                  alt={section.title}
+                  fill
+                  className="object-contain p-6 transition duration-500 hover:scale-105"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold text-zinc-950">{section.title}</h2>
+                <p className="mt-4 text-base leading-8 text-zinc-600">{section.intro}</p>
+                <div className="mt-6 grid gap-3">
+                  {section.items.map((item) => (
+                    <div
+                      key={item.title}
+                      className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-md"
+                    >
+                      <div className="flex items-start gap-3">
+                        <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-primary" />
+                        <div>
+                          <h3 className="font-semibold text-zinc-950">{item.title}</h3>
+                          <p className="mt-1 text-sm leading-6 text-zinc-600">{item.desc}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+                <p className="mt-5 font-semibold text-primary">{section.foot}</p>
+              </div>
             </div>
-            <p className="mt-6 text-primary font-medium">{about.secondFoot}</p>
-          </div>
-          <div className="lg:w-1/2 relative group">
-            <div className="absolute -inset-4 bg-primary/10 rounded-3xl -z-10 transform -rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
-            <Image
-              src='https://img.freepik.com/free-vector/surprise-gift-concept-illustration_114360-30506.jpg'
-              alt="Special Offers"
-              width={600}
-              height={500}
-              className="rounded-2xl shadow-xl transform group-hover:scale-105 transition-all duration-500"
-            />
-          </div>
-        </div>
-
-        {/* Third Section */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-          <div className="lg:w-1/2 relative group">
-            <div className="absolute -inset-4 bg-primary/10 rounded-3xl -z-10 transform rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
-            <Image
-              src='https://img.freepik.com/free-vector/chef-holding-tray-food_1020-664.jpg'
-              alt="Our Promise"
-              width={600}
-              height={500}
-              className="rounded-2xl shadow-xl transform group-hover:scale-105 transition-all duration-500"
-            />
-          </div>
-          <div className="lg:w-1/2">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">{about.thirdTitle}</h2>
-            <p className="text-gray-600 mb-6">{thirdDescriptions.beginning}</p>
-            <div className="space-y-4">
-              {[
-                { title: 'Farm to Table Freshness', desc: thirdDescriptions.one },
-                { title: 'Diverse Menu Options', desc: thirdDescriptions.two },
-                { title: 'Chef-Crafted Recipes', desc: thirdDescriptions.three },
-                { title: 'Fast & Reliable Delivery', desc: thirdDescriptions.four },
-                { title: 'Eco-Friendly Practices', desc: thirdDescriptions.five }
-              ].map((item, index) => (
-                <div key={index} className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
-                  <div className="bg-primary/10 p-2 rounded-lg">
-                    <span className="text-primary font-bold">{index + 1}.</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">{locale === 'en' ? item.title : ''}</h3>
-                    <p className="text-gray-600 text-sm">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="mt-6 text-primary font-medium">{about.thirdFoot}</p>
-          </div>
+          ))}
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default About
+export default About;

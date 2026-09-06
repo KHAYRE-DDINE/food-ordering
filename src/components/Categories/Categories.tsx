@@ -4,6 +4,7 @@ import { ProductSizes, ExtraIngredients } from "@prisma/client";
 import Menu from "@/components/menu";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { Translations } from "@/types/translations";
 
 interface Category {
   id: string;
@@ -13,6 +14,9 @@ interface Category {
 
 interface CategoriesProps {
   categories: Category[];
+  labels: Translations["menuItem"];
+  categoryLabels: Translations["menu"]["categoryLabels"];
+  emptyText: string;
 }
 
 interface Product {
@@ -39,7 +43,7 @@ interface Product {
   updatedAt: Date;
 }
 
-export default function Categories({ categories }: CategoriesProps) {
+export default function Categories({ categories, labels, categoryLabels, emptyText }: CategoriesProps) {
   const filters = useSelector((state: RootState) => state.filter.items);
 
   const filteredCategories = categories.map(category => {
@@ -89,11 +93,16 @@ export default function Categories({ categories }: CategoriesProps) {
       {filteredCategories.map((category) => (
         <section key={category.id} className="section-gap">
           <h1 className="text-primary text-4xl font-bold italic text-center mb-6 mt-14">
-            {category.name}
+            {categoryLabels[category.name as keyof typeof categoryLabels] || category.name}
           </h1>
-          <Menu items={category.products} />
+          <Menu items={category.products} labels={labels} />
         </section>
       ))}
+      {filteredCategories.length === 0 && (
+        <div className="container mt-10 rounded-lg border border-zinc-200 bg-white p-10 text-center text-zinc-500">
+          {emptyText}
+        </div>
+      )}
     </div>
   );
 }

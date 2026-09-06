@@ -1,5 +1,7 @@
 import Details from "@/components/menu/details";
 import { db } from "@/lib/prisma";
+import getTrans from "@/lib/translation";
+import { Locale } from "@/i18n.config";
 
 export const dynamic = "force-dynamic";
 
@@ -20,7 +22,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function MenuItemPage({ params }: PageProps) {
   const awaitedParams = await params;
-  const { id } = awaitedParams;
+  const { id, locale } = awaitedParams;
+  const translation = await getTrans(locale as Locale);
   
   try {
     const product = await db.product.findUnique({
@@ -32,16 +35,16 @@ export default async function MenuItemPage({ params }: PageProps) {
     });
 
     if (!product) {
-      return <div className="container py-8">Product not found</div>;
+      return <div className="container py-8">{translation.menu.productNotFound}</div>;
     }
 
     return (
       <div className="container py-8">
-        <Details item={product} />
+        <Details item={product} labels={translation.menuItem} />
       </div>
     );
   } catch (error) {
     console.error('Error fetching product:', error);
-    return <div className="container py-8">Error loading product. Please try again later.</div>;
+    return <div className="container py-8">{translation.menu.productLoadError}</div>;
   }
 }

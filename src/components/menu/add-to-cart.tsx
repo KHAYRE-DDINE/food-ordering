@@ -20,8 +20,9 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { AddToCart, RemoveCartItem, RemoveItemFromForm, selectCartItems } from "@/redux/features/cart/cartSlice"
 import { useState } from "react"
 import { getItemQuantity } from "@/lib/cart"
+import { Translations } from "@/types/translations"
 
-const AddButton = ({ item }: { item: ProductWithRelations }) => {
+const AddButton = ({ item, labels }: { item: ProductWithRelations; labels: Translations["menuItem"] }) => {
     const cart = useAppSelector(selectCartItems)
     const dispatch = useAppDispatch()
     const defaultSize = cart.find((product) => product.id == item.id)?.size || item.sizes.find((size) => size.name === ProductSizes.SMALL)
@@ -58,19 +59,19 @@ const AddButton = ({ item }: { item: ProductWithRelations }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className='text-white mt-4 rounded-full !px-8' type='button' size='lg'><span>Add To Card</span></Button>
+                <Button className='mt-4 !px-8' type='button' size='lg'><span>{labels.addToCart}</span></Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
                     <Image src={item.image} alt={item.name} width={200} height={200} className="m-auto" />
-                    <DialogTitle className="text-center">Pizza</DialogTitle>
+                    <DialogTitle className="text-center">{labels.customize}</DialogTitle>
                     <DialogDescription className="text-center">
                         {item.description}
                     </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-10">
                     <div className="space-y-4 text-center">
-                        <Label>Pick your size</Label>
+                        <Label>{labels.pickSize}</Label>
                         <PickSize
                             sizes={item.sizes}
                             item={item}
@@ -79,7 +80,7 @@ const AddButton = ({ item }: { item: ProductWithRelations }) => {
                         />
                     </div>
                     <div className="space-y-4 text-center">
-                        <Label>Any Extra?</Label>
+                        <Label>{labels.anyExtra}</Label>
                         <Extras
                             extras={item.extras}
                             selectedExtras={selectedExtras}
@@ -90,8 +91,8 @@ const AddButton = ({ item }: { item: ProductWithRelations }) => {
                 <DialogFooter>
                     {quantity === 0 ?
                         <Button type="submit" className="w-full h-10" onClick={handleCart}>
-                            Add To Card {FormatCurrency(totalPrice)}
-                        </Button> : <ChooseQuantity item={item} quantity={quantity} selectedSize={selectedSize} selectedExtras={selectedExtras} />
+                            {labels.addToCartWithPrice} {FormatCurrency(totalPrice)}
+                        </Button> : <ChooseQuantity item={item} quantity={quantity} selectedSize={selectedSize} selectedExtras={selectedExtras} labels={labels} />
                     }
                 </DialogFooter>
             </DialogContent>
@@ -163,13 +164,14 @@ export function Extras(
     )
 }
 
-export function ChooseQuantity({ quantity, item, selectedSize, selectedExtras }
+export function ChooseQuantity({ quantity, item, selectedSize, selectedExtras, labels }
     :
     {
         quantity: number,
         item: ProductWithRelations,
         selectedSize: Size,
-        selectedExtras: Extra[]
+        selectedExtras: Extra[],
+        labels: Translations["menuItem"]
     }) {
     const dispatch = useAppDispatch()
     return (
@@ -182,7 +184,7 @@ export function ChooseQuantity({ quantity, item, selectedSize, selectedExtras }
                     -
                 </Button>
                 <div>
-                    <span className='text-black'>{quantity} in cart</span>
+                    <span className='text-black'>{quantity} {labels.inCart}</span>
                 </div>
                 <Button
                     variant='outline'
@@ -206,7 +208,7 @@ export function ChooseQuantity({ quantity, item, selectedSize, selectedExtras }
                 size='sm'
                 onClick={() => dispatch(RemoveItemFromForm({ id: item.id }))}
             >
-                Remove
+                {labels.remove}
             </Button>
         </div>
     )
