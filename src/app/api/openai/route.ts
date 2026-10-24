@@ -1,113 +1,86 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
+type ChatMessage = { role: "user" | "assistant"; content: string };
+
 export async function POST(request: Request) {
-  const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY || "dummy-key-for-build",
-  });
-  console.log("=== OpenAI API Route Called ===");
-  
+  // The client is created per request so the build does not require the key.
+  if (!process.env.OPENAI_API_KEY) {
+    return NextResponse.json(
+      { error: "The assistant is not available right now." },
+      { status: 503 }
+    );
+  }
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
   try {
-    // Log that we're starting the request
-    console.log("1. Environment check:");
-    console.log("   - API Key exists:", !!process.env.OPENAI_API_KEY);
-    console.log("   - API Key length:", process.env.OPENAI_API_KEY?.length);
-    console.log("   - API Key prefix:", process.env.OPENAI_API_KEY?.substring(0, 7));
-
     const body = await request.json();
-    console.log("2. Request body received:", JSON.stringify(body, null, 2));
+    const { messages } = body as { messages?: unknown };
 
-    const { messages } = body;
-
-    if (!messages || !Array.isArray(messages)) {
-      console.log("3. Error: Invalid messages format");
+    if (!Array.isArray(messages) || messages.length === 0) {
       return NextResponse.json(
         { error: "Messages array is required" },
         { status: 400 }
       );
     }
 
-    console.log("3. Creating OpenAI completion with messages:", messages.length);
+    // Only forward user/assistant text, capped in count and length, so callers
+    // cannot inject a system prompt or send unbounded input.
+    const safeMessages: ChatMessage[] = messages
+      .filter(
+        (msg): msg is ChatMessage =>
+          typeof msg === "object" &&
+          msg !== null &&
+          (msg.role === "user" || msg.role === "assistant") &&
+          typeof msg.content === "string"
+      )
+      .slice(-10)
+      .map((msg) => ({ role: msg.role, content: msg.content.slice(0, 1000) }));
 
-    // Create a simpler, more controlled request
+    if (safeMessages.length === 0) {
+      return NextResponse.json({ error: "No valid messages" }, { status: 400 });
+    }
+
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
-          content: "You are a helpful assistant. Respond in a friendly manner."
+          content: "You are a helpful assistant. Respond in a friendly manner.",
         },
-        ...messages.map(msg => ({
-          role: msg.role,
-          content: msg.content
-        }))
+        ...safeMessages,
       ],
       max_tokens: 100,
       temperature: 0.7,
     });
 
-    console.log("4. OpenAI response received:");
-    console.log("   - Choices count:", completion.choices.length);
-    console.log("   - First choice message:", completion.choices[0]?.message);
-
     const assistantMessage = completion.choices[0]?.message;
-
     if (!assistantMessage || !assistantMessage.content) {
-      console.log("5. Error: No valid response from OpenAI");
       throw new Error("No response generated from OpenAI");
     }
 
-    console.log("5. Success: Sending response to client");
-    
     return NextResponse.json({
       role: "assistant",
-      content: assistantMessage.content
+      content: assistantMessage.content,
     });
-
   } catch (error: unknown) {
-    console.error("6. ERROR DETAILS:");
-    
-    // Type-safe error handling
-    let errorMessage = "An unexpected error occurred";
-    let statusCode = 500;
-    
-    // Log error details safely
-    if (error instanceof Error) {
-      console.error("   - Error name:", error.name);
-      console.error("   - Error message:", error.message);
-    }
-    
-    // Type assertion for API error with code and status
     const apiError = error as { code?: string; status?: number; message?: string };
-    
-    console.error("   - Error code:", apiError.code);
-    console.error("   - Error status:", apiError.status);
-    console.error("   - Full error:", error);
+    // Log the error class/status only: never keys, prompts or full payloads.
+    console.error("OpenAI route error:", apiError.status ?? "", apiError.code ?? "", error instanceof Error ? error.name : "");
 
-    if (apiError.code === 'invalid_api_key') {
-      errorMessage = "Invalid OpenAI API key. Please check your API key.";
-      statusCode = 401;
-    } else if (apiError.status === 429) {
-      errorMessage = "Rate limit exceeded. Please try again later.";
+    let errorMessage = "The assistant could not answer right now. Please try again.";
+    let statusCode = 500;
+
+    if (apiError.status === 429) {
+      errorMessage = "The assistant is busy. Please try again later.";
       statusCode = 429;
-    } else if (apiError.status === 401) {
-      errorMessage = "Authentication error. Please check your API key.";
-      statusCode = 401;
-    } else if (apiError.message?.includes('quota')) {
-      errorMessage = "API quota exceeded. Please check your OpenAI account billing.";
-      statusCode = 402;
-    } else {
-      errorMessage = apiError.message || "Internal server error";
+    } else if (apiError.status === 401 || apiError.code === "invalid_api_key") {
+      // Misconfiguration: do not reveal details to the client.
+      errorMessage = "The assistant is not available right now.";
+      statusCode = 503;
     }
 
-    return NextResponse.json(
-      { 
-        error: errorMessage,
-        code: apiError.code,
-        status: apiError.status
-      },
-      { status: statusCode }
-    );
+    return NextResponse.json({ error: errorMessage }, { status: statusCode });
   }
 }
 
@@ -115,9 +88,9 @@ export async function OPTIONS() {
   return new Response(null, {
     status: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
     },
   });
 }

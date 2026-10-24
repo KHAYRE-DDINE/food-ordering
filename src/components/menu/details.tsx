@@ -1,18 +1,19 @@
 'use client'
 import { buttonVariants } from "@/components/ui/button"
-import Loading from "@/lib/Loading"
 import { AddToCart, selectCartItems } from "@/redux/features/cart/cartSlice"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { ProductWithRelations } from "@/types/product"
 import { useEffect, useState } from "react"
 import { ChooseQuantity, Extras, PickSize } from "./add-to-cart"
 import { Extra, ProductSizes, Size } from "@prisma/client"
-import { getItemQuantity, getTotalAmount } from "@/lib/cart"
+import { getLineQuantity } from "@/lib/cart"
+import { cartLineKey } from "@/lib/cart-line"
+import { computeUnitPriceCents, fromCents } from "@/lib/pricing"
 import { Label } from "@radix-ui/react-label"
 import { FormatCurrency } from "@/lib/Formatter"
 import { LanguageType } from "@/i18n.config"
 import { Translations } from "@/types/translations"
-import { defaultMenuTranslation, localizeExtraName } from "@/lib/menu-localization"
+import { defaultMenuTranslation } from "@/lib/menu-localization"
 import { Languages } from "@/constants/enums"
 
 const Details = ({
@@ -26,14 +27,24 @@ const Details = ({
 }) => {
     const dispatch = useAppDispatch()
     const cart = useAppSelector(selectCartItems)
-    const [loading, setLoading] = useState(false)
-    const defaultSize = cart.find((product) => product.id == item.id)?.size || item.sizes.find((size) => size.name === ProductSizes.SMALL)
-    const defaultExtra = cart.find((element) => element.id === item.id)?.extra || []
-    const [selectedSize, setSelectedSize] = useState<Size>(defaultSize!)
-    const [selectedExtras, setSelectedExtras] = useState<Extra[]>(defaultExtra)
-    const quantity = getItemQuantity(item.id, cart)
+    // Prefer the SMALL size, otherwise the first available one.
+    const defaultSize = item.sizes.find((size) => size.name === ProductSizes.SMALL) ?? item.sizes[0]
+    const [selectedSize, setSelectedSize] = useState<Size | undefined>(defaultSize)
+    const [selectedExtras, setSelectedExtras] = useState<Extra[]>([])
+
+    // The quantity shown belongs to this exact customization.
+    const lineKey = cartLineKey({ id: item.id, size: selectedSize, extra: selectedExtras })
+    const quantity = getLineQuantity(lineKey, cart)
     // const [itemQuantity, setQuantity] = useState<number>(quantity)
-    const totalAmount = getTotalAmount(cart)
+
+    // Preview of this item's price; the server recomputes it at checkout.
+    const itemPrice = fromCents(
+        computeUnitPriceCents({
+            basePrice: item.basePrice,
+            sizePrice: selectedSize?.price ?? 0,
+            extraPrices: selectedExtras.map((extra) => extra.price),
+        })
+    )
 
     const handleCartItem = () => {
         dispatch(
@@ -42,7 +53,6 @@ const Details = ({
                 basePrice: item.basePrice,
                 image: item.image,
                 name: item.name,
-                quantity: quantity,
                 size: selectedSize,
                 extra: selectedExtras
             })
@@ -50,21 +60,8 @@ const Details = ({
     }
 
     useEffect(() => {
-        setLoading(true)
-
-        setTimeout(() => {
-            setLoading(false)
-        }, 1000)
-    }, [])
-
-    useEffect(() => {
         sessionStorage.setItem('cartItems', JSON.stringify(cart));
     }, [cart]);
-
-
-    if (loading) {
-        return <Loading />
-    }
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 py-10 items-center'>
@@ -87,34 +84,39 @@ const Details = ({
                     </div> */}
                 </div>
                 <div className="grid grid-cols-2 gap-3 mt-5">
-                    <div className="space-y-4 text-center">
-                        <Label className="text-primary font-bold">{translation.pickYourSize}</Label>
-                        <PickSize
-                            sizes={item.sizes}
-                            item={item}
-                            selectedSize={selectedSize}
-                            setSelectedSize={setSelectedSize}
-                        />
-                    </div>
-                    <div className="space-y-4 text-center">
-                        <Label className="text-primary font-bold">{translation.anyExtra}</Label>
-                        <Extras
-                            extras={item.extras}
-                            selectedExtras={selectedExtras}
-                            setSelectedExtras={setSelectedExtras}
-                            locale={locale}
-                        />
-                    </div>
+                    {item.sizes.length > 0 && selectedSize && (
+                        <div className="space-y-4 text-center">
+                            <Label className="text-primary font-bold">{translation.pickYourSize}</Label>
+                            <PickSize
+                                sizes={item.sizes}
+                                item={item}
+                                selectedSize={selectedSize}
+                                setSelectedSize={setSelectedSize}
+                            />
+                        </div>
+                    )}
+                    {item.extras.length > 0 && (
+                        <div className="space-y-4 text-center">
+                            <Label className="text-primary font-bold">{translation.anyExtra}</Label>
+                            <Extras
+                                extras={item.extras}
+                                selectedExtras={selectedExtras}
+                                setSelectedExtras={setSelectedExtras}
+                                locale={locale}
+                            />
+                        </div>
+                    )}
                 </div>
                 {quantity == 0 ? (
                     <button
+                        type="button"
                         className={`${buttonVariants({ size: 'lg' })} p-2 mt-5 !rounded-full`}
                         onClick={handleCartItem}
                     >
-                        {translation.addToCart} {FormatCurrency(totalAmount)}
+                        {translation.addToCart} {FormatCurrency(itemPrice)}
                     </button>
                 ) : (
-                    <ChooseQuantity quantity={quantity} item={item} selectedSize={selectedSize} selectedExtras={selectedExtras} translation={translation} />
+                    <ChooseQuantity quantity={quantity} item={item} lineKey={lineKey} selectedSize={selectedSize} selectedExtras={selectedExtras} translation={translation} />
                 )}
 
                 <div className="choose-image flex items-center justify-start gap-2 mt-6">
@@ -145,4 +147,3 @@ const Details = ({
 }
 
 export default Details
-

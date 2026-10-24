@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { getSubTotal, getTotalAmount } from "@/lib/cart";
+import { getTotalAmount } from "@/lib/cart";
 import { FormatCurrency } from "@/lib/Formatter";
 import { ClearCartItems, selectCartItems } from "@/redux/features/cart/cartSlice";
 import { useAppSelector } from "@/redux/hooks";
@@ -17,7 +17,6 @@ const Checkpoint = ({ translation }: { translation: Translations['cart'] }) => {
   const dispatch = useAppDispatch();
   const cart = useAppSelector(selectCartItems);
   const totalAmount = getTotalAmount(cart);
-  const subTotal = getSubTotal(cart);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     userEmail: "",
@@ -39,15 +38,19 @@ const Checkpoint = ({ translation }: { translation: Translations['cart'] }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          subTotal: subTotal.toString(),
-          totalPrice: totalAmount.toString(),
           userEmail: form.userEmail,
           phone: form.phone,
           streetAddress: form.address,
           postalCode: form.postalCode,
           city: form.city,
           country: form.country,
-          products: cart,
+          // Only identifiers and quantities are sent. The server prices the order.
+          products: cart.map((item) => ({
+            productId: item.id,
+            quantity: item.quantity ?? 1,
+            sizeId: item.size?.id ?? null,
+            extraIds: (item.extra ?? []).map((extra) => extra.id),
+          })),
         }),
       });
 
@@ -63,22 +66,16 @@ const Checkpoint = ({ translation }: { translation: Translations['cart'] }) => {
       });
       sessionStorage.removeItem("cartItems");
       dispatch(ClearCartItems());
+      // Reset the form only after a successful order; on failure the customer keeps what they typed.
+      setForm({ userEmail: "", phone: "", address: "", postalCode: "", city: "", country: "" });
       console.log("Order created:", data);
     } catch (error: unknown) {
       console.error("Order error:", error);
-      toast.error("Failed to submit order", {
+      toast.error(error instanceof Error ? error.message : "Failed to submit order", {
         position: "bottom-left",
       });
     } finally {
       setIsSubmitting(false);
-      setForm({
-        userEmail: "",
-        phone: "",
-        address: "",
-        postalCode: "",
-        city: "",
-        country: "",
-      });
     }
   };
 

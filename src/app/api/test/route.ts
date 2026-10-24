@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 
+// Minimal liveness check. Must not expose any configuration or secret metadata.
 export async function GET() {
-  return NextResponse.json({ 
-    hasApiKey: !!process.env.OPENAI_API_KEY,
-    apiKeyLength: process.env.OPENAI_API_KEY?.length,
-    apiKeyPrefix: process.env.OPENAI_API_KEY?.substring(0, 7)
-  });
+  return NextResponse.json({ ok: true });
 }

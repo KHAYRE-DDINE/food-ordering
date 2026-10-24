@@ -1,4 +1,5 @@
 import { RootState } from "@/redux/store";
+import { cartLineKey } from "@/lib/cart-line";
 import { Extra, Size } from "@prisma/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -42,30 +43,32 @@ export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
+        // A line is product + size + extras: a different customization of the
+        // same product becomes its own line instead of overwriting another.
         AddToCart: (state, action: PayloadAction<CartItem>) => {
-            const existingItem = state.items.find((item) => item.id === action.payload.id)
-            
+            const key = cartLineKey(action.payload)
+            const existingItem = state.items.find((item) => cartLineKey(item) === key)
+
             if (existingItem) {
                 existingItem.quantity = (existingItem.quantity || 0) + 1
-                existingItem.size = action.payload.size
-                existingItem.extra = action.payload.extra
-
             } else {
                 state.items.push({ ...action.payload, quantity: 1 })
             }
         },
-        RemoveCartItem: (state, action: PayloadAction<{ id: string }>) => {
-            const item = state.items.find((e) => e.id === action.payload.id)
+        // Decrease one unit of a specific line.
+        RemoveCartItem: (state, action: PayloadAction<{ lineKey: string }>) => {
+            const item = state.items.find((e) => cartLineKey(e) === action.payload.lineKey)
             if (item) {
-                if (item.quantity === 1) {
-                    state.items = state.items.filter((item) => item.id != action.payload.id)
+                if ((item.quantity ?? 1) <= 1) {
+                    state.items = state.items.filter((e) => cartLineKey(e) !== action.payload.lineKey)
                 } else {
                     item.quantity! -= 1
                 }
             }
         },
-        RemoveItemFromForm: (state, action: PayloadAction<{ id: string }>) => {
-            state.items = state.items.filter((item) => item.id !== action.payload.id)
+        // Remove a whole line regardless of quantity.
+        RemoveItemFromForm: (state, action: PayloadAction<{ lineKey: string }>) => {
+            state.items = state.items.filter((item) => cartLineKey(item) !== action.payload.lineKey)
         },
         ClearCartItems: (state) => {
             state.items = []

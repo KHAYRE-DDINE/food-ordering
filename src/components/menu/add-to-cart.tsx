@@ -19,7 +19,9 @@ import { ProductWithRelations } from "@/types/product"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { AddToCart, RemoveCartItem, RemoveItemFromForm, selectCartItems } from "@/redux/features/cart/cartSlice"
 import { useState } from "react"
-import { getItemQuantity } from "@/lib/cart"
+import { getLineQuantity } from "@/lib/cart"
+import { cartLineKey } from "@/lib/cart-line"
+import { computeUnitPriceCents, fromCents } from "@/lib/pricing"
 import { Translations } from "@/types/translations"
 import { LanguageType } from "@/i18n.config"
 import { defaultMenuTranslation, localizeExtraName } from "@/lib/menu-localization"
@@ -38,22 +40,23 @@ const AddButton = ({
     const currentTranslation = translation ?? defaultMenuTranslation
     const cart = useAppSelector(selectCartItems)
     const dispatch = useAppDispatch()
-    const defaultSize = cart.find((product) => product.id == item.id)?.size || item.sizes.find((size) => size.name === ProductSizes.SMALL)
-    const defaultExtra = cart.find((element) => element.id === item.id)?.extra || []
-    const [selectedSize, setSelectedSize] = useState<Size>(defaultSize!)
-    const [selectedExtras, setSelectedExtras] = useState<Extra[]>(defaultExtra)
-    const quantity = getItemQuantity(item.id, cart)
+    // Prefer the SMALL size, otherwise the first available one. A product
+    // without sizes is still orderable (selectedSize stays undefined).
+    const defaultSize = item.sizes.find((size) => size.name === ProductSizes.SMALL) ?? item.sizes[0]
+    const [selectedSize, setSelectedSize] = useState<Size | undefined>(defaultSize)
+    const [selectedExtras, setSelectedExtras] = useState<Extra[]>([])
 
+    // The quantity shown belongs to this exact customization.
+    const lineKey = cartLineKey({ id: item.id, size: selectedSize, extra: selectedExtras })
+    const quantity = getLineQuantity(lineKey, cart)
 
-    let totalPrice = item.basePrice
-    if (selectedSize) {
-        totalPrice += selectedSize.price
-    }
-    if (selectedExtras) {
-        for (const extra of selectedExtras) {
-            totalPrice += extra.price
-        }
-    }
+    const totalPrice = fromCents(
+        computeUnitPriceCents({
+            basePrice: item.basePrice,
+            sizePrice: selectedSize?.price ?? 0,
+            extraPrices: selectedExtras.map((extra) => extra.price),
+        })
+    )
 
     const handleCart = () => {
         dispatch(
@@ -77,36 +80,40 @@ const AddButton = ({
             <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
                     <Image src={item.image} alt={item.name} width={200} height={200} className="m-auto" />
-                    <DialogTitle className="text-center">Pizza</DialogTitle>
+                    <DialogTitle className="text-center">{item.name}</DialogTitle>
                     <DialogDescription className="text-center">
                         {item.description}
                     </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-10">
-                    <div className="space-y-4 text-center">
-                        <Label>{currentTranslation.pickYourSize}</Label>
-                        <PickSize
-                            sizes={item.sizes}
-                            item={item}
-                            selectedSize={selectedSize}
-                            setSelectedSize={setSelectedSize}
-                        />
-                    </div>
-                    <div className="space-y-4 text-center">
-                        <Label>{currentTranslation.anyExtra}</Label>
-                        <Extras
-                            extras={item.extras}
-                            selectedExtras={selectedExtras}
-                            setSelectedExtras={setSelectedExtras}
-                            locale={currentLocale}
-                        />
-                    </div>
+                    {item.sizes.length > 0 && selectedSize && (
+                        <div className="space-y-4 text-center">
+                            <Label>{currentTranslation.pickYourSize}</Label>
+                            <PickSize
+                                sizes={item.sizes}
+                                item={item}
+                                selectedSize={selectedSize}
+                                setSelectedSize={setSelectedSize}
+                            />
+                        </div>
+                    )}
+                    {item.extras.length > 0 && (
+                        <div className="space-y-4 text-center">
+                            <Label>{currentTranslation.anyExtra}</Label>
+                            <Extras
+                                extras={item.extras}
+                                selectedExtras={selectedExtras}
+                                setSelectedExtras={setSelectedExtras}
+                                locale={currentLocale}
+                            />
+                        </div>
+                    )}
                 </div>
                 <DialogFooter>
                     {quantity === 0 ?
-                        <Button type="submit" className="w-full h-10" onClick={handleCart}>
+                        <Button type="button" className="w-full h-10" onClick={handleCart}>
                             {currentTranslation.addToCart} {FormatCurrency(totalPrice)}
-                        </Button> : <ChooseQuantity item={item} quantity={quantity} selectedSize={selectedSize} selectedExtras={selectedExtras} translation={currentTranslation} />
+                        </Button> : <ChooseQuantity item={item} lineKey={lineKey} quantity={quantity} selectedSize={selectedSize} selectedExtras={selectedExtras} translation={currentTranslation} />
                     }
                 </DialogFooter>
             </DialogContent>
@@ -123,19 +130,20 @@ export function PickSize({
     sizes: Size[],
     item: ProductWithRelations,
     selectedSize: Size,
-    setSelectedSize: React.Dispatch<React.SetStateAction<Size>>
+    setSelectedSize: React.Dispatch<React.SetStateAction<Size | undefined>>
 }) {
     return (
-        <RadioGroup defaultValue="comfortable" >
+        <RadioGroup
+            value={selectedSize.id}
+            onValueChange={(sizeId) => setSelectedSize(sizes.find((size) => size.id === sizeId))}
+        >
             {sizes.map((size) => (
                 <div key={size.id} className="flex items-center space-x-2 border border-gray-100 rounded-md p-4 mb-3">
                     <RadioGroupItem
-                        value={selectedSize.name}
-                        id={item.id}
-                        checked={selectedSize.id === size.id}
-                        onClick={() => setSelectedSize(size)}
+                        value={size.id}
+                        id={`size-${size.id}`}
                         className={`${selectedSize.id === size.id ? 'bg-primary' : ''} w-5 h-5 border border-primary rounded-full`} />
-                    <Label htmlFor={size.id}>{size.name} {FormatCurrency(size.price + item.basePrice)}</Label>
+                    <Label htmlFor={`size-${size.id}`}>{size.name} {FormatCurrency(size.price + item.basePrice)}</Label>
                 </div>
             ))}
         </RadioGroup>
@@ -162,32 +170,33 @@ export function Extras(
     }
 
     return (
-        <RadioGroup defaultValue="comfortable" >
+        <div>
             {extras.map((extra) => (
                 <div key={extra.id} className="flex items-center space-x-2 border border-gray-100 rounded-md p-4 mb-3">
                     <Checkbox
-                        id={extra.id}
+                        id={`extra-${extra.id}`}
                         checked={Boolean(selectedExtras.find((e) => e.id === extra.id))}
                         onClick={() => handleExtras(extra)}
                         className={`${Boolean(selectedExtras.find((ex) => ex.id === extra.id)) ? 'bg-primary' : ''} w-5 h-5 border border-primary rounded-md`} />
                     <Label
-                        htmlFor={extra.id}
+                        htmlFor={`extra-${extra.id}`}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                         {localizeExtraName(extra.name, currentLocale)} {FormatCurrency(extra.price)}
                     </Label>
                 </div>
             ))}
-        </RadioGroup>
+        </div>
     )
 }
 
-export function ChooseQuantity({ quantity, item, selectedSize, selectedExtras, translation }
+export function ChooseQuantity({ quantity, item, lineKey, selectedSize, selectedExtras, translation }
     :
     {
         quantity: number,
         item: ProductWithRelations,
-        selectedSize: Size,
+        lineKey: string,
+        selectedSize?: Size,
         selectedExtras: Extra[],
         translation?: Translations['menu']
     }) {
@@ -198,7 +207,7 @@ export function ChooseQuantity({ quantity, item, selectedSize, selectedExtras, t
             <div className='flex items-center justify-center gap-2'>
                 <Button
                     variant='outline'
-                    onClick={() => dispatch(RemoveCartItem({ id: item.id }))}
+                    onClick={() => dispatch(RemoveCartItem({ lineKey }))}
                 >
                     -
                 </Button>
@@ -225,7 +234,7 @@ export function ChooseQuantity({ quantity, item, selectedSize, selectedExtras, t
             </div>
             <Button
                 size='sm'
-                onClick={() => dispatch(RemoveItemFromForm({ id: item.id }))}
+                onClick={() => dispatch(RemoveItemFromForm({ lineKey }))}
             >
                 {currentTranslation.remove}
             </Button>

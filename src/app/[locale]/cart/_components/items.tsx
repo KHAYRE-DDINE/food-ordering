@@ -1,6 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { deliveryFee, getSubTotal } from '@/lib/cart'
+import { deliveryFee, getLineTotal, getSubTotal } from '@/lib/cart'
+import { cartLineKey } from '@/lib/cart-line'
 import { FormatCurrency } from '@/lib/Formatter'
 import { RemoveItemFromForm, selectCartItems } from '@/redux/features/cart/cartSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
@@ -32,7 +33,7 @@ const Items = ({ translation }: { translation: Translations['cart'] }) => {
         <div className='space-y-6'>
             <ul className='space-y-6 divide-y divide-gray-100'>
                 {cart.map((item) => (
-                    <li key={item.id} className='pt-6 first:pt-0'>
+                    <li key={cartLineKey(item)} className='pt-6 first:pt-0'>
                         <div className='flex flex-col sm:flex-row gap-4 justify-between'>
                             <div className='flex items-start gap-4 flex-1'>
                                 <div className='relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-50'>
@@ -74,10 +75,10 @@ const Items = ({ translation }: { translation: Translations['cart'] }) => {
                                     ×{item.quantity}
                                 </div>
                                 <div className='text-right'>
-                                    <p className='font-semibold text-gray-900'>{FormatCurrency(item.basePrice)}</p>
+                                    <p className='font-semibold text-gray-900'>{FormatCurrency(getLineTotal(item))}</p>
                                 </div>
                                 <Button
-                                    onClick={() => dispatch(RemoveItemFromForm({ id: item.id }))}
+                                    onClick={() => dispatch(RemoveItemFromForm({ lineKey: cartLineKey(item) }))}
                                     variant='ghost'
                                     size='icon'
                                     className='text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full'

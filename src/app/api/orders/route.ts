@@ -1,111 +1,117 @@
 // app/api/orders/route.ts
 import { db } from "@/lib/prisma";
+import { DELIVERY_FEE, computeOrderTotals, fromCents, type PricedLine } from "@/lib/pricing";
+import { createOrderSchema } from "@/lib/validation/order";
 import { NextResponse } from "next/server";
 
-type OrderProductRequest = {
-  id: string;
-  quantity: number;
-};
-
 export async function POST(request: Request) {
+  let json: unknown;
   try {
-    const body = await request.json();
-    console.log("Order API received body:", body);
+    json = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
 
-    const products: OrderProductRequest[] = Array.isArray(body.products) ? body.products : [];
-    const subTotal = Number(body.subTotal);
-    const totalPrice = Number(body.totalPrice);
-
-    if (!Number.isFinite(subTotal) || !Number.isFinite(totalPrice)) {
-      return NextResponse.json(
-        { error: "Invalid order totals" },
-        { status: 400 }
-      );
-    }
-
-    if (products.length === 0) {
-      return NextResponse.json(
-        { error: "Cart is empty" },
-        { status: 400 }
-      );
-    }
-
-    const invalidProduct = products.find(
-      (product) =>
-        typeof product.id !== "string" ||
-        product.id.length === 0 ||
-        !Number.isInteger(product.quantity) ||
-        product.quantity < 1
+  const parsed = createOrderSchema.safeParse(json);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "Invalid order", fields: parsed.error.flatten().fieldErrors },
+      { status: 400 }
     );
+  }
+  const input = parsed.data;
 
-    if (invalidProduct) {
-      return NextResponse.json(
-        { error: "Invalid cart item", item: invalidProduct },
-        { status: 400 }
-      );
-    }
-
-    const existingProducts = await db.product.findMany({
-      where: {
-        id: {
-          in: products.map((product) => product.id),
-        },
-      },
-      select: {
-        id: true,
-      },
+  try {
+    const productIds = [...new Set(input.products.map((line) => line.productId))];
+    const dbProducts = await db.product.findMany({
+      where: { id: { in: productIds } },
+      include: { sizes: true, extras: true },
     });
-    const existingProductIds = new Set(existingProducts.map((product) => product.id));
-    const missingProductIds = products
-      .map((product) => product.id)
-      .filter((productId) => !existingProductIds.has(productId));
+    const productById = new Map(dbProducts.map((product) => [product.id, product]));
 
+    const missingProductIds = productIds.filter((id) => !productById.has(id));
     if (missingProductIds.length > 0) {
       return NextResponse.json(
-        {
-          error: "Some cart items no longer exist",
-          missingProductIds,
-        },
-        { status: 400 }
+        { error: "Some cart items no longer exist", missingProductIds },
+        { status: 409 }
       );
     }
 
-    const completeOrder = await db.$transaction(async (tx) => {
-      const order = await tx.order.create({
+    // Price every line from database values; client prices are never used.
+    const pricedLines: (PricedLine & { productId: string })[] = [];
+    for (const line of input.products) {
+      const product = productById.get(line.productId)!;
+
+      let sizePrice = 0;
+      if (line.sizeId) {
+        const size = product.sizes.find((candidate) => candidate.id === line.sizeId);
+        if (!size) {
+          return NextResponse.json(
+            { error: "Invalid size for product", productId: product.id },
+            { status: 400 }
+          );
+        }
+        sizePrice = size.price;
+      } else if (product.sizes.length > 0) {
+        return NextResponse.json(
+          { error: "A size is required for this product", productId: product.id },
+          { status: 400 }
+        );
+      }
+
+      const uniqueExtraIds = [...new Set(line.extraIds)];
+      const extraPrices: number[] = [];
+      for (const extraId of uniqueExtraIds) {
+        const extra = product.extras.find((candidate) => candidate.id === extraId);
+        if (!extra) {
+          return NextResponse.json(
+            { error: "Invalid extra for product", productId: product.id },
+            { status: 400 }
+          );
+        }
+        extraPrices.push(extra.price);
+      }
+
+      pricedLines.push({
+        productId: product.id,
+        quantity: line.quantity,
+        basePrice: product.basePrice,
+        sizePrice,
+        extraPrices,
+      });
+    }
+
+    const totals = computeOrderTotals(pricedLines, DELIVERY_FEE);
+
+    const order = await db.$transaction(async (tx) => {
+      return tx.order.create({
         data: {
-          paid: true,
-          subTotal,
-          deliveryFee: 5.0,
-          totalPrice,
-          userEmail: body.userEmail,
-          phone: body.phone,
-          streetAddress: body.streetAddress,
-          postalCode: body.postalCode,
-          city: body.city,
-          country: body.country,
+          // Payment is not collected yet, so a new order is never "paid".
+          paid: false,
+          subTotal: fromCents(totals.subTotalCents),
+          deliveryFee: fromCents(totals.deliveryFeeCents),
+          totalPrice: fromCents(totals.totalCents),
+          userEmail: input.userEmail,
+          phone: input.phone,
+          streetAddress: input.streetAddress,
+          postalCode: input.postalCode,
+          city: input.city,
+          country: input.country,
           products: {
-            create: products.map((product) => ({
-              productId: product.id,
-              quantity: product.quantity,
+            create: pricedLines.map((line) => ({
+              productId: line.productId,
+              quantity: line.quantity,
             })),
           },
         },
-        include: {
-          products: true,
-        },
+        select: { id: true, subTotal: true, deliveryFee: true, totalPrice: true, createdAt: true },
       });
-
-      return order;
     });
 
-    return NextResponse.json(completeOrder);
+    return NextResponse.json(order, { status: 201 });
   } catch (error: unknown) {
-    console.error("Order creation error:", error);
-    const message = error instanceof Error ? error.message : "Failed to create order";
-
-    return NextResponse.json(
-      { error: message },
-      { status: 500 }
-    );
+    // Log server-side only; never return internal error text to the client.
+    console.error("Order creation failed:", error instanceof Error ? error.message : "unknown error");
+    return NextResponse.json({ error: "Could not create the order. Please try again." }, { status: 500 });
   }
 }
