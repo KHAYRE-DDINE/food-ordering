@@ -26,9 +26,11 @@ const Navbar = ({ translation }: { translation: Translations }) => {
 
     const Links = [
         { href: Routes.MENU, title: navbar.menu },
+        { href: Routes.OFFERS, title: (navbar as Record<string, string>).offers || 'Offers' },
+        { href: Routes.ORDERS, title: (navbar as Record<string, string>).orders || 'My Orders' },
         { href: Routes.ABOUT, title: navbar.about },
         { href: Routes.CONTACT, title: navbar.contact },
-        { href: `${Routes.AUTH}/${Pages.LOGIN}`, title: navbar.login },
+        { href: Routes.PROFILE, title: (navbar as Record<string, string>).account || 'Account' },
     ]
 
     useEffect(() => {
@@ -85,8 +87,8 @@ const Navbar = ({ translation }: { translation: Translations }) => {
                         onClick={() => handleNavigationClick(`/${localeValue}/${link.href}`, link.title)}
                         onPointerEnter={() => prefetchRoute(`/${localeValue}/${link.href}`)}
                         onFocus={() => prefetchRoute(`/${localeValue}/${link.href}`)}
-                        className={`${link.href === `${Routes.AUTH}/${Pages.LOGIN}` ? `
-                            ${buttonVariants({ size: 'lg' })} !px-8 !rounded-full capitalize`
+                        className={`${link.href === Routes.PROFILE ? `
+                            ${buttonVariants({ size: 'sm' })} !px-5 !rounded-full capitalize`
                             : 'text-accent hover:text-primary capitalize duration-200 '}
                             font-semibold ${pathname.startsWith(`/${localeValue}/${link.href}`) ? 'text-primary ' : 'text-accent'}`}
                     >

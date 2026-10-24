@@ -3,7 +3,6 @@ import { cartLineKey } from "@/lib/cart-line";
 import { Extra, Size } from "@prisma/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-
 export type CartItem = {
     name: string
     id: string
@@ -14,8 +13,16 @@ export type CartItem = {
     extra?: Extra[]
 }
 
+export type AppliedPromo = {
+    code: string
+    discountAmount: number
+    discountType: 'PERCENTAGE' | 'FIXED'
+    discountValue: number
+}
+
 type CartState = {
     items: CartItem[]
+    appliedPromo: AppliedPromo | null
 }
 
 let initialCartItems: CartItem[] = [];
@@ -36,15 +43,14 @@ if (typeof window !== 'undefined') {
 }
 
 const initialState: CartState = {
-    items: initialCartItems
+    items: initialCartItems,
+    appliedPromo: null
 };
 
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        // A line is product + size + extras: a different customization of the
-        // same product becomes its own line instead of overwriting another.
         AddToCart: (state, action: PayloadAction<CartItem>) => {
             const key = cartLineKey(action.payload)
             const existingItem = state.items.find((item) => cartLineKey(item) === key)
@@ -55,7 +61,6 @@ export const cartSlice = createSlice({
                 state.items.push({ ...action.payload, quantity: 1 })
             }
         },
-        // Decrease one unit of a specific line.
         RemoveCartItem: (state, action: PayloadAction<{ lineKey: string }>) => {
             const item = state.items.find((e) => cartLineKey(e) === action.payload.lineKey)
             if (item) {
@@ -66,17 +71,40 @@ export const cartSlice = createSlice({
                 }
             }
         },
-        // Remove a whole line regardless of quantity.
         RemoveItemFromForm: (state, action: PayloadAction<{ lineKey: string }>) => {
             state.items = state.items.filter((item) => cartLineKey(item) !== action.payload.lineKey)
         },
         ClearCartItems: (state) => {
             state.items = []
+            state.appliedPromo = null
+        },
+        ApplyPromoCode: (state, action: PayloadAction<AppliedPromo>) => {
+            state.appliedPromo = action.payload
+        },
+        RemovePromoCode: (state) => {
+            state.appliedPromo = null
+        },
+        ReorderItems: (state, action: PayloadAction<CartItem[]>) => {
+            state.items = action.payload
+            state.appliedPromo = null
+            if (typeof window !== 'undefined') {
+                sessionStorage.setItem('cartItems', JSON.stringify(action.payload))
+            }
         }
     }
 })
 
+export const { 
+    AddToCart, 
+    RemoveCartItem, 
+    RemoveItemFromForm, 
+    ClearCartItems,
+    ApplyPromoCode,
+    RemovePromoCode,
+    ReorderItems
+} = cartSlice.actions
 
-export const { AddToCart, RemoveCartItem, RemoveItemFromForm, ClearCartItems } = cartSlice.actions
 export default cartSlice.reducer
+
 export const selectCartItems = (state: RootState) => state.cart.items
+export const selectAppliedPromo = (state: RootState) => state.cart.appliedPromo

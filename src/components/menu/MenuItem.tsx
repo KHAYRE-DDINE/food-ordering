@@ -13,6 +13,7 @@ import { LanguageType } from "@/i18n.config";
 import { Translations } from "@/types/translations";
 import { defaultMenuTranslation, localizeExtraName } from "@/lib/menu-localization";
 import { Languages } from "@/constants/enums";
+import FavoriteButton from "./FavoriteButton";
 
 function MenuItem({
   item,
@@ -34,13 +35,25 @@ function MenuItem({
       transition={{ duration: 0.4, delay: 0.2 }}
       className="menu-item h-full p-4 rounded-md bg-gray-200 hover:shadow-2xl shadow-[#000000b3] duration-75"
     >
-      <div className="relative w-full h-48 mx-auto overflow-hidden">
+      <div className="relative w-full h-48 mx-auto overflow-hidden rounded">
         <img
           src={item.image}
           alt={item.name}
           className="h-full w-full object-cover"
           loading="lazy"
         />
+        <div className="absolute top-2 right-2 z-10">
+          <FavoriteButton
+            item={{
+              id: item.id,
+              name: item.name,
+              image: item.image,
+              basePrice: item.basePrice,
+              description: item.description,
+              categoryId: item.categoryId,
+            }}
+          />
+        </div>
       </div>
       <div className="flex justify-between items-center h-[50px]">
         <Link key={item.id} href={`/${currentLocale}/${Routes.MENU}/${item.id}`} prefetch>

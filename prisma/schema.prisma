@@ -21,10 +21,12 @@ model User {
   postalCode    String?
   city          String?
   country       String?
-  role          UserRole       @default(USER)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  role          UserRole          @default(USER)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
   orders        OrderProduct[]
+  addresses     CustomerAddress[]
+  favorites     Favorite[]
 }
 
 model Product {
@@ -39,6 +41,7 @@ model Product {
   sizes       Size[]
   extras      Extra[]
   orders      OrderProduct[]
+  favorites   Favorite[]
   category    Category       @relation(fields: [categoryId], references: [id])
   categoryId  String
 }
@@ -83,6 +86,8 @@ model Order {
   city              String
   country           String
   deliveryNotes     String?
+  promoCode         String?
+  discountAmount    Float              @default(0)
   subTotal          Float
   deliveryFee       Float
   totalPrice        Float
@@ -125,17 +130,83 @@ model OrderStatusEvent {
 }
 
 model RestaurantSettings {
-  id              String   @id @default("default")
-  name            String   @default("Our Restaurant")
-  phone           String   @default("+1 555-0199")
-  email           String   @default("contact@restaurant.com")
-  address         String   @default("123 Food Street")
-  deliveryFee     Float    @default(5.0)
-  minOrderAmount  Float    @default(10.0)
-  isOpen          Boolean  @default(true)
-  deliveryEnabled Boolean  @default(true)
-  pickupEnabled   Boolean  @default(true)
-  updatedAt       DateTime @updatedAt
+  id                     String   @id @default("default")
+  name                   String   @default("Our Restaurant")
+  phone                  String   @default("+1 555-0199")
+  email                  String   @default("contact@restaurant.com")
+  address                String   @default("123 Food Street")
+  deliveryFee            Float    @default(5.0)
+  minOrderAmount         Float    @default(10.0)
+  freeDeliveryThreshold  Float    @default(35.0)
+  estimatedDeliveryMinutes Int    @default(35)
+  estimatedPickupMinutes   Int    @default(15)
+  openingHour            String   @default("10:00")
+  closingHour            String   @default("23:00")
+  operatingDays          String   @default("Monday - Sunday")
+  isOpen                 Boolean  @default(true)
+  deliveryEnabled        Boolean  @default(true)
+  pickupEnabled          Boolean  @default(true)
+  updatedAt              DateTime @updatedAt
+}
+
+model PromoCode {
+  id             String       @id @default(cuid())
+  code           String       @unique
+  discountType   DiscountType @default(PERCENTAGE)
+  discountValue  Float
+  minOrderAmount Float        @default(0)
+  maxDiscount    Float?
+  isActive       Boolean      @default(true)
+  startsAt       DateTime?
+  expiresAt      DateTime?
+  usageLimit     Int?
+  timesUsed      Int          @default(0)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Offer {
+  id            String    @id @default(cuid())
+  title         String
+  description   String    @db.Text
+  badge         String?
+  price         Float
+  originalPrice Float?
+  image         String    @db.Text
+  isActive      Boolean   @default(true)
+  terms         String?   @db.Text
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+}
+
+model CustomerAddress {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label         String   @default("Home")
+  streetAddress String
+  city          String
+  postalCode    String
+  country       String
+  isDefault     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED
 }
 
 enum ProductSizes {

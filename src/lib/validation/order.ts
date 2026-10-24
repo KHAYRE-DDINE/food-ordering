@@ -25,6 +25,9 @@ export const createOrderSchema = z.object({
   postalCode: trimmed(20),
   city: trimmed(100),
   country: trimmed(100),
+  deliveryNotes: z.string().trim().max(500).optional(),
+  promoCode: z.string().trim().max(30).optional(),
+  fulfillmentMethod: z.enum(["DELIVERY", "PICKUP"]).default("DELIVERY"),
   products: z.array(orderLineSchema).min(1).max(50),
 });
 

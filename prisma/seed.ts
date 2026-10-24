@@ -194,6 +194,114 @@ async function main() {
     }
   })
 
+  console.log('Seeding promo codes...')
+  await db.promoCode.deleteMany()
+  await db.promoCode.createMany({
+    data: [
+      {
+        code: 'WELCOME10',
+        discountType: 'PERCENTAGE',
+        discountValue: 10,
+        minOrderAmount: 15,
+        isActive: true,
+      },
+      {
+        code: 'FASTY5',
+        discountType: 'FIXED',
+        discountValue: 5,
+        minOrderAmount: 25,
+        isActive: true,
+      },
+      {
+        code: 'FEAST20',
+        discountType: 'PERCENTAGE',
+        discountValue: 20,
+        minOrderAmount: 40,
+        isActive: true,
+      }
+    ]
+  })
+
+  console.log('Seeding offers & meal deals...')
+  await db.offer.deleteMany()
+  await db.offer.createMany({
+    data: [
+      {
+        id: 'offer-family-combo',
+        title: 'Family Feast Combo',
+        description: 'Two large Margherita pizzas, seasoned Spicy Chicken Wings, and fresh Caprese salad. Perfect for 3-4 people.',
+        badge: 'Save 25%',
+        price: 32.99,
+        originalPrice: 43.96,
+        image: '/assets/images/menu/margherita-pizza.jpg',
+        isActive: true,
+        terms: 'Available for delivery and pickup. Cannot be combined with other coupons.'
+      },
+      {
+        id: 'offer-shawarma-duo',
+        title: 'Shawarma & Biryani Duo',
+        description: 'Grilled Chicken Shawarma paired with aromatic Lamb Biryani and house garlic sauce.',
+        badge: 'Best Value',
+        price: 24.99,
+        originalPrice: 28.98,
+        image: '/assets/images/menu/grilled-chicken-shawarma.jpg',
+        isActive: true,
+        terms: 'Valid daily from 11:00 AM to 10:00 PM.'
+      },
+      {
+        id: 'offer-pasta-fondue',
+        title: 'Italian & Fondue Night',
+        description: 'Authentic Spaghetti Carbonara accompanied by warm melted Cheese Fondue and dipping bread.',
+        badge: 'Chef Choice',
+        price: 21.99,
+        originalPrice: 25.98,
+        image: '/assets/images/menu/spaghetti-carbonara.jpg',
+        isActive: true,
+        terms: 'Subject to daily availability.'
+      }
+    ]
+  })
+
+  console.log('Upserting restaurant settings...')
+  await db.restaurantSettings.upsert({
+    where: { id: 'default' },
+    update: {
+      name: 'Fasty Food Restaurant',
+      phone: '+1 555-0199',
+      email: 'orders@fastyfood.com',
+      address: '123 Gourmet Boulevard, Food District',
+      deliveryFee: 5.0,
+      minOrderAmount: 10.0,
+      freeDeliveryThreshold: 40.0,
+      estimatedDeliveryMinutes: 30,
+      estimatedPickupMinutes: 15,
+      openingHour: '10:00 AM',
+      closingHour: '11:00 PM',
+      operatingDays: 'Monday - Sunday',
+      isOpen: true,
+      deliveryEnabled: true,
+      pickupEnabled: true,
+    },
+    create: {
+      id: 'default',
+      name: 'Fasty Food Restaurant',
+      phone: '+1 555-0199',
+      email: 'orders@fastyfood.com',
+      address: '123 Gourmet Boulevard, Food District',
+      deliveryFee: 5.0,
+      minOrderAmount: 10.0,
+      freeDeliveryThreshold: 40.0,
+      estimatedDeliveryMinutes: 30,
+      estimatedPickupMinutes: 15,
+      openingHour: '10:00 AM',
+      closingHour: '11:00 PM',
+      operatingDays: 'Monday - Sunday',
+      isOpen: true,
+      deliveryEnabled: true,
+      pickupEnabled: true,
+    }
+  })
+
   console.log('Seeding completed successfully!')
 }
 

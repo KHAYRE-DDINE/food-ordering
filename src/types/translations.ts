@@ -99,6 +99,10 @@ export type Translations = {
         home: string;
         about: string;
         menu: string;
+        offers?: string;
+        orders?: string;
+        favorites?: string;
+        account?: string;
         contact: string;
         login: string;
         register: string;

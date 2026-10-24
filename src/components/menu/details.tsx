@@ -15,6 +15,7 @@ import { LanguageType } from "@/i18n.config"
 import { Translations } from "@/types/translations"
 import { defaultMenuTranslation } from "@/lib/menu-localization"
 import { Languages } from "@/constants/enums"
+import FavoriteButton from "./FavoriteButton"
 
 const Details = ({
     item,
@@ -65,8 +66,21 @@ const Details = ({
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 py-10 items-center'>
-            <div className="image">
-                <img src={item.image} alt={item.name} width="400" height="400" />
+            <div className="image relative max-w-[400px]">
+                <img src={item.image} alt={item.name} className="w-full h-auto rounded-lg shadow-md" />
+                <div className="absolute top-4 right-4 z-10">
+                    <FavoriteButton
+                        item={{
+                            id: item.id,
+                            name: item.name,
+                            image: item.image,
+                            basePrice: item.basePrice,
+                            description: item.description,
+                            categoryId: item.categoryId,
+                        }}
+                        size={22}
+                    />
+                </div>
             </div>
             <div className="details leading-7">
                 <h1 className='text-primary text-4xl font-bold my-7'>{item.name}</h1>

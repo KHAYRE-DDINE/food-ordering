@@ -103,20 +103,63 @@ export async function POST(request: Request) {
       });
     }
 
-    const totals = computeOrderTotals(pricedLines, DELIVERY_FEE);
+    const deliveryFeeToCharge = input.fulfillmentMethod === "PICKUP" ? 0 : DELIVERY_FEE;
+    const totals = computeOrderTotals(pricedLines, deliveryFeeToCharge);
+
+    let promoCodeApplied: string | null = null;
+    let discountAmountCents = 0;
+
+    if (input.promoCode) {
+      const normalizedCode = input.promoCode.toUpperCase().trim();
+      const promo = await db.promoCode.findUnique({
+        where: { code: normalizedCode },
+      });
+
+      const now = new Date();
+      if (
+        promo &&
+        promo.isActive &&
+        (!promo.startsAt || promo.startsAt <= now) &&
+        (!promo.expiresAt || promo.expiresAt >= now) &&
+        (promo.usageLimit === null || promo.timesUsed < promo.usageLimit) &&
+        totals.subTotalCents >= Math.round(promo.minOrderAmount * 100)
+      ) {
+        promoCodeApplied = promo.code;
+        if (promo.discountType === "PERCENTAGE") {
+          discountAmountCents = Math.round((totals.subTotalCents * promo.discountValue) / 100);
+          if (promo.maxDiscount) {
+            discountAmountCents = Math.min(discountAmountCents, Math.round(promo.maxDiscount * 100));
+          }
+        } else {
+          discountAmountCents = Math.min(Math.round(promo.discountValue * 100), totals.subTotalCents);
+        }
+      }
+    }
+
+    const finalTotalCents = Math.max(0, totals.subTotalCents - discountAmountCents + totals.deliveryFeeCents);
 
     const order = await db.$transaction(async (tx) => {
+      if (promoCodeApplied) {
+        await tx.promoCode.update({
+          where: { code: promoCodeApplied },
+          data: { timesUsed: { increment: 1 } },
+        });
+      }
+
       return tx.order.create({
         data: {
           paid: false,
           fulfillmentStatus: "PENDING",
           paymentStatus: "UNPAID",
-          fulfillmentMethod: "DELIVERY",
-          paymentMethod: "CASH_ON_DELIVERY",
+          fulfillmentMethod: input.fulfillmentMethod,
+          paymentMethod: input.fulfillmentMethod === "PICKUP" ? "CASH_ON_PICKUP" : "CASH_ON_DELIVERY",
           customerName: input.userEmail.split("@")[0],
+          promoCode: promoCodeApplied,
+          discountAmount: fromCents(discountAmountCents),
           subTotal: fromCents(totals.subTotalCents),
           deliveryFee: fromCents(totals.deliveryFeeCents),
-          totalPrice: fromCents(totals.totalCents),
+          totalPrice: fromCents(finalTotalCents),
+          deliveryNotes: input.deliveryNotes,
           userEmail: input.userEmail,
           phone: input.phone,
           streetAddress: input.streetAddress,
