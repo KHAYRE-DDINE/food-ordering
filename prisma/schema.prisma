@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -30,11 +27,11 @@ model User {
   orders        OrderProduct[]
 }
 
- model Product {
+model Product {
   id          String         @id @default(cuid())
   name        String
-  description String
-  image       String
+  description String         @db.Text
+  image       String         @db.Text
   order       Int            @default(0)
   basePrice   Float
   createdAt   DateTime       @default(now())
@@ -70,31 +67,75 @@ model Category {
 }
 
 model Order {
-  id            String         @id @default(uuid())
-  paid          Boolean        @default(false)
-  subTotal      Float
-  deliveryFee   Float
-  totalPrice    Float
-  userEmail     String
-  phone         String
-  streetAddress String
-  postalCode    String
-  city          String
-  country       String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  products      OrderProduct[]
+  id                String             @id @default(uuid())
+  orderNumber       Int?               @unique
+  trackingToken     String             @unique @default(cuid())
+  paid              Boolean            @default(false)
+  fulfillmentStatus FulfillmentStatus  @default(PENDING)
+  paymentStatus     PaymentStatus      @default(UNPAID)
+  fulfillmentMethod FulfillmentMethod  @default(DELIVERY)
+  paymentMethod     PaymentMethod      @default(CASH_ON_DELIVERY)
+  customerName      String?
+  userEmail         String
+  phone             String
+  streetAddress     String
+  postalCode        String
+  city              String
+  country           String
+  deliveryNotes     String?
+  subTotal          Float
+  deliveryFee       Float
+  totalPrice        Float
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  products          OrderProduct[]
+  statusEvents      OrderStatusEvent[]
+
+  @@index([trackingToken])
+  @@index([userEmail])
+  @@index([fulfillmentStatus])
 }
 
 model OrderProduct {
-  id        String  @id @default(cuid())
-  quantity  Int
-  order     Order   @relation(fields: [orderId], references: [id])
-  orderId   String
-  user      User?   @relation(fields: [userId], references: [id])
-  userId    String?
-  product   Product @relation(fields: [productId], references: [id])
-  productId String
+  id          String   @id @default(cuid())
+  quantity    Int
+  productName String?
+  sizeName    String?
+  extraNames  String?
+  unitPrice   Float?
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId     String
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String?
+  product     Product  @relation(fields: [productId], references: [id])
+  productId   String
+}
+
+model OrderStatusEvent {
+  id         String             @id @default(cuid())
+  order      Order              @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId    String
+  fromStatus FulfillmentStatus?
+  toStatus   FulfillmentStatus
+  note       String?
+  actor      String?            @default("SYSTEM")
+  createdAt  DateTime           @default(now())
+
+  @@index([orderId])
+}
+
+model RestaurantSettings {
+  id              String   @id @default("default")
+  name            String   @default("Our Restaurant")
+  phone           String   @default("+1 555-0199")
+  email           String   @default("contact@restaurant.com")
+  address         String   @default("123 Food Street")
+  deliveryFee     Float    @default(5.0)
+  minOrderAmount  Float    @default(10.0)
+  isOpen          Boolean  @default(true)
+  deliveryEnabled Boolean  @default(true)
+  pickupEnabled   Boolean  @default(true)
+  updatedAt       DateTime @updatedAt
 }
 
 enum ProductSizes {
@@ -114,4 +155,36 @@ enum ExtraIngredients {
 enum UserRole {
   USER
   ADMIN
+  STAFF
+  KITCHEN
+}
+
+enum FulfillmentStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  READY
+  OUT_FOR_DELIVERY
+  COMPLETED
+  CANCELLED
+  REJECTED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum FulfillmentMethod {
+  DELIVERY
+  PICKUP
+}
+
+enum PaymentMethod {
+  CASH_ON_DELIVERY
+  CASH_ON_PICKUP
+  ONLINE
 }

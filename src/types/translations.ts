@@ -283,4 +283,21 @@ export type Translations = {
     category: string;
     copyRight: string;
     noProductsFound: string;
+    orderTracking?: {
+        title: string;
+        orderPlaced: string;
+        thankYou: string;
+        orderReference: string;
+        status: string;
+        deliveryAddress: string;
+        contact: string;
+        items: string;
+        subtotal: string;
+        deliveryFee: string;
+        total: string;
+        orderNotFound: string;
+        orderNotFoundDesc: string;
+        backToMenu: string;
+        statuses: Record<string, string>;
+    };
 };

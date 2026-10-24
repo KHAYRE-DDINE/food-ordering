@@ -346,5 +346,31 @@
   },
   "copyRight": "© 2025 All rights reserved",
   "noProductsFound": "No products found",
-  "noCategoriesFound": "No categories found"
+  "noCategoriesFound": "No categories found",
+  "orderTracking": {
+    "title": "Order Tracking",
+    "orderPlaced": "Order Placed Successfully!",
+    "thankYou": "Thank you for your order. We are preparing your delicious meal.",
+    "orderReference": "Order Reference",
+    "status": "Order Status",
+    "deliveryAddress": "Delivery Address",
+    "contact": "Contact",
+    "items": "Ordered Items",
+    "subtotal": "Subtotal",
+    "deliveryFee": "Delivery Fee",
+    "total": "Total Amount",
+    "orderNotFound": "Order Not Found",
+    "orderNotFoundDesc": "We could not find an order matching this tracking link.",
+    "backToMenu": "Back to Menu",
+    "statuses": {
+      "PENDING": "Order Received",
+      "CONFIRMED": "Order Confirmed",
+      "PREPARING": "Preparing in Kitchen",
+      "READY": "Ready for Pickup/Delivery",
+      "OUT_FOR_DELIVERY": "Out for Delivery",
+      "COMPLETED": "Delivered",
+      "CANCELLED": "Cancelled",
+      "REJECTED": "Rejected"
+    }
+  }
 }

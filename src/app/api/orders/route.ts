@@ -1,8 +1,16 @@
 // app/api/orders/route.ts
 import { db } from "@/lib/prisma";
-import { DELIVERY_FEE, computeOrderTotals, fromCents, type PricedLine } from "@/lib/pricing";
+import { DELIVERY_FEE, computeOrderTotals, computeUnitPriceCents, fromCents, type PricedLine } from "@/lib/pricing";
 import { createOrderSchema } from "@/lib/validation/order";
 import { NextResponse } from "next/server";
+
+type DetailedPricedLine = PricedLine & {
+  productId: string;
+  productName: string;
+  sizeName: string | null;
+  extraNames: string;
+  unitPrice: number;
+};
 
 export async function POST(request: Request) {
   let json: unknown;
@@ -38,11 +46,12 @@ export async function POST(request: Request) {
     }
 
     // Price every line from database values; client prices are never used.
-    const pricedLines: (PricedLine & { productId: string })[] = [];
+    const pricedLines: DetailedPricedLine[] = [];
     for (const line of input.products) {
       const product = productById.get(line.productId)!;
 
       let sizePrice = 0;
+      let sizeName: string | null = null;
       if (line.sizeId) {
         const size = product.sizes.find((candidate) => candidate.id === line.sizeId);
         if (!size) {
@@ -52,6 +61,7 @@ export async function POST(request: Request) {
           );
         }
         sizePrice = size.price;
+        sizeName = size.name;
       } else if (product.sizes.length > 0) {
         return NextResponse.json(
           { error: "A size is required for this product", productId: product.id },
@@ -61,6 +71,7 @@ export async function POST(request: Request) {
 
       const uniqueExtraIds = [...new Set(line.extraIds)];
       const extraPrices: number[] = [];
+      const extraNamesList: string[] = [];
       for (const extraId of uniqueExtraIds) {
         const extra = product.extras.find((candidate) => candidate.id === extraId);
         if (!extra) {
@@ -70,10 +81,21 @@ export async function POST(request: Request) {
           );
         }
         extraPrices.push(extra.price);
+        extraNamesList.push(extra.name);
       }
+
+      const unitPriceCents = computeUnitPriceCents({
+        basePrice: product.basePrice,
+        sizePrice,
+        extraPrices,
+      });
 
       pricedLines.push({
         productId: product.id,
+        productName: product.name,
+        sizeName,
+        extraNames: extraNamesList.join(", "),
+        unitPrice: fromCents(unitPriceCents),
         quantity: line.quantity,
         basePrice: product.basePrice,
         sizePrice,
@@ -86,8 +108,12 @@ export async function POST(request: Request) {
     const order = await db.$transaction(async (tx) => {
       return tx.order.create({
         data: {
-          // Payment is not collected yet, so a new order is never "paid".
           paid: false,
+          fulfillmentStatus: "PENDING",
+          paymentStatus: "UNPAID",
+          fulfillmentMethod: "DELIVERY",
+          paymentMethod: "CASH_ON_DELIVERY",
+          customerName: input.userEmail.split("@")[0],
           subTotal: fromCents(totals.subTotalCents),
           deliveryFee: fromCents(totals.deliveryFeeCents),
           totalPrice: fromCents(totals.totalCents),
@@ -101,10 +127,28 @@ export async function POST(request: Request) {
             create: pricedLines.map((line) => ({
               productId: line.productId,
               quantity: line.quantity,
+              productName: line.productName,
+              sizeName: line.sizeName,
+              extraNames: line.extraNames,
+              unitPrice: line.unitPrice,
             })),
           },
+          statusEvents: {
+            create: {
+              toStatus: "PENDING",
+              note: "Order placed by customer",
+              actor: "CUSTOMER",
+            },
+          },
         },
-        select: { id: true, subTotal: true, deliveryFee: true, totalPrice: true, createdAt: true },
+        select: {
+          id: true,
+          trackingToken: true,
+          subTotal: true,
+          deliveryFee: true,
+          totalPrice: true,
+          createdAt: true,
+        },
       });
     });
 

@@ -12,11 +12,15 @@ import { CreditCard, MapPin, Phone, ShoppingBag, Mail } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Translations } from "@/types/translations";
+import { useRouter, useParams } from "next/navigation";
 
 const Checkpoint = ({ translation }: { translation: Translations['cart'] }) => {
   const dispatch = useAppDispatch();
   const cart = useAppSelector(selectCartItems);
   const totalAmount = getTotalAmount(cart);
+  const router = useRouter();
+  const params = useParams();
+  const locale = params?.locale || "en";
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     userEmail: "",
@@ -68,7 +72,9 @@ const Checkpoint = ({ translation }: { translation: Translations['cart'] }) => {
       dispatch(ClearCartItems());
       // Reset the form only after a successful order; on failure the customer keeps what they typed.
       setForm({ userEmail: "", phone: "", address: "", postalCode: "", city: "", country: "" });
-      console.log("Order created:", data);
+      if (data.trackingToken) {
+        router.push(`/${locale}/orders/${data.trackingToken}`);
+      }
     } catch (error: unknown) {
       console.error("Order error:", error);
       toast.error(error instanceof Error ? error.message : "Failed to submit order", {
