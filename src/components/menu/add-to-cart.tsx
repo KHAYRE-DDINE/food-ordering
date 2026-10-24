@@ -20,8 +20,22 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { AddToCart, RemoveCartItem, RemoveItemFromForm, selectCartItems } from "@/redux/features/cart/cartSlice"
 import { useState } from "react"
 import { getItemQuantity } from "@/lib/cart"
+import { Translations } from "@/types/translations"
+import { LanguageType } from "@/i18n.config"
+import { defaultMenuTranslation, localizeExtraName } from "@/lib/menu-localization"
+import { Languages } from "@/constants/enums"
 
-const AddButton = ({ item }: { item: ProductWithRelations }) => {
+const AddButton = ({
+    item,
+    locale,
+    translation,
+}: {
+    item: ProductWithRelations
+    locale?: LanguageType
+    translation?: Translations['menu']
+}) => {
+    const currentLocale = locale ?? Languages.ENGLISH
+    const currentTranslation = translation ?? defaultMenuTranslation
     const cart = useAppSelector(selectCartItems)
     const dispatch = useAppDispatch()
     const defaultSize = cart.find((product) => product.id == item.id)?.size || item.sizes.find((size) => size.name === ProductSizes.SMALL)
@@ -58,7 +72,7 @@ const AddButton = ({ item }: { item: ProductWithRelations }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className='text-white mt-4 rounded-full !px-8' type='button' size='lg'><span>Add To Card</span></Button>
+                <Button className='text-white mt-4 rounded-full !px-8' type='button' size='lg'><span>{currentTranslation.addToCart}</span></Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
@@ -70,7 +84,7 @@ const AddButton = ({ item }: { item: ProductWithRelations }) => {
                 </DialogHeader>
                 <div className="space-y-10">
                     <div className="space-y-4 text-center">
-                        <Label>Pick your size</Label>
+                        <Label>{currentTranslation.pickYourSize}</Label>
                         <PickSize
                             sizes={item.sizes}
                             item={item}
@@ -79,19 +93,20 @@ const AddButton = ({ item }: { item: ProductWithRelations }) => {
                         />
                     </div>
                     <div className="space-y-4 text-center">
-                        <Label>Any Extra?</Label>
+                        <Label>{currentTranslation.anyExtra}</Label>
                         <Extras
                             extras={item.extras}
                             selectedExtras={selectedExtras}
                             setSelectedExtras={setSelectedExtras}
+                            locale={currentLocale}
                         />
                     </div>
                 </div>
                 <DialogFooter>
                     {quantity === 0 ?
                         <Button type="submit" className="w-full h-10" onClick={handleCart}>
-                            Add To Card {FormatCurrency(totalPrice)}
-                        </Button> : <ChooseQuantity item={item} quantity={quantity} selectedSize={selectedSize} selectedExtras={selectedExtras} />
+                            {currentTranslation.addToCart} {FormatCurrency(totalPrice)}
+                        </Button> : <ChooseQuantity item={item} quantity={quantity} selectedSize={selectedSize} selectedExtras={selectedExtras} translation={currentTranslation} />
                     }
                 </DialogFooter>
             </DialogContent>
@@ -128,10 +143,14 @@ export function PickSize({
 }
 
 export function Extras(
-    { extras, selectedExtras, setSelectedExtras }
+    { extras, selectedExtras, setSelectedExtras, locale }
         : {
-            extras: Extra[], selectedExtras: Extra[], setSelectedExtras: React.Dispatch<React.SetStateAction<Extra[]>>
+            extras: Extra[],
+            selectedExtras: Extra[],
+            setSelectedExtras: React.Dispatch<React.SetStateAction<Extra[]>>,
+            locale?: LanguageType
         }) {
+    const currentLocale = locale ?? Languages.ENGLISH
 
     const handleExtras = (extra: Extra) => {
         if (selectedExtras.find((e) => e.id === extra.id)) {
@@ -155,7 +174,7 @@ export function Extras(
                         htmlFor={extra.id}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
-                        {extra.name} {FormatCurrency(extra.price)}
+                        {localizeExtraName(extra.name, currentLocale)} {FormatCurrency(extra.price)}
                     </Label>
                 </div>
             ))}
@@ -163,15 +182,17 @@ export function Extras(
     )
 }
 
-export function ChooseQuantity({ quantity, item, selectedSize, selectedExtras }
+export function ChooseQuantity({ quantity, item, selectedSize, selectedExtras, translation }
     :
     {
         quantity: number,
         item: ProductWithRelations,
         selectedSize: Size,
-        selectedExtras: Extra[]
+        selectedExtras: Extra[],
+        translation?: Translations['menu']
     }) {
     const dispatch = useAppDispatch()
+    const currentTranslation = translation ?? defaultMenuTranslation
     return (
         <div className='flex items-center flex-col gap-2 mt-4 w-full'>
             <div className='flex items-center justify-center gap-2'>
@@ -182,7 +203,7 @@ export function ChooseQuantity({ quantity, item, selectedSize, selectedExtras }
                     -
                 </Button>
                 <div>
-                    <span className='text-black'>{quantity} in cart</span>
+                    <span className='text-black'>{quantity} {currentTranslation.inCart}</span>
                 </div>
                 <Button
                     variant='outline'
@@ -206,7 +227,7 @@ export function ChooseQuantity({ quantity, item, selectedSize, selectedExtras }
                 size='sm'
                 onClick={() => dispatch(RemoveItemFromForm({ id: item.id }))}
             >
-                Remove
+                {currentTranslation.remove}
             </Button>
         </div>
     )

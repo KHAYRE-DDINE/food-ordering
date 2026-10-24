@@ -47,8 +47,73 @@
     },
     "contact": {
       "Don't Hesitate": "Don't hesitate",
-      "contactUs": "Contact us"
+      "contactUs": "Contact us",
+      "getInTouch": "Get in Touch",
+      "description": "Have questions or feedback? We'd love to hear from you. Reach out to us through any of these channels.",
+      "ourLocation": "Our Location",
+      "emailUs": "Email Us",
+      "callUs": "Call Us",
+      "workingHours": "Working Hours",
+      "followUs": "Follow Us",
+      "sendUsMessage": "Send Us a Message",
+      "formDescription": "Fill out the form below and we'll get back to you as soon as possible.",
+      "yourName": "Your Name",
+      "yourEmail": "Your Email",
+      "subject": "Subject",
+      "yourMessage": "Your Message",
+      "sendMessage": "Send Message",
+      "address": "123 Food Street, Cuisine City",
+      "email": "contact@foodordering.com",
+      "phone": "+1 (555) 123-4567",
+      "workingHoursValue": "Mon - Fri: 9:00 AM - 10:00 PM"
+    },
+    "offers": {
+      "whyChooseUs": "Why Choose Us?",
+      "securePrivacy": "Secure privacy",
+      "safePayments": "Safe payments",
+      "deliveryGuarantee": "Delivery guarantee",
+      "securityReminder": "Security reminder: Please be wary of scam messages and links. Temu won't ask for extra fees via SMS or email.",
+      "lightningDeals": "Lightning deals",
+      "limitedTimeOffer": "Limited time offer"
+    },
+    "specials": {
+      "title": "Special Offers",
+      "orderNow": "Order Now",
+      "offers": [
+        {
+          "title": "Family Feast",
+          "description": "Perfect for family gatherings. Get 20% off on orders above $50",
+          "code": "FAMILY20"
+        },
+        {
+          "title": "Weekend Special",
+          "description": "Enjoy 15% off on all orders during weekends",
+          "code": "WEEKEND15"
+        },
+        {
+          "title": "First Order",
+          "description": "New customer? Get 25% off on your first order",
+          "code": "NEW25"
+        }
+      ]
     }
+  },
+  "menu": {
+    "title": "Choose Your Meal",
+    "subtitle": "Enjoy with it",
+    "searchMenu": "Search menu",
+    "searchPlaceholder": "Search by name or keyword...",
+    "filterByCategory": "Filter by Category",
+    "dietaryOptions": "Dietary Options",
+    "allCategories": "All Categories",
+    "addToCart": "Add To Cart",
+    "pickYourSize": "Pick your size",
+    "anyExtra": "Any Extra?",
+    "inCart": "in cart",
+    "remove": "Remove",
+    "numberOfOrders": "Number of Orders:",
+    "productNotFound": "Product not found",
+    "errorLoadingProduct": "Error loading product. Please try again later."
   },
   "navbar": {
     "home": "Home",
@@ -258,7 +323,26 @@
   "create": "Create",
   "cart": {
     "title": "Shopping Cart",
-    "noItemsInCart": "There are no items in your cart. Add some"
+    "noItemsInCart": "There are no items in your cart. Add some",
+    "orderSummary": "Order Summary",
+    "emptyTitle": "Your cart is empty",
+    "emptyDescription": "Start adding some delicious items to your cart.",
+    "size": "Size",
+    "extras": "Extras",
+    "subtotal": "Subtotal",
+    "delivery": "Delivery",
+    "total": "Total",
+    "checkout": {
+      "emailAddress": "Email Address",
+      "phoneNumber": "Phone Number",
+      "deliveryAddress": "Delivery Address",
+      "postalCode": "Postal Code",
+      "city": "City",
+      "country": "Country",
+      "processing": "Processing...",
+      "pay": "Pay",
+      "agreement": "By placing this order, you agree to our Terms of Service and Privacy Policy"
+    }
   },
   "copyRight": "© 2025 All rights reserved",
   "noProductsFound": "No products found",

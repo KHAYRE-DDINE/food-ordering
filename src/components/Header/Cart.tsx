@@ -6,13 +6,16 @@ import { ShoppingCartIcon } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { GetCartQuantity } from '../../lib/cart'
+import { useParams } from 'next/navigation'
 
 const Cart = () => {
     const cart = useAppSelector(selectCartItems)
     const cartQuantity = GetCartQuantity(cart)
+    const { locale } = useParams()
+    const localeValue = Array.isArray(locale) ? locale[0] : locale
 
     return (
-        <Link href={Routes.CART} className='block relative group'>
+        <Link href={`/${localeValue}/${Routes.CART}`} className='block relative group'>
             <span className='absolute -top-4 bg-primary start-4 w-5 h-5 rounded-full text-white text-center text-sm'>
                 {cartQuantity}
             </span>

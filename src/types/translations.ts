@@ -57,6 +57,42 @@ export type Translations = {
         contact: {
             "Don't Hesitate": string;
             contactUs: string;
+            getInTouch: string;
+            description: string;
+            ourLocation: string;
+            emailUs: string;
+            callUs: string;
+            workingHours: string;
+            followUs: string;
+            sendUsMessage: string;
+            formDescription: string;
+            yourName: string;
+            yourEmail: string;
+            subject: string;
+            yourMessage: string;
+            sendMessage: string;
+            address: string;
+            email: string;
+            phone: string;
+            workingHoursValue: string;
+        };
+        offers: {
+            whyChooseUs: string;
+            securePrivacy: string;
+            safePayments: string;
+            deliveryGuarantee: string;
+            securityReminder: string;
+            lightningDeals: string;
+            limitedTimeOffer: string;
+        };
+        specials: {
+            title: string;
+            orderNow: string;
+            offers: {
+                title: string;
+                description: string;
+                code: string;
+            }[];
         };
     };
     navbar: {
@@ -126,6 +162,42 @@ export type Translations = {
     cart: {
         title: string;
         noItemsInCart: string;
+        orderSummary: string;
+        emptyTitle: string;
+        emptyDescription: string;
+        size: string;
+        extras: string;
+        subtotal: string;
+        delivery: string;
+        total: string;
+        checkout: {
+            emailAddress: string;
+            phoneNumber: string;
+            deliveryAddress: string;
+            postalCode: string;
+            city: string;
+            country: string;
+            processing: string;
+            pay: string;
+            agreement: string;
+        };
+    };
+    menu: {
+        title: string;
+        subtitle: string;
+        searchMenu: string;
+        searchPlaceholder: string;
+        filterByCategory: string;
+        dietaryOptions: string;
+        allCategories: string;
+        addToCart: string;
+        pickYourSize: string;
+        anyExtra: string;
+        inCart: string;
+        remove: string;
+        numberOfOrders: string;
+        productNotFound: string;
+        errorLoadingProduct: string;
     };
     profile: {
         title: string;

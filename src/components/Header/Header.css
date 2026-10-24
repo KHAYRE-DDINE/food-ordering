@@ -1,5 +1,5 @@
 .navbar a:not(:last-of-type) {
-    width: 80px;
+    width: 100px;
     height: 35px;
     line-height: 35px;
     text-align: center;

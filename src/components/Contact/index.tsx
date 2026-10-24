@@ -1,5 +1,5 @@
 import { Routes } from "@/constants/enums"
-import { getCurrentLocale } from "@/lib/getCurrentLocale"
+import { Locale } from "@/i18n.config";
 import getTrans from "@/lib/translation"
 import { Mail, MapPin, Phone, Send, Clock, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
 
@@ -14,30 +14,9 @@ const MainHead = ({ title, subTitle }: { title: string; subTitle: string }) => (
   </div>
 )
 
-interface ContactInfo {
-  contactUs: string;
-  "Don't Hesitate": string;
-  address: string;
-  email: string;
-  phone: string;
-  workingHours: string;
-}
-
-const Contact = async () => {
-    const locale = await getCurrentLocale();
+const Contact = async ({ locale }: { locale: Locale }) => {
     const { home } = await getTrans(locale);
-    const contact = home.contact as unknown as ContactInfo;
-    
-    // Default values in case translations are missing
-    const contactDetails = {
-        address: contact?.address || '123 Food Street, Cuisine City',
-        email: contact?.email || 'contact@foodordering.com',
-        phone: contact?.phone || '+1 (555) 123-4567',
-        workingHours: contact?.workingHours || 'Mon - Fri: 9:00 AM - 10:00 PM',
-    };
-    
-    // Destructure for easier access
-    const { address, email, phone, workingHours } = contactDetails;
+    const contact = home.contact;
 
     return (
         <section className="py-20 bg-gradient-to-b from-white to-gray-50" id={Routes.CONTACT}>
@@ -48,9 +27,9 @@ const Contact = async () => {
                     <div className="md:flex">
                         {/* Contact Information */}
                         <div className="md:w-2/5 text-white p-12" style={{ background: 'var(--primary-gradient)' }}>
-                            <h2 className="text-3xl font-bold mb-8">Get in Touch</h2>
+                            <h2 className="text-3xl font-bold mb-8">{contact.getInTouch}</h2>
                             <p className="text-white/90 mb-10">
-                                Have questions or feedback? We&apos;d love to hear from you. Reach out to us through any of these channels.
+                                {contact.description}
                             </p>
                             
                             <div className="space-y-8">
@@ -59,8 +38,8 @@ const Contact = async () => {
                                         <MapPin className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-lg font-semibold">Our Location</h3>
-                                        <p className="text-white/90">{address}</p>
+                                        <h3 className="text-lg font-semibold">{contact.ourLocation}</h3>
+                                        <p className="text-white/90">{contact.address}</p>
                                     </div>
                                 </div>
                                 
@@ -69,9 +48,9 @@ const Contact = async () => {
                                         <Mail className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-lg font-semibold">Email Us</h3>
-                                        <a href={`mailto:${email}`} className="text-white/90 hover:text-white transition-colors">
-                                            {email}
+                                        <h3 className="text-lg font-semibold">{contact.emailUs}</h3>
+                                        <a href={`mailto:${contact.email}`} className="text-white/90 hover:text-white transition-colors">
+                                            {contact.email}
                                         </a>
                                     </div>
                                 </div>
@@ -81,9 +60,9 @@ const Contact = async () => {
                                         <Phone className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-lg font-semibold">Call Us</h3>
-                                        <a href={`tel:${phone.replace(/\D/g, '')}`} className="text-white/90 hover:text-white transition-colors">
-                                            {phone}
+                                        <h3 className="text-lg font-semibold">{contact.callUs}</h3>
+                                        <a href={`tel:${contact.phone.replace(/\D/g, '')}`} className="text-white/90 hover:text-white transition-colors">
+                                            {contact.phone}
                                         </a>
                                     </div>
                                 </div>
@@ -93,14 +72,14 @@ const Contact = async () => {
                                         <Clock className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-lg font-semibold">Working Hours</h3>
-                                        <p className="text-white/90">{workingHours}</p>
+                                        <h3 className="text-lg font-semibold">{contact.workingHours}</h3>
+                                        <p className="text-white/90">{contact.workingHoursValue}</p>
                                     </div>
                                 </div>
                             </div>
                             
                             <div className="mt-12 pt-8 border-t border-white/20">
-                                <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
+                                <h3 className="text-lg font-semibold mb-4">{contact.followUs}</h3>
                                 <div className="flex gap-4">
                                     {['facebook', 'twitter', 'instagram', 'linkedin'].map((social) => (
                                         <a
@@ -122,14 +101,14 @@ const Contact = async () => {
                         
                         {/* Contact Form */}
                         <div className="md:w-3/5 p-12">
-                            <h2 className="text-3xl font-bold text-gray-900 mb-2">Send Us a Message</h2>
-                            <p className="text-gray-600 mb-8">Fill out the form below and we&apos;ll get back to you as soon as possible.</p>
+                            <h2 className="text-3xl font-bold text-gray-900 mb-2">{contact.sendUsMessage}</h2>
+                            <p className="text-gray-600 mb-8">{contact.formDescription}</p>
                             
                             <form className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="group">
                                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-primary transition-colors">
-                                            Your Name <span className="text-red-500">*</span>
+                                            {contact.yourName} <span className="text-red-500">*</span>
                                         </label>
                                         <div className="relative">
                                             <input
@@ -149,7 +128,7 @@ const Contact = async () => {
                                     
                                     <div className="group">
                                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-primary transition-colors">
-                                            Your Email <span className="text-red-500">*</span>
+                                            {contact.yourEmail} <span className="text-red-500">*</span>
                                         </label>
                                         <div className="relative">
                                             <input
@@ -171,7 +150,7 @@ const Contact = async () => {
                                 
                                 <div className="group">
                                     <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-primary transition-colors">
-                                        Subject <span className="text-red-500">*</span>
+                                        {contact.subject} <span className="text-red-500">*</span>
                                     </label>
                                     <div className="relative">
                                         <input
@@ -191,7 +170,7 @@ const Contact = async () => {
                                 
                                 <div className="group">
                                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1 group-focus-within:text-primary transition-colors">
-                                        Your Message <span className="text-red-500">*</span>
+                                        {contact.yourMessage} <span className="text-red-500">*</span>
                                     </label>
                                     <div className="relative">
                                         <textarea
@@ -216,7 +195,7 @@ const Contact = async () => {
                                         className="w-full bg-primary text-white py-4 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-3 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                                     >
                                         <Send className="w-5 h-5" />
-                                        Send Message
+                                        {contact.sendMessage}
                                     </button>
                                 </div>
                             </form>

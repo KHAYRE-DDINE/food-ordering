@@ -16,13 +16,13 @@ export async function generateStaticParams() {
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
-  preload: true,
+  preload: false,
 });
 
 const cairo = Cairo({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
-  preload: true,
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -52,12 +52,12 @@ export default async function RootLayout({
         }
       >
         <ReduxProvider>
-          <Header />
+          <Header locale={locale} />
           <div className="pt-[80px]" style={{ minHeight: 'calc(100vh - 95px)' }}>
             {children}
           </div>
           {/* <ChatAi /> */}
-          <Footer />
+          <Footer locale={locale} />
           <ToastProvider />
         </ReduxProvider>
       </body>

@@ -5,14 +5,25 @@ import { AddToCart, selectCartItems } from "@/redux/features/cart/cartSlice"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { ProductWithRelations } from "@/types/product"
 import { useEffect, useState } from "react"
-import Image from "next/image"
 import { ChooseQuantity, Extras, PickSize } from "./add-to-cart"
 import { Extra, ProductSizes, Size } from "@prisma/client"
 import { getItemQuantity, getTotalAmount } from "@/lib/cart"
 import { Label } from "@radix-ui/react-label"
 import { FormatCurrency } from "@/lib/Formatter"
+import { LanguageType } from "@/i18n.config"
+import { Translations } from "@/types/translations"
+import { defaultMenuTranslation, localizeExtraName } from "@/lib/menu-localization"
+import { Languages } from "@/constants/enums"
 
-const Details = ({ item }: { item: ProductWithRelations }) => {
+const Details = ({
+    item,
+    locale = Languages.ENGLISH,
+    translation = defaultMenuTranslation,
+}: {
+    item: ProductWithRelations
+    locale?: LanguageType
+    translation?: Translations['menu']
+}) => {
     const dispatch = useAppDispatch()
     const cart = useAppSelector(selectCartItems)
     const [loading, setLoading] = useState(false)
@@ -58,13 +69,13 @@ const Details = ({ item }: { item: ProductWithRelations }) => {
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 py-10 items-center'>
             <div className="image">
-                <Image src={item.image} alt={item.name} width='400' height='400' />
+                <img src={item.image} alt={item.name} width="400" height="400" />
             </div>
             <div className="details leading-7">
                 <h1 className='text-primary text-4xl font-bold my-7'>{item.name}</h1>
                 <p className='text-accent text-sm font-bold w-[340px]'>{item.description}</p>
                 <div className="leading-none">
-                    <span className='text-accent text-[14px] font-bold mt-5 mb-4 block'>Number of Orders:</span>
+                    <span className='text-accent text-[14px] font-bold mt-5 mb-4 block'>{translation.numberOfOrders}</span>
                     {/* <div className='flex items-center justify-start gap-4'>
                         <button
                             onClick={() => setQuantity(itemQuantity > 0 ? itemQuantity - 1 : 0)}
@@ -77,7 +88,7 @@ const Details = ({ item }: { item: ProductWithRelations }) => {
                 </div>
                 <div className="grid grid-cols-2 gap-3 mt-5">
                     <div className="space-y-4 text-center">
-                        <Label className="text-primary font-bold">Pick your size</Label>
+                        <Label className="text-primary font-bold">{translation.pickYourSize}</Label>
                         <PickSize
                             sizes={item.sizes}
                             item={item}
@@ -86,11 +97,12 @@ const Details = ({ item }: { item: ProductWithRelations }) => {
                         />
                     </div>
                     <div className="space-y-4 text-center">
-                        <Label className="text-primary font-bold">Any Extra?</Label>
+                        <Label className="text-primary font-bold">{translation.anyExtra}</Label>
                         <Extras
                             extras={item.extras}
                             selectedExtras={selectedExtras}
                             setSelectedExtras={setSelectedExtras}
+                            locale={locale}
                         />
                     </div>
                 </div>
@@ -99,31 +111,31 @@ const Details = ({ item }: { item: ProductWithRelations }) => {
                         className={`${buttonVariants({ size: 'lg' })} p-2 mt-5 !rounded-full`}
                         onClick={handleCartItem}
                     >
-                        Add To Card {FormatCurrency(totalAmount)}
+                        {translation.addToCart} {FormatCurrency(totalAmount)}
                     </button>
                 ) : (
-                    <ChooseQuantity quantity={quantity} item={item} selectedSize={selectedSize} selectedExtras={selectedExtras} />
+                    <ChooseQuantity quantity={quantity} item={item} selectedSize={selectedSize} selectedExtras={selectedExtras} translation={translation} />
                 )}
 
                 <div className="choose-image flex items-center justify-start gap-2 mt-6">
                     <div className="overflow-hidden border-[3px] border-primary rounded-full cursor-pointer">
-                        <Image
-                            src='https://plus.unsplash.com/premium_photo-1679924471091-f7cd7ad90ddf?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                        <img
+                            src={item.image}
                             alt="img-1" width={80} height={90} className="hover:scale-110 transition-all duration-500" />
                     </div>
                     <div className="overflow-hidden border-[3px] border-primary rounded-full cursor-pointer">
-                        <Image
-                            src='https://plus.unsplash.com/premium_photo-1679924471091-f7cd7ad90ddf?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                        <img
+                            src={item.image}
                             alt="img-1" width={80} height={90} className="hover:scale-110 transition-all duration-500" />
                     </div>
                     <div className="overflow-hidden border-[3px] border-primary rounded-full cursor-pointer">
-                        <Image
-                            src='https://plus.unsplash.com/premium_photo-1679924471091-f7cd7ad90ddf?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                        <img
+                            src={item.image}
                             alt="img-1" width={80} height={90} className="hover:scale-110 transition-all duration-500" />
                     </div>
                     <div className="overflow-hidden border-[3px] border-primary rounded-full cursor-pointer">
-                        <Image
-                            src='https://plus.unsplash.com/premium_photo-1679924471091-f7cd7ad90ddf?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                        <img
+                            src={item.image}
                             alt="img-1" width={80} height={90} className="hover:scale-110 transition-all duration-500" />
                     </div>
                 </div>

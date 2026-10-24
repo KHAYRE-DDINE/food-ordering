@@ -2,24 +2,74 @@
 import './Header.css'
 import { Pages, Routes } from '@/constants/enums'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Menu, XIcon } from 'lucide-react';
-import { useParams, usePathname } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import { Translations } from '@/types/translations'
+
+const NAV_TIMING_KEY = 'nav-click-timing';
 
 const Navbar = ({ translation }: { translation: Translations }) => {
     const { locale } = useParams(); // Valid only inside components
+    const localeValue = Array.isArray(locale) ? locale[0] : locale;
     const pathname = usePathname();
+    const router = useRouter();
     const [openMenu, setOpenMenu] = useState(false);
+    const navigationStartRef = useRef<{
+        href: string;
+        title: string;
+        startedAt: number;
+        from: string;
+    } | null>(null);
     const { navbar } = translation
 
     const Links = [
-        { id: crypto.randomUUID(), href: Routes.MENU, title: navbar.menu },
-        { id: crypto.randomUUID(), href: Routes.ABOUT, title: navbar.about },
-        { id: crypto.randomUUID(), href: Routes.CONTACT, title: navbar.contact },
-        { id: crypto.randomUUID(), href: `${Routes.AUTH}/${Pages.LOGIN}`, title: navbar.login },
+        { href: Routes.MENU, title: navbar.menu },
+        { href: Routes.ABOUT, title: navbar.about },
+        { href: Routes.CONTACT, title: navbar.contact },
+        { href: `${Routes.AUTH}/${Pages.LOGIN}`, title: navbar.login },
     ]
+
+    useEffect(() => {
+        const storedTiming = sessionStorage.getItem(NAV_TIMING_KEY);
+        const pendingTiming = navigationStartRef.current ?? (storedTiming ? JSON.parse(storedTiming) : null);
+
+        if (!pendingTiming || pendingTiming.href !== pathname) {
+            return;
+        }
+
+        const duration = Math.round(performance.now() - pendingTiming.startedAt);
+        console.log('[navigation timing] redirect completed', {
+            link: pendingTiming.title,
+            from: pendingTiming.from,
+            to: pathname,
+            durationMs: duration,
+        });
+        navigationStartRef.current = null;
+        sessionStorage.removeItem(NAV_TIMING_KEY);
+    }, [pathname]);
+
+    const handleNavigationClick = (href: string, title: string) => {
+        const timing = {
+            href,
+            title,
+            startedAt: performance.now(),
+            from: pathname,
+        };
+
+        navigationStartRef.current = timing;
+        sessionStorage.setItem(NAV_TIMING_KEY, JSON.stringify(timing));
+        console.log('[navigation timing] link clicked', {
+            link: title,
+            from: pathname,
+            to: href,
+        });
+    };
+
+    const prefetchRoute = (href: string) => {
+        router.prefetch(href);
+    };
 
     return (
         <nav className='flex-1 justify-start md:justify-end flex '>
@@ -31,11 +81,14 @@ const Navbar = ({ translation }: { translation: Translations }) => {
                     <XIcon className='!w-6 !h-6' />
                 </Button>
                 {Links.map((link) => (
-                    <Link href={`/${locale}/${link.href}`} key={link.id}
+                    <Link href={`/${localeValue}/${link.href}`} key={link.href}
+                        onClick={() => handleNavigationClick(`/${localeValue}/${link.href}`, link.title)}
+                        onPointerEnter={() => prefetchRoute(`/${localeValue}/${link.href}`)}
+                        onFocus={() => prefetchRoute(`/${localeValue}/${link.href}`)}
                         className={`${link.href === `${Routes.AUTH}/${Pages.LOGIN}` ? `
                             ${buttonVariants({ size: 'lg' })} !px-8 !rounded-full capitalize`
                             : 'text-accent hover:text-primary capitalize duration-200 '}
-                            font-semibold ${pathname.startsWith(`/${locale}/${link.href}`) ? 'text-primary ' : 'text-accent'}`}
+                            font-semibold ${pathname.startsWith(`/${localeValue}/${link.href}`) ? 'text-primary ' : 'text-accent'}`}
                     >
                         <span></span>
                         <span></span>

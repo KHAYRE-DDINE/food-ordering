@@ -4,6 +4,9 @@ import { ProductSizes, ExtraIngredients } from "@prisma/client";
 import Menu from "@/components/menu";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { LanguageType } from "@/i18n.config";
+import { localizeCategoryName, localizeProduct } from "@/lib/menu-localization";
+import { Translations } from "@/types/translations";
 
 interface Category {
   id: string;
@@ -13,6 +16,8 @@ interface Category {
 
 interface CategoriesProps {
   categories: Category[];
+  locale: LanguageType;
+  translation: Translations['menu'];
 }
 
 interface Product {
@@ -39,7 +44,7 @@ interface Product {
   updatedAt: Date;
 }
 
-export default function Categories({ categories }: CategoriesProps) {
+export default function Categories({ categories, locale, translation }: CategoriesProps) {
   const filters = useSelector((state: RootState) => state.filter.items);
 
   const filteredCategories = categories.map(category => {
@@ -89,9 +94,13 @@ export default function Categories({ categories }: CategoriesProps) {
       {filteredCategories.map((category) => (
         <section key={category.id} className="section-gap">
           <h1 className="text-primary text-4xl font-bold italic text-center mb-6 mt-14">
-            {category.name}
+            {localizeCategoryName(category.name, locale)}
           </h1>
-          <Menu items={category.products} />
+          <Menu
+            items={category.products.map((product) => localizeProduct(product, locale))}
+            locale={locale}
+            translation={translation}
+          />
         </section>
       ))}
     </div>

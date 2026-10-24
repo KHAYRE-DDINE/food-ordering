@@ -1,42 +1,35 @@
 import Image from 'next/image'
 import React from 'react'
+import getTrans from '@/lib/translation'
+import { Locale } from '@/i18n.config'
 
-const Specials = () => {
+const images = [
+  '/assets/images/menu/special-family-feast.jpg',
+  '/assets/images/menu/special-weekend.jpg',
+  '/assets/images/menu/special-first-order.jpg',
+]
+
+const Specials = async ({ locale }: { locale: Locale }) => {
+  const { home } = await getTrans(locale)
+  const { specials } = home
+
   return (
     <section className="section-gap">
     <div className="container">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 italic bg-clip-text text-transparent" style={{ backgroundImage: 'var(--primary-gradient)' }}>
-        Special Offers
+        {specials.title}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {[
-          {
-            title: 'Family Feast',
-            description: 'Perfect for family gatherings. Get 20% off on orders above $50',
-            image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1398&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            code: 'FAMILY20'
-          },
-          {
-            title: 'Weekend Special',
-            description: 'Enjoy 15% off on all orders during weekends',
-            image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            code: 'WEEKEND15'
-          },
-          {
-            title: 'First Order',
-            description: 'New customer? Get 25% off on your first order',
-            image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=1527&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            code: 'NEW25'
-          }
-        ].map((offer, index) => (
+        {specials.offers.map((offer, index) => (
           <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
             <div className="h-48 overflow-hidden">
               <Image
-                src={offer.image} 
+                src={images[index]}
                 alt={offer.title}
                 width={400}
                 height={192}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                style={{ width: "100%", height: "auto", minHeight: "100%" }}
                 priority={index < 2} // Optional: prioritize loading first 2 images
               />
             </div>
@@ -48,7 +41,7 @@ const Specials = () => {
                   {offer.code}
                 </span>
                 <button className="text-primary font-medium hover:underline">
-                  Order Now
+                  {specials.orderNow}
                 </button>
               </div>
             </div>

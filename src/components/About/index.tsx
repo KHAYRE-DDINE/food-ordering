@@ -1,5 +1,5 @@
 import { Routes } from "@/constants/enums"
-import { getCurrentLocale } from "@/lib/getCurrentLocale"
+import { Locale } from "@/i18n.config"
 import getTrans from "@/lib/translation"
 import Image from "next/image"
 
@@ -14,8 +14,7 @@ const MainHead = ({ title, subTitle }: { title: string; subTitle: string }) => (
   </div>
 )
 
-const About = async () => {
-    const locale = await getCurrentLocale()
+const About = async ({ locale }: { locale: Locale }) => {
     const { home } = await getTrans(locale)
     const { about } = home
     const { ourStory, aboutUs, firstDescriptions, secondDescriptions, thirdDescriptions } = about

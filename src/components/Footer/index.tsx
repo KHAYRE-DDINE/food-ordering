@@ -1,10 +1,9 @@
-import { getCurrentLocale } from '@/lib/getCurrentLocale'
 import getTrans from '@/lib/translation'
 import React from 'react'
+import { Locale } from '@/i18n.config'
 
 
-const Footer = async () => {
-    const locale = await getCurrentLocale()
+const Footer = async ({ locale }: { locale: Locale }) => {
     const { copyRight } = await getTrans(locale)
 
     return (

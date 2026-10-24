@@ -5,13 +5,16 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { getSubTotal, getTotalAmount } from "@/lib/cart";
 import { FormatCurrency } from "@/lib/Formatter";
-import { selectCartItems } from "@/redux/features/cart/cartSlice";
+import { ClearCartItems, selectCartItems } from "@/redux/features/cart/cartSlice";
 import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { CreditCard, MapPin, Phone, ShoppingBag, Mail } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { Translations } from "@/types/translations";
 
-const Checkpoint = () => {
+const Checkpoint = ({ translation }: { translation: Translations['cart'] }) => {
+  const dispatch = useAppDispatch();
   const cart = useAppSelector(selectCartItems);
   const totalAmount = getTotalAmount(cart);
   const subTotal = getSubTotal(cart);
@@ -50,6 +53,7 @@ const Checkpoint = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
+        console.error("Order API error response:", errorData);
         throw new Error(errorData.error || "Failed to create order");
       }
 
@@ -58,6 +62,7 @@ const Checkpoint = () => {
         position: "bottom-left",
       });
       sessionStorage.removeItem("cartItems");
+      dispatch(ClearCartItems());
       console.log("Order created:", data);
     } catch (error: unknown) {
       console.error("Order error:", error);
@@ -92,7 +97,7 @@ const Checkpoint = () => {
     <div className="bg-white rounded-xl shadow-sm p-6 sticky top-6">
       <div className="flex items-center gap-2 mb-6">
         <ShoppingBag className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-bold text-gray-900">Order Summary</h2>
+        <h2 className="text-2xl font-bold text-gray-900">{translation.orderSummary}</h2>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -102,7 +107,7 @@ const Checkpoint = () => {
             className="text-gray-700 flex items-center gap-2"
           >
             <Mail className="h-4 w-4 text-gray-500" />
-            Email Address
+            {translation.checkout.emailAddress}
           </Label>
           <Input
             id="email"
@@ -121,7 +126,7 @@ const Checkpoint = () => {
             className="text-gray-700 flex items-center gap-2"
           >
             <Phone className="h-4 w-4 text-gray-500" />
-            Phone Number
+            {translation.checkout.phoneNumber}
           </Label>
           <Input
             id="phone"
@@ -141,7 +146,7 @@ const Checkpoint = () => {
             className="text-gray-700 flex items-center gap-2"
           >
             <MapPin className="h-4 w-4 text-gray-500" />
-            Delivery Address
+            {translation.checkout.deliveryAddress}
           </Label>
           <Textarea
             id="address"
@@ -163,7 +168,7 @@ const Checkpoint = () => {
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
             <Label htmlFor="postal-code" className="text-gray-700 text-sm">
-              Postal Code
+              {translation.checkout.postalCode}
             </Label>
             <Input
               type="text"
@@ -178,7 +183,7 @@ const Checkpoint = () => {
           </div>
           <div className="space-y-1">
             <Label htmlFor="city" className="text-gray-700 text-sm">
-              City
+              {translation.checkout.city}
             </Label>
             <Input
               type="text"
@@ -195,7 +200,7 @@ const Checkpoint = () => {
 
         <div className="space-y-1">
           <Label htmlFor="country" className="text-gray-700 text-sm">
-            Country
+            {translation.checkout.country}
           </Label>
           <Input
             type="text"
@@ -217,14 +222,13 @@ const Checkpoint = () => {
           >
             <CreditCard className="mr-2 h-5 w-5" />
             {isSubmitting
-              ? "Processing..."
-              : `Pay ${FormatCurrency(totalAmount)}`}
+              ? translation.checkout.processing
+              : `${translation.checkout.pay} ${FormatCurrency(totalAmount)}`}
           </Button>
         </div>
 
         <p className="text-xs text-gray-500 text-center mt-4">
-          By placing this order, you agree to our Terms of Service and Privacy
-          Policy
+          {translation.checkout.agreement}
         </p>
       </form>
     </div>

@@ -1,13 +1,12 @@
 import React from 'react'
 import Navbar from './Navbar'
 import Link from 'next/link';
-import { getCurrentLocale } from '@/lib/getCurrentLocale';
 import getTrans from '@/lib/translation';
 import SwitchLanguage from './SwitchLanguage';
 import Cart from './Cart';
+import { Locale } from '@/i18n.config';
 
-const Header = async () => {
-    const locale = await getCurrentLocale()
+const Header = async ({ locale }: { locale: Locale }) => {
     const translation = await getTrans(locale)
 
     return (
