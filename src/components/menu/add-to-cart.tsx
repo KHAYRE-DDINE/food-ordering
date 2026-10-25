@@ -40,9 +40,9 @@ const AddButton = ({
     const currentTranslation = translation ?? defaultMenuTranslation
     const cart = useAppSelector(selectCartItems)
     const dispatch = useAppDispatch()
-    // Prefer the SMALL size, otherwise the first available one. A product
-    // without sizes is still orderable (selectedSize stays undefined).
-    const defaultSize = item.sizes.find((size) => size.name === ProductSizes.SMALL) ?? item.sizes[0]
+    const safeSizes = Array.isArray(item?.sizes) ? item.sizes : []
+    const safeExtras = Array.isArray(item?.extras) ? item.extras : []
+    const defaultSize = safeSizes.find((size) => size.name === ProductSizes.SMALL) ?? safeSizes[0]
     const [selectedSize, setSelectedSize] = useState<Size | undefined>(defaultSize)
     const [selectedExtras, setSelectedExtras] = useState<Extra[]>([])
 
@@ -86,22 +86,22 @@ const AddButton = ({
                     </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-10">
-                    {item.sizes.length > 0 && selectedSize && (
+                    {safeSizes.length > 0 && selectedSize && (
                         <div className="space-y-4 text-center">
                             <Label>{currentTranslation.pickYourSize}</Label>
                             <PickSize
-                                sizes={item.sizes}
+                                sizes={safeSizes}
                                 item={item}
                                 selectedSize={selectedSize}
                                 setSelectedSize={setSelectedSize}
                             />
                         </div>
                     )}
-                    {item.extras.length > 0 && (
+                    {safeExtras.length > 0 && (
                         <div className="space-y-4 text-center">
                             <Label>{currentTranslation.anyExtra}</Label>
                             <Extras
-                                extras={item.extras}
+                                extras={safeExtras}
                                 selectedExtras={selectedExtras}
                                 setSelectedExtras={setSelectedExtras}
                                 locale={currentLocale}

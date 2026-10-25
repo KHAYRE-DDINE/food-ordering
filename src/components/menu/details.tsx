@@ -28,8 +28,9 @@ const Details = ({
 }) => {
     const dispatch = useAppDispatch()
     const cart = useAppSelector(selectCartItems)
-    // Prefer the SMALL size, otherwise the first available one.
-    const defaultSize = item.sizes.find((size) => size.name === ProductSizes.SMALL) ?? item.sizes[0]
+    const safeSizes = Array.isArray(item?.sizes) ? item.sizes : []
+    const safeExtras = Array.isArray(item?.extras) ? item.extras : []
+    const defaultSize = safeSizes.find((size) => size.name === ProductSizes.SMALL) ?? safeSizes[0]
     const [selectedSize, setSelectedSize] = useState<Size | undefined>(defaultSize)
     const [selectedExtras, setSelectedExtras] = useState<Extra[]>([])
 
@@ -98,22 +99,22 @@ const Details = ({
                     </div> */}
                 </div>
                 <div className="grid grid-cols-2 gap-3 mt-5">
-                    {item.sizes.length > 0 && selectedSize && (
+                    {safeSizes.length > 0 && selectedSize && (
                         <div className="space-y-4 text-center">
                             <Label className="text-primary font-bold">{translation.pickYourSize}</Label>
                             <PickSize
-                                sizes={item.sizes}
+                                sizes={safeSizes}
                                 item={item}
                                 selectedSize={selectedSize}
                                 setSelectedSize={setSelectedSize}
                             />
                         </div>
                     )}
-                    {item.extras.length > 0 && (
+                    {safeExtras.length > 0 && (
                         <div className="space-y-4 text-center">
                             <Label className="text-primary font-bold">{translation.anyExtra}</Label>
                             <Extras
-                                extras={item.extras}
+                                extras={safeExtras}
                                 selectedExtras={selectedExtras}
                                 setSelectedExtras={setSelectedExtras}
                                 locale={locale}

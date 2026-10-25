@@ -1,27 +1,18 @@
 'use client'
-import './Header.css'
-import { Pages, Routes } from '@/constants/enums'
+import { Routes } from '@/constants/enums'
 import Link from 'next/link'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { Menu, XIcon } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import { Translations } from '@/types/translations'
 
-const NAV_TIMING_KEY = 'nav-click-timing';
-
 const Navbar = ({ translation }: { translation: Translations }) => {
-    const { locale } = useParams(); // Valid only inside components
+    const { locale } = useParams();
     const localeValue = Array.isArray(locale) ? locale[0] : locale;
     const pathname = usePathname();
     const router = useRouter();
     const [openMenu, setOpenMenu] = useState(false);
-    const navigationStartRef = useRef<{
-        href: string;
-        title: string;
-        startedAt: number;
-        from: string;
-    } | null>(null);
     const { navbar } = translation
 
     const Links = [
@@ -33,72 +24,111 @@ const Navbar = ({ translation }: { translation: Translations }) => {
         { href: Routes.PROFILE, title: (navbar as Record<string, string>).account || 'Account' },
     ]
 
-    useEffect(() => {
-        const storedTiming = sessionStorage.getItem(NAV_TIMING_KEY);
-        const pendingTiming = navigationStartRef.current ?? (storedTiming ? JSON.parse(storedTiming) : null);
-
-        if (!pendingTiming || pendingTiming.href !== pathname) {
-            return;
-        }
-
-        const duration = Math.round(performance.now() - pendingTiming.startedAt);
-        console.log('[navigation timing] redirect completed', {
-            link: pendingTiming.title,
-            from: pendingTiming.from,
-            to: pathname,
-            durationMs: duration,
-        });
-        navigationStartRef.current = null;
-        sessionStorage.removeItem(NAV_TIMING_KEY);
-    }, [pathname]);
-
-    const handleNavigationClick = (href: string, title: string) => {
-        const timing = {
-            href,
-            title,
-            startedAt: performance.now(),
-            from: pathname,
-        };
-
-        navigationStartRef.current = timing;
-        sessionStorage.setItem(NAV_TIMING_KEY, JSON.stringify(timing));
-        console.log('[navigation timing] link clicked', {
-            link: title,
-            from: pathname,
-            to: href,
-        });
-    };
-
-    const prefetchRoute = (href: string) => {
-        router.prefetch(href);
-    };
-
     return (
-        <nav className='flex-1 justify-start md:justify-end flex '>
-            <Button variant={'secondary'} size='sm' className='md:hidden absolute top-6 left-1/2' onClick={() => setOpenMenu(!openMenu)}>
-                <Menu className='!w-6 !h-6 ' />
+        <>
+            {/* Desktop Navigation */}
+            <nav className='hidden md:flex items-center gap-6 lg:gap-8'>
+                {Links.map((link) => {
+                    const isProfile = link.href === Routes.PROFILE;
+                    const isActive = pathname.startsWith(`/${localeValue}/${link.href}`);
+
+                    if (isProfile) {
+                        return (
+                            <Link
+                                key={link.href}
+                                href={`/${localeValue}/${link.href}`}
+                                onPointerEnter={() => router.prefetch(`/${localeValue}/${link.href}`)}
+                                className={`${buttonVariants({ size: 'sm' })} !px-5 !rounded-full capitalize font-semibold shadow-sm`}
+                            >
+                                {link.title}
+                            </Link>
+                        );
+                    }
+
+                    return (
+                        <Link
+                            key={link.href}
+                            href={`/${localeValue}/${link.href}`}
+                            onPointerEnter={() => router.prefetch(`/${localeValue}/${link.href}`)}
+                            className={`text-sm font-semibold capitalize transition-colors duration-150 ${
+                                isActive
+                                    ? 'text-primary font-bold'
+                                    : 'text-gray-600 hover:text-primary'
+                            }`}
+                        >
+                            {link.title}
+                        </Link>
+                    );
+                })}
+            </nav>
+
+            {/* Mobile Hamburger Toggle Button */}
+            <Button
+                variant='ghost'
+                size='icon'
+                className='md:hidden text-gray-700 hover:text-primary'
+                onClick={() => setOpenMenu(true)}
+                aria-label="Open Navigation Menu"
+            >
+                <Menu className='h-6 w-6' />
             </Button>
-            <ul className={`${openMenu ? 'left-0 z-[1000]' : '!-left-full'} navbar w-full h-full left-0 top-0 px-10 py-20 md:py-0 md:px-3 flex flex-col md:flex-row justify-start md:justify-end items-start md:items-center gap-6 lg:gap-10 fixed md:static bg-background rounded-full`}>
-                <Button variant={'secondary'} size='sm' className='md:hidden absolute top-10 right-10 ' onClick={() => setOpenMenu(!openMenu)}>
-                    <XIcon className='!w-6 !h-6' />
-                </Button>
-                {Links.map((link) => (
-                    <Link href={`/${localeValue}/${link.href}`} key={link.href}
-                        onClick={() => handleNavigationClick(`/${localeValue}/${link.href}`, link.title)}
-                        onPointerEnter={() => prefetchRoute(`/${localeValue}/${link.href}`)}
-                        onFocus={() => prefetchRoute(`/${localeValue}/${link.href}`)}
-                        className={`${link.href === Routes.PROFILE ? `
-                            ${buttonVariants({ size: 'sm' })} !px-5 !rounded-full capitalize`
-                            : 'text-accent hover:text-primary capitalize duration-200 '}
-                            font-semibold ${pathname.startsWith(`/${localeValue}/${link.href}`) ? 'text-primary ' : 'text-accent'}`}
+
+            {/* Mobile Drawer Backdrop & Menu */}
+            {openMenu && (
+                <div
+                    className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm md:hidden"
+                    onClick={() => setOpenMenu(false)}
+                >
+                    <div
+                        className="fixed top-0 bottom-0 right-0 w-[280px] bg-white shadow-2xl p-6 flex flex-col justify-between"
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        <span></span>
-                        <span></span>
-                        {link.title}
-                    </Link>
-                ))}
-            </ul>
-        </nav>
+                        <div>
+                            <div className="flex items-center justify-between pb-6 border-b border-gray-100">
+                                <span className="font-extrabold text-xl text-primary">Menu</span>
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => setOpenMenu(false)}
+                                    aria-label="Close menu"
+                                >
+                                    <X className="h-5 w-5 text-gray-500" />
+                                </Button>
+                            </div>
+
+                            <ul className="flex flex-col gap-4 pt-6">
+                                {Links.map((link) => {
+                                    const isProfile = link.href === Routes.PROFILE;
+                                    const isActive = pathname.startsWith(`/${localeValue}/${link.href}`);
+
+                                    return (
+                                        <li key={link.href}>
+                                            <Link
+                                                href={`/${localeValue}/${link.href}`}
+                                                onClick={() => setOpenMenu(false)}
+                                                className={`block py-2 text-base font-semibold transition-colors ${
+                                                    isProfile
+                                                        ? `${buttonVariants({ size: 'sm' })} w-full text-center mt-2`
+                                                        : isActive
+                                                        ? 'text-primary'
+                                                        : 'text-gray-700 hover:text-primary'
+                                                }`}
+                                            >
+                                                {link.title}
+                                            </Link>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </div>
+
+                        <div className="pt-6 border-t border-gray-100 text-xs text-gray-400 text-center">
+                            Fasty Food © 2026
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
     )
 }
 

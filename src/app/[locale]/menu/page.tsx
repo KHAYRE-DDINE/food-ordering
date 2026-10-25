@@ -10,22 +10,26 @@ export default async function MenuPage({
 }: {
   params: Promise<{ locale: Locale }>;
 }) {
-  // Fetch categories
   const [{ locale }, categories] = await Promise.all([
     params,
     getProductByCategory(),
   ]);
   const { menu } = await getTrans(locale);
 
+  // Guarantee clean plain JSON serialization across the server/client component boundary
+  const plainCategories = JSON.parse(JSON.stringify(categories ?? []));
+
   return (
-    <div>
-      <div className="text-center pt-[66px]">
-        <MainHead title={menu.title} subTitle={menu.subtitle} />
-      </div>
-      <div className="container max-w-7xl">
+    <main className="min-h-screen pt-28 pb-20 bg-gray-50/40">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8">
+          <MainHead title={menu.title} subTitle={menu.subtitle} />
+        </div>
         <FilterItems translation={menu} />
-        <Categories categories={categories} locale={locale} translation={menu} />
+        <div className="mt-8">
+          <Categories categories={plainCategories} locale={locale} translation={menu} />
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
