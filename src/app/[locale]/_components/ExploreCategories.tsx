@@ -62,12 +62,13 @@ export default async function ExploreCategories({ locale }: { locale: Locale }) 
               <Utensils className="h-6 w-6 text-primary" />
             );
             const localizedName = localizeCategoryName(cat.name, locale);
+            const targetHash = cat.name.toLowerCase().trim().replace(/\s+/g, '-');
 
             return (
               <Link
                 key={cat.id}
-                href={`/${locale}/menu`}
-                className="group p-5 bg-gray-50 hover:bg-primary/5 rounded-xl border border-gray-200/80 hover:border-primary/40 transition-all text-center flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow"
+                href={`/${locale}/menu#${targetHash}`}
+                className="group p-5 bg-gray-50 hover:bg-primary/5 rounded-xl border border-gray-200/80 hover:border-primary/40 transition-all text-center flex flex-col items-center justify-center gap-3 shadow-sm hover:shadow cursor-pointer"
               >
                 <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
                   {icon}

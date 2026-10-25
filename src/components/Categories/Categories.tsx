@@ -1,12 +1,14 @@
 "use client";
 
+import { useEffect } from "react";
 import Menu from "@/components/menu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { LanguageType } from "@/i18n.config";
 import { localizeCategoryName, localizeProduct } from "@/lib/menu-localization";
 import { Translations } from "@/types/translations";
 import { ProductWithRelations } from "@/types/product";
+import { addToFilter } from "@/redux/features/filter/filterSlice";
 
 interface Category {
   id: string;
@@ -21,6 +23,7 @@ interface CategoriesProps {
 }
 
 export default function Categories({ categories = [], locale, translation }: CategoriesProps) {
+  const dispatch = useDispatch();
   const filterItems = useSelector((state: RootState) => state?.filter?.items);
   const safeFilters = Array.isArray(filterItems) ? filterItems : [];
 
@@ -37,6 +40,39 @@ export default function Categories({ categories = [], locale, translation }: Cat
   } else if (typeof dietaryItem?.value === "string" && dietaryItem.value) {
     dietaryFilters = [dietaryItem.value.toLowerCase()];
   }
+
+  // Handle URL hash navigation (e.g. /menu#burgers)
+  useEffect(() => {
+    const handleScrollToHash = () => {
+      const rawHash = window.location.hash;
+      if (!rawHash) return;
+      const targetId = decodeURIComponent(rawHash.replace(/^#/, "")).toLowerCase().trim().replace(/\s+/g, '-');
+      if (!targetId) return;
+
+      // If a specific filter is blocking visibility of the hash target, reset category filter
+      const currentCatFilter = categoryFilter.toLowerCase();
+      if (currentCatFilter !== "all categories" && currentCatFilter !== targetId) {
+        dispatch(addToFilter({ name: "category", value: "All Categories" }));
+      }
+
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    };
+
+    // Attempt immediately and with short timeouts for DOM readiness
+    handleScrollToHash();
+    const timer1 = setTimeout(handleScrollToHash, 150);
+    const timer2 = setTimeout(handleScrollToHash, 450);
+
+    window.addEventListener("hashchange", handleScrollToHash);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      window.removeEventListener("hashchange", handleScrollToHash);
+    };
+  }, [categoryFilter, dispatch]);
 
   const safeCategories = Array.isArray(categories) ? categories : [];
 
@@ -56,10 +92,10 @@ export default function Categories({ categories = [], locale, translation }: Cat
         pDesc.includes(searchFilter);
 
       // Category filter
-      const catName = String(category.name || "").toLowerCase();
+      const catName = String(category.name || "").toLowerCase().trim();
       const matchesCategory =
         categoryFilter === "All Categories" ||
-        catName === categoryFilter.toLowerCase();
+        catName === categoryFilter.toLowerCase().trim();
 
       // Dietary filter: check against ingredients/extras that the item does NOT contain
       const safeExtras = Array.isArray(product.extras) ? product.extras : [];
@@ -88,22 +124,29 @@ export default function Categories({ categories = [], locale, translation }: Cat
 
   return (
     <div className="space-y-16">
-      {filteredCategories.map((category) => (
-        <section key={category.id} id={category.name.toLowerCase()} className="scroll-mt-28">
-          <div className="flex items-center justify-center gap-4 mb-8 mt-12">
-            <span className="h-px bg-primary/20 w-16 sm:w-28" />
-            <h2 className="text-gray-900 text-2xl sm:text-3xl font-extrabold tracking-tight text-center">
-              {localizeCategoryName(category.name, locale)}
-            </h2>
-            <span className="h-px bg-primary/20 w-16 sm:w-28" />
-          </div>
-          <Menu
-            items={category.products.map((product) => localizeProduct(product, locale))}
-            locale={locale}
-            translation={translation}
-          />
-        </section>
-      ))}
+      {filteredCategories.map((category) => {
+        const categorySlug = category.name.toLowerCase().trim().replace(/\s+/g, '-');
+        return (
+          <section
+            key={category.id}
+            id={categorySlug}
+            className="scroll-mt-28"
+          >
+            <div className="flex items-center justify-center gap-4 mb-8 mt-12">
+              <span className="h-px bg-primary/20 w-16 sm:w-28" />
+              <h2 className="text-gray-900 text-2xl sm:text-3xl font-extrabold tracking-tight text-center">
+                {localizeCategoryName(category.name, locale)}
+              </h2>
+              <span className="h-px bg-primary/20 w-16 sm:w-28" />
+            </div>
+            <Menu
+              items={category.products.map((product) => localizeProduct(product, locale))}
+              locale={locale}
+              translation={translation}
+            />
+          </section>
+        );
+      })}
     </div>
   );
 }

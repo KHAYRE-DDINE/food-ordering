@@ -16,7 +16,7 @@ const BestSellers = async ({ locale }: { locale: Locale }) => {
     const { bestSeller } = home
 
     return (
-        <section className="py-12">
+        <section id="best-sellers" className="py-12 scroll-mt-28">
             <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className='text-center mb-8'>
                     <MainHead title={bestSeller.checkOut} subTitle={bestSeller.OurBestSellers} />

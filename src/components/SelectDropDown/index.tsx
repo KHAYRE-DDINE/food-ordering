@@ -17,7 +17,18 @@ function DropDown({
   translation: Translations['menu'];
 }) {
   const [isActive, setIsActive] = useState<boolean>(false);
-  const categories = ["All Categories", "Classic", "Vegetarian", "Meat", "Cheese", "Spicy"];
+  const categories = [
+    "All Categories",
+    "Classic",
+    "Vegetarian",
+    "Meat",
+    "Cheese",
+    "Spicy",
+    "Burgers",
+    "Desserts",
+    "Beverages",
+    "Sides",
+  ];
   const isArabic = translation.allCategories !== "All Categories";
   const labels: Record<string, string> = {
     "All Categories": translation.allCategories,
@@ -26,6 +37,10 @@ function DropDown({
     Meat: isArabic ? "لحوم" : "Meat",
     Cheese: isArabic ? "جبن" : "Cheese",
     Spicy: isArabic ? "حار" : "Spicy",
+    Burgers: isArabic ? "برجر" : "Burgers",
+    Desserts: isArabic ? "حلويات" : "Desserts",
+    Beverages: isArabic ? "مشروبات" : "Beverages",
+    Sides: isArabic ? "مقبلات" : "Sides",
   };
 
   return (
