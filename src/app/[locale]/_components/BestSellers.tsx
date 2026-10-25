@@ -16,9 +16,9 @@ const BestSellers = async ({ locale }: { locale: Locale }) => {
     const { bestSeller } = home
 
     return (
-        <section>
-            <div className="container">
-                <div className='text-center mb-4'>
+        <section className="py-12">
+            <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className='text-center mb-8'>
                     <MainHead title={bestSeller.checkOut} subTitle={bestSeller.OurBestSellers} />
                 </div>
                 <Menu
@@ -31,4 +31,4 @@ const BestSellers = async ({ locale }: { locale: Locale }) => {
     )
 }
 
-export default BestSellers
+export default BestSellers;

@@ -12,7 +12,7 @@ const Header = async ({ locale }: { locale: Locale }) => {
 
     return (
         <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
-            <div className="container max-w-7xl mx-auto h-20 flex items-center justify-between px-4 sm:px-6 lg:px-8 gap-4">
+            <div className="container max-w-6xl mx-auto h-20 flex items-center justify-between px-4 sm:px-6 lg:px-8 gap-4">
                 <Link href={`/${locale}`} className="logo text-primary font-black text-2xl flex items-center gap-1.5 shrink-0 tracking-tight">
                     <span className="text-2xl">🍕</span>
                     <span>{translation.logo}</span>

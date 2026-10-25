@@ -2,14 +2,15 @@ import React from 'react'
 import { Lock, CreditCard, Truck, ShieldCheck, Bell, Zap, ChevronRight } from "lucide-react";
 import getTrans from '@/lib/translation';
 import { Locale } from '@/i18n.config';
+import Link from 'next/link';
 
 export const Offers = async ({ locale }: { locale: Locale }) => {
   const { home } = await getTrans(locale);
   const { offers } = home;
 
   return (
-    <div className="container">
-      <div className="why mt-12 border border-emerald-600/30 rounded-xl overflow-hidden bg-white shadow-sm">
+    <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2">
+      <div className="why border border-emerald-600/30 rounded-xl overflow-hidden bg-white shadow-sm">
         <div className="resons flex flex-col sm:flex-row justify-between items-center p-3 rounded-t-xl bg-emerald-700 text-white gap-2">
           <h2 className="flex justify-center items-center gap-1.5 text-sm font-semibold">
             <ShieldCheck className="h-5 w-5 text-emerald-200" /> {offers.whyChooseUs}
@@ -33,7 +34,10 @@ export const Offers = async ({ locale }: { locale: Locale }) => {
           </p>
         </div>
       </div>
-      <div className="lighting text-white bg-gradient-to-r from-primary to-orange-600 flex justify-between items-center p-3.5 rounded-xl mt-4 shadow-sm">
+      <Link
+        href={`/${locale}/offers`}
+        className="lighting text-white bg-gradient-to-r from-primary to-orange-600 flex justify-between items-center p-3.5 rounded-xl mt-4 shadow-sm hover:opacity-95 transition-opacity block"
+      >
         <div className="flex items-center gap-2">
           <Zap className="h-5 w-5 text-amber-200 fill-amber-200" />
           <span className="font-bold text-base sm:text-lg">{offers.lightningDeals}</span>
@@ -42,7 +46,7 @@ export const Offers = async ({ locale }: { locale: Locale }) => {
           <span>{offers.limitedTimeOffer}</span>
           <ChevronRight className="h-4 w-4" />
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

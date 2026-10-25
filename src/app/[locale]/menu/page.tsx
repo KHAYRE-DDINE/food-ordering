@@ -21,7 +21,7 @@ export default async function MenuPage({
 
   return (
     <main className="min-h-screen pt-28 pb-20 bg-gray-50/40">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <MainHead title={menu.title} subTitle={menu.subtitle} />
         </div>
