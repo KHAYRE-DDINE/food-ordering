@@ -48,7 +48,6 @@ export default function Categories({ categories, locale, translation }: Categori
   const filters = useSelector((state: RootState) => state.filter.items);
 
   const filteredCategories = categories.map(category => {
-    
     const filteredProducts = category.products.filter(product => {
       // Get filter values
       const searchFilter =
@@ -70,8 +69,7 @@ export default function Categories({ categories, locale, translation }: Categori
         categoryFilter === "All Categories" ||
         category.name.toLowerCase() === categoryFilter.toLowerCase();
 
-      // Dietary filter - assuming dietaryFilters are tags on the product itself
-      // Adjust this based on your actual data structure
+      // Dietary filter
       const matchesDietary =
         dietaryFilters.length === 0 ||
         dietaryFilters.every(diet => 
@@ -87,15 +85,19 @@ export default function Categories({ categories, locale, translation }: Categori
       ...category,
       products: filteredProducts
     };
-  }).filter(category => category.products.length > 0); // Only keep categories with products
+  }).filter(category => category.products.length > 0);
 
   return (
-    <div>
+    <div className="space-y-12">
       {filteredCategories.map((category) => (
         <section key={category.id} className="section-gap">
-          <h1 className="text-primary text-4xl font-bold italic text-center mb-6 mt-14">
-            {localizeCategoryName(category.name, locale)}
-          </h1>
+          <div className="flex items-center justify-center gap-4 mb-8 mt-10">
+            <span className="h-px bg-primary/25 w-12 sm:w-24" />
+            <h2 className="text-primary text-2xl sm:text-3xl font-extrabold tracking-tight text-center">
+              {localizeCategoryName(category.name, locale)}
+            </h2>
+            <span className="h-px bg-primary/25 w-12 sm:w-24" />
+          </div>
           <Menu
             items={category.products.map((product) => localizeProduct(product, locale))}
             locale={locale}

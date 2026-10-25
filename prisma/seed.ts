@@ -20,6 +20,10 @@ async function main() {
       { id: 'ffe5a310-d9fd-46e8-8a25-3d1f133ff66f', name: "Meat", order: 3 },
       { id: 'fd2f22ee-8165-4720-b22c-75c3ecacb536', name: "Cheese", order: 4 },
       { id: 'ff443f25-09c3-4320-b619-bda6102445e4', name: "Spicy", order: 5 },
+      { id: 'f1111111-2222-3333-4444-555555555555', name: "Burgers", order: 6 },
+      { id: 'f2222222-3333-4444-5555-666666666666', name: "Desserts", order: 7 },
+      { id: 'f3333333-4444-5555-6666-777777777777', name: "Beverages", order: 8 },
+      { id: 'f4444444-5555-6666-7777-888888888888', name: "Sides", order: 9 },
     ]
   })
 
@@ -142,6 +146,118 @@ async function main() {
         order: 10,
         basePrice: 13.99,
         categoryId: 'ff443f25-09c3-4320-b619-bda6102445e4', // Spicy
+      },
+      // Burgers
+      {
+        id: 'burger001smashqazwsx',
+        name: 'Classic Smash Burger',
+        description: 'Double Angus beef smash patties, melted American cheddar, caramelized onions, house burger sauce on a toasted brioche bun.',
+        image: '/assets/images/menu/classic-smash-burger.jpg',
+        order: 14,
+        basePrice: 11.49,
+        categoryId: 'f1111111-2222-3333-4444-555555555555', // Burgers
+      },
+      {
+        id: 'burger002crispychik',
+        name: 'Crispy Buttermilk Chicken Burger',
+        description: 'Golden-fried buttermilk chicken breast, crunchy coleslaw, dill pickles, and creamy garlic aioli on a sesame bun.',
+        image: '/assets/images/menu/crispy-chicken-burger.jpg',
+        order: 15,
+        basePrice: 10.99,
+        categoryId: 'f1111111-2222-3333-4444-555555555555', // Burgers
+      },
+      {
+        id: 'burger003bbqbacon',
+        name: 'Smoky BBQ Bacon Burger',
+        description: 'Juicy beef patty stacked with crispy beef bacon, smoky barbecue sauce, crispy onion rings, and smoked cheddar.',
+        image: '/assets/images/menu/bbq-bacon-burger.jpg',
+        order: 16,
+        basePrice: 12.99,
+        categoryId: 'f1111111-2222-3333-4444-555555555555', // Burgers
+      },
+      // Desserts
+      {
+        id: 'dessert001tiramisu',
+        name: 'Classic Italian Tiramisu',
+        description: 'Layers of espresso-soaked ladyfingers, rich mascarpone cream, and Dutch cocoa powder.',
+        image: '/assets/images/menu/classic-tiramisu.jpg',
+        order: 17,
+        basePrice: 6.99,
+        categoryId: 'f2222222-3333-4444-5555-666666666666', // Desserts
+      },
+      {
+        id: 'dessert002lavacake',
+        name: 'Molten Chocolate Lava Cake',
+        description: 'Warm, decadent dark chocolate cake with a gooey molten center, dusted with powdered sugar.',
+        image: '/assets/images/menu/chocolate-lava-cake.jpg',
+        order: 18,
+        basePrice: 7.49,
+        categoryId: 'f2222222-3333-4444-5555-666666666666', // Desserts
+      },
+      {
+        id: 'dessert003nutellapiz',
+        name: 'Nutella & Hazelnut Pizza',
+        description: 'Fresh wood-fired crust slathered with warm Nutella, crushed toasted hazelnuts, and fresh strawberries.',
+        image: '/assets/images/menu/nutella-pizza.jpg',
+        order: 19,
+        basePrice: 8.99,
+        categoryId: 'f2222222-3333-4444-5555-666666666666', // Desserts
+      },
+      // Beverages
+      {
+        id: 'drink001mintlemon',
+        name: 'Fresh Mint Lemonade',
+        description: 'Freshly squeezed lemons, crushed garden mint, and pure cane syrup over crushed ice.',
+        image: '/assets/images/menu/fresh-mint-lemonade.jpg',
+        order: 20,
+        basePrice: 3.99,
+        categoryId: 'f3333333-4444-5555-6666-777777777777', // Beverages
+      },
+      {
+        id: 'drink002caramellat',
+        name: 'Iced Caramel Macchiato',
+        description: 'Rich espresso poured over chilled whole milk with vanilla and finished with buttery caramel drizzle.',
+        image: '/assets/images/menu/iced-caramel-latte.jpg',
+        order: 21,
+        basePrice: 4.49,
+        categoryId: 'f3333333-4444-5555-6666-777777777777', // Beverages
+      },
+      {
+        id: 'drink003berrycool',
+        name: 'Sparkling Wild Berry Cooler',
+        description: 'Refreshing sparkling water infused with blackberries, raspberries, fresh lime, and aromatic thyme.',
+        image: '/assets/images/menu/berry-cooler.jpg',
+        order: 22,
+        basePrice: 4.29,
+        categoryId: 'f3333333-4444-5555-6666-777777777777', // Beverages
+      },
+      // Sides
+      {
+        id: 'side001trufflefries',
+        name: 'Truffle Parmesan Fries',
+        description: 'Hand-cut crispy skin-on fries tossed in white truffle oil, freshly grated Parmesan, and fresh parsley.',
+        image: '/assets/images/menu/truffle-parmesan-fries.jpg',
+        order: 23,
+        basePrice: 5.99,
+        categoryId: 'f4444444-5555-6666-7777-888888888888', // Sides
+      },
+      {
+        id: 'side002mozzasticks',
+        name: 'Crispy Mozzarella Sticks',
+        description: 'Golden seasoned breaded mozzarella sticks served hot and stretchy with homemade marinara dip.',
+        image: '/assets/images/menu/mozzarella-sticks.jpg',
+        order: 24,
+        basePrice: 6.49,
+        categoryId: 'f4444444-5555-6666-7777-888888888888', // Sides
+      },
+      {
+        id: 'side003garlicbites',
+        name: 'Garlic Butter Dough Bites',
+        description: 'Oven-baked pizza dough bites tossed in rich roasted garlic herb butter and served with warm cheese sauce.',
+        image: '/assets/images/menu/garlic-bread-bites.jpg',
+        order: 25,
+        basePrice: 5.49,
+        categoryId: 'f4444444-5555-6666-7777-888888888888', // Sides
       },
     ],
   })

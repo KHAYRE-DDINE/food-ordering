@@ -2,7 +2,7 @@ import React from "react";
 import { db } from "@/lib/prisma";
 import { Locale } from "@/i18n.config";
 import Link from "next/link";
-import { Utensils, Flame, Sparkles, Leaf, Pizza, Beef } from "lucide-react";
+import { Utensils, Flame, Sparkles, Leaf, Pizza, Beef, Sandwich, CakeSlice, Coffee, UtensilsCrossed } from "lucide-react";
 import { localizeCategoryName } from "@/lib/menu-localization";
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
@@ -11,6 +11,10 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   vegetarian: <Leaf className="h-6 w-6 text-green-600" />,
   classic: <Sparkles className="h-6 w-6 text-primary" />,
   spicy: <Flame className="h-6 w-6 text-red-600" />,
+  burgers: <Sandwich className="h-6 w-6 text-amber-600" />,
+  desserts: <CakeSlice className="h-6 w-6 text-pink-500" />,
+  beverages: <Coffee className="h-6 w-6 text-cyan-600" />,
+  sides: <UtensilsCrossed className="h-6 w-6 text-orange-500" />,
 };
 
 export default async function ExploreCategories({ locale }: { locale: Locale }) {

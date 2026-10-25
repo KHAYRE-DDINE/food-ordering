@@ -26,6 +26,10 @@ const categoryLabels: Record<string, string> = {
   Meat: "لحوم",
   Cheese: "جبن",
   Spicy: "حار",
+  Burgers: "برجر",
+  Desserts: "حلويات",
+  Beverages: "مشروبات",
+  Sides: "مقبلات",
 };
 
 const extraLabels: Record<string, string> = {

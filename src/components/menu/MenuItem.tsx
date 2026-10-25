@@ -7,8 +7,7 @@ import { ProductWithRelations } from "@/types/product";
 import { Routes } from "@/constants/enums";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { FaBacon, FaCheese, FaPepperHot } from "react-icons/fa6";
-import { Salad, Vegan } from "lucide-react";
+import { Salad, Vegan, Pizza, Flame, Sparkles } from "lucide-react";
 import { LanguageType } from "@/i18n.config";
 import { Translations } from "@/types/translations";
 import { defaultMenuTranslation, localizeExtraName } from "@/lib/menu-localization";
@@ -31,11 +30,10 @@ function MenuItem({
     <motion.div
       initial={{ y: 40, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
-      // whileHover={{ scale: 1.1 }}
       transition={{ duration: 0.4, delay: 0.2 }}
-      className="menu-item h-full p-4 rounded-md bg-gray-200 hover:shadow-2xl shadow-[#000000b3] duration-75"
+      className="menu-item h-full p-4 rounded-xl bg-white border border-gray-100 hover:shadow-xl duration-200 transition-all shadow-sm"
     >
-      <div className="relative w-full h-48 mx-auto overflow-hidden rounded">
+      <div className="relative w-full h-48 mx-auto overflow-hidden rounded-lg bg-gray-50">
         <img
           src={item.image}
           alt={item.name}
@@ -55,23 +53,23 @@ function MenuItem({
           />
         </div>
       </div>
-      <div className="flex justify-between items-center h-[50px]">
+      <div className="flex justify-between items-center h-[50px] mt-2">
         <Link key={item.id} href={`/${currentLocale}/${Routes.MENU}/${item.id}`} prefetch>
-          <h4 className="font-semibold text-[17px] hover:underline">{item.name}</h4>
+          <h4 className="font-bold text-[17px] hover:text-primary transition-colors">{item.name}</h4>
         </Link>
-        <strong className="text-accent">
+        <strong className="text-primary font-extrabold text-base">
           {FormatCurrency(item.basePrice)}
         </strong>
       </div>
-      <p className="text-gray-500 text-sm line-clamp-1 text-start mt-[-20px] h-[20px]">{item.description}</p>
-      <div className="spices flex justify-center items-center flex-wrap gap-x-2">
+      <p className="text-gray-500 text-xs line-clamp-2 text-start mt-[-8px] h-[32px] leading-relaxed">{item.description}</p>
+      <div className="spices flex justify-center items-center flex-wrap gap-x-2 mt-2">
         {item.extras.map((extra) => {
           const extraIcons: { [key: string]: JSX.Element } = {
-            cheese: <FaCheese className="w-4 h-4 text-yellow-400" />,
-            pepper: <FaPepperHot className="w-4 h-4 text-red-600" />,
-            tomato: <Vegan className="w-4 h-4 text-red-500" />,
-            bacon: <FaBacon className="w-4 h-4 text-red-800" />,
-            onion: <Salad className="w-4 h-4 text-purple-500" />,
+            cheese: <Pizza className="w-3.5 h-3.5 text-amber-500" />,
+            pepper: <Flame className="w-3.5 h-3.5 text-red-600" />,
+            tomato: <Vegan className="w-3.5 h-3.5 text-emerald-600" />,
+            bacon: <Sparkles className="w-3.5 h-3.5 text-rose-600" />,
+            onion: <Salad className="w-3.5 h-3.5 text-purple-600" />,
           };
 
           const icon = extraIcons[extra.name.toLowerCase()] || null;
@@ -79,17 +77,19 @@ function MenuItem({
           return (
             <div
               key={`${item.id}-${extra.id}`}
-              className="extras h-[18px] my-2 flex items-center gap-x-1 border border-1 rounded-xl border-gray-400 p-[10px]"
+              className="extras h-[20px] my-1 flex items-center gap-x-1 border rounded-full border-gray-200 bg-gray-50 px-2.5 py-1 text-gray-700"
             >
               {icon}
-              <span className=" capitalize text-[12px] ">
+              <span className="capitalize text-[11px] font-medium">
                 {localizeExtraName(extra.name, currentLocale)}
               </span>
             </div>
           );
         })}
       </div>
-      <AddButton item={item} locale={currentLocale} translation={currentTranslation} />
+      <div className="mt-3">
+        <AddButton item={item} locale={currentLocale} translation={currentTranslation} />
+      </div>
     </motion.div>
   );
 }
