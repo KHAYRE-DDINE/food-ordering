@@ -1,79 +1,109 @@
 "use client";
 
-import { ProductSizes, ExtraIngredients } from "@prisma/client";
+import { useEffect } from "react";
 import Menu from "@/components/menu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { LanguageType } from "@/i18n.config";
+import { localizeCategoryName, localizeProduct } from "@/lib/menu-localization";
+import { Translations } from "@/types/translations";
+import { ProductWithRelations } from "@/types/product";
+import { addToFilter } from "@/redux/features/filter/filterSlice";
 
 interface Category {
   id: string;
   name: string;
-  products: Product[];
+  products: ProductWithRelations[];
 }
 
 interface CategoriesProps {
   categories: Category[];
+  locale: LanguageType;
+  translation: Translations['menu'];
 }
 
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-  order: number;
-  basePrice: number;
-  sizes: {
-    id: string;
-    name: ProductSizes;
-    price: number;
-    productId: string;
-  }[];
-  extras: {
-    id: string;
-    name: ExtraIngredients;
-    price: number;
-    productId: string;
-  }[];
-  categoryId: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+export default function Categories({ categories = [], locale, translation }: CategoriesProps) {
+  const dispatch = useDispatch();
+  const filterItems = useSelector((state: RootState) => state?.filter?.items);
+  const safeFilters = Array.isArray(filterItems) ? filterItems : [];
 
-export default function Categories({ categories }: CategoriesProps) {
-  const filters = useSelector((state: RootState) => state.filter.items);
+  const searchItem = safeFilters.find((f) => f && f.name === "search");
+  const searchFilter = typeof searchItem?.value === "string" ? searchItem.value.trim().toLowerCase() : "";
 
-  const filteredCategories = categories.map(category => {
-    
-    const filteredProducts = category.products.filter(product => {
-      // Get filter values
-      const searchFilter =
-        (filters.find((f) => f.name === "search")?.value as string) || "";
-      const categoryFilter =
-        (filters.find((f) => f.name === "category")?.value as string) ||
-        "All Categories";
-      const dietaryFilters =
-        (filters.find((f) => f.name === "dietary")?.value as string[]) || [];
+  const categoryItem = safeFilters.find((f) => f && f.name === "category");
+  const categoryFilter = typeof categoryItem?.value === "string" ? categoryItem.value : "All Categories";
+
+  const dietaryItem = safeFilters.find((f) => f && f.name === "dietary");
+  let dietaryFilters: string[] = [];
+  if (Array.isArray(dietaryItem?.value)) {
+    dietaryFilters = dietaryItem.value.map((v) => String(v).toLowerCase());
+  } else if (typeof dietaryItem?.value === "string" && dietaryItem.value) {
+    dietaryFilters = [dietaryItem.value.toLowerCase()];
+  }
+
+  // Handle URL hash navigation (e.g. /menu#burgers)
+  useEffect(() => {
+    const handleScrollToHash = () => {
+      const rawHash = window.location.hash;
+      if (!rawHash) return;
+      const targetId = decodeURIComponent(rawHash.replace(/^#/, "")).toLowerCase().trim().replace(/\s+/g, '-');
+      if (!targetId) return;
+
+      // If a specific filter is blocking visibility of the hash target, reset category filter
+      const currentCatFilter = categoryFilter.toLowerCase();
+      if (currentCatFilter !== "all categories" && currentCatFilter !== targetId) {
+        dispatch(addToFilter({ name: "category", value: "All Categories" }));
+      }
+
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    };
+
+    // Attempt immediately and with short timeouts for DOM readiness
+    handleScrollToHash();
+    const timer1 = setTimeout(handleScrollToHash, 150);
+    const timer2 = setTimeout(handleScrollToHash, 450);
+
+    window.addEventListener("hashchange", handleScrollToHash);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      window.removeEventListener("hashchange", handleScrollToHash);
+    };
+  }, [categoryFilter, dispatch]);
+
+  const safeCategories = Array.isArray(categories) ? categories : [];
+
+  const filteredCategories = safeCategories.map(category => {
+    const products = Array.isArray(category?.products) ? category.products : [];
+
+    const filteredProducts = products.filter(product => {
+      if (!product) return false;
+
+      const pName = String(product.name || "").toLowerCase();
+      const pDesc = String(product.description || "").toLowerCase();
 
       // Search text filter
       const matchesSearch =
         searchFilter === "" ||
-        product.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchFilter.toLowerCase());
+        pName.includes(searchFilter) ||
+        pDesc.includes(searchFilter);
 
       // Category filter
+      const catName = String(category.name || "").toLowerCase().trim();
       const matchesCategory =
         categoryFilter === "All Categories" ||
-        category.name.toLowerCase() === categoryFilter.toLowerCase();
+        catName === categoryFilter.toLowerCase().trim();
 
-      // Dietary filter - assuming dietaryFilters are tags on the product itself
-      // Adjust this based on your actual data structure
+      // Dietary filter: check against ingredients/extras that the item does NOT contain
+      const safeExtras = Array.isArray(product.extras) ? product.extras : [];
+      const productExtrasLower = safeExtras.map(e => String(e.name || "").toLowerCase());
+
       const matchesDietary =
         dietaryFilters.length === 0 ||
-        dietaryFilters.every(diet => 
-          product.extras.some(extra => 
-            extra.name.toLowerCase() === diet.toLowerCase()
-          )
-        );
+        dietaryFilters.every(filter => !productExtrasLower.includes(filter));
 
       return matchesSearch && matchesCategory && matchesDietary;
     });
@@ -82,18 +112,41 @@ export default function Categories({ categories }: CategoriesProps) {
       ...category,
       products: filteredProducts
     };
-  }).filter(category => category.products.length > 0); // Only keep categories with products
+  }).filter(category => category.products.length > 0);
+
+  if (filteredCategories.length === 0) {
+    return (
+      <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-gray-200">
+        <p className="text-gray-500 text-lg">No dishes found matching your current filter.</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      {filteredCategories.map((category) => (
-        <section key={category.id} className="section-gap">
-          <h1 className="text-primary text-4xl font-bold italic text-center mb-6 mt-14">
-            {category.name}
-          </h1>
-          <Menu items={category.products} />
-        </section>
-      ))}
+    <div className="space-y-16">
+      {filteredCategories.map((category) => {
+        const categorySlug = category.name.toLowerCase().trim().replace(/\s+/g, '-');
+        return (
+          <section
+            key={category.id}
+            id={categorySlug}
+            className="scroll-mt-28"
+          >
+            <div className="flex items-center justify-center gap-4 mb-8 mt-12">
+              <span className="h-px bg-primary/20 w-16 sm:w-28" />
+              <h2 className="text-gray-900 text-2xl sm:text-3xl font-extrabold tracking-tight text-center">
+                {localizeCategoryName(category.name, locale)}
+              </h2>
+              <span className="h-px bg-primary/20 w-16 sm:w-28" />
+            </div>
+            <Menu
+              items={category.products.map((product) => localizeProduct(product, locale))}
+              locale={locale}
+              translation={translation}
+            />
+          </section>
+        );
+      })}
     </div>
   );
 }

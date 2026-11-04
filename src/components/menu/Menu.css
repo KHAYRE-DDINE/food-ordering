@@ -1,9 +1,13 @@
 .menu-item {
-    display: grid;
-    grid-template-rows: 196px 71px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-item img {
+    transition: transform 0.3s ease;
 }
 
 .menu-item:hover img {
-    transition: .3s;
-    transform: scale(1.1) rotate(5deg);
+    transform: scale(1.05);
 }

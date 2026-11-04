@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   distDir: '.next',
   images: {
+    unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "img.freepik.com" },

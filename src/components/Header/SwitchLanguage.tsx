@@ -9,9 +9,17 @@ const SwitchLanguage = () => {
   const router = useRouter()
 
   const switchLanguage = (newLocale: string) => {
-    const path = pathname.replace(`/${locale}`, `/${newLocale}`) ?? `/${newLocale}`
+    const localeValue = Array.isArray(locale) ? locale[0] : locale;
+    const path = pathname.startsWith(`/${localeValue}`)
+      ? pathname.replace(`/${localeValue}`, `/${newLocale}`)
+      : `/${newLocale}${pathname}`;
 
-    router.push(path)
+    console.log('[language switch]', {
+      from: localeValue,
+      to: newLocale,
+      path,
+    });
+    router.push(path);
   }
   return (
     <div className="flex mx-2">

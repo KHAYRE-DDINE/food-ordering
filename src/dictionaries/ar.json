@@ -14,47 +14,116 @@
     "about": {
       "ourStory": "قصتنا",
       "aboutUs": "معلومات عنا",
-      "firstTitle": "Our Services",
+      "firstTitle": "خدماتنا",
       "firstDescriptions": {
-        "beginning": "At Pizza Restaurant, we’re passionate about creating unforgettable culinary experiences. From savory dishes to sweet delights, our services are designed to satisfy every craving. Here’s what we bring to the table:",
-        "one": "Exquisite meals crafted with fresh, high-quality ingredients.",
-        "two": "Perfectly tailored menus for weddings, corporate events, and private parties.",
-        "three": "Healthy, delicious meals delivered straight to your door.",
-        "four": "Learn the secrets behind our signature dishes with hands-on cooking sessions.",
-        "five": "Personalized dining experiences to suit your taste and dietary needs."
+        "beginning": "في مطعم البيتزا، نهتم بتقديم تجارب طعام لا تنسى. من الأطباق الشهية إلى الحلويات، صممت خدماتنا لتلبي كل رغبة.",
+        "one": "وجبات مميزة محضرة بمكونات طازجة وعالية الجودة.",
+        "two": "قوائم طعام مناسبة للأعراس وفعاليات الشركات والحفلات الخاصة.",
+        "three": "وجبات صحية ولذيذة تصل مباشرة إلى بابك.",
+        "four": "تعلم أسرار أطباقنا المميزة من خلال حصص طبخ تطبيقية.",
+        "five": "تجارب طعام مخصصة تناسب ذوقك واحتياجاتك الغذائية."
       },
-      "firstFoot": "Let us take care of the cooking—you just enjoy the feast!",
-      "secondTitle": "Our Offers",
+      "firstFoot": "دع الطبخ علينا واستمتع أنت بالوجبة!",
+      "secondTitle": "عروضنا",
       "secondDescriptions": {
-        "beginning": "We believe good food should be accessible to everyone. That’s why we’ve prepared special offers to make your dining experience even sweeter:",
-        "one": "Enjoy 10% off your first order with us!",
-        "two": "Special packages for family-sized meals at unbeatable prices.",
-        "three": " Limited-time dishes featuring the freshest seasonal ingredients.",
-        "four": "Earn points with every order and redeem them for free meals.",
-        "five": "Book your next event with us and receive exclusive perks."
+        "beginning": "نؤمن أن الطعام الجيد يجب أن يكون متاحا للجميع، لذلك جهزنا عروضا خاصة تجعل تجربتك ألذ.",
+        "one": "استمتع بخصم 10% على أول طلب لك معنا.",
+        "two": "باقات عائلية بأسعار ممتازة.",
+        "three": "أطباق موسمية لفترة محدودة بمكونات طازجة.",
+        "four": "اكسب نقاطا مع كل طلب واستبدلها بوجبات مجانية.",
+        "five": "احجز فعاليتك القادمة معنا واحصل على مزايا حصرية."
       },
-      "secondFoot": "Indulge in flavor without breaking the bank—explore our offers today!",
-      "thirdTitle": "Our Features",
+      "secondFoot": "استمتع بالنكهة بسعر مناسب واكتشف عروضنا اليوم!",
+      "thirdTitle": "مميزاتنا",
       "thirdDescriptions": {
-        "beginning": "What makes us the go-to choice for food lovers? It’s our dedication to quality, creativity, and customer satisfaction. Here’s what sets us apart:",
-        "one": "We source our ingredients locally to ensure the highest quality.",
-        "two": "From vegan and gluten-free to hearty comfort food, there’s something for everyone.",
-        "three": "Every dish is a masterpiece, created by our talented culinary team.",
-        "four": "Hot, fresh meals delivered right to your doorstep.",
-        "five": "We’re committed to sustainability, from packaging to kitchen operations."
+        "beginning": "ما الذي يجعلنا الخيار المفضل لمحبي الطعام؟ إنه التزامنا بالجودة والإبداع ورضا الزبائن.",
+        "one": "نختار مكوناتنا محليا لضمان أعلى جودة.",
+        "two": "خيارات متنوعة تناسب النباتيين ومحبي الوجبات المريحة.",
+        "three": "كل طبق يحضره فريقنا بعناية وخبرة.",
+        "four": "وجبات ساخنة وطازجة تصل إلى بابك بسرعة.",
+        "five": "نلتزم بالاستدامة في التغليف والعمل داخل المطبخ."
       },
-      "thirdFoot": "Taste the difference with a dining experience that’s as unique as you are."
+      "thirdFoot": "تذوق الفرق مع تجربة طعام مميزة تناسبك."
     },
     "contact": {
       "Don't Hesitate": "لا تتردد",
-      "contactUs": "اتصل بنا"
+      "contactUs": "اتصل بنا",
+      "getInTouch": "ابق على تواصل",
+      "description": "لديك أسئلة أو ملاحظات؟ يسعدنا سماعك. تواصل معنا عبر أي من هذه القنوات.",
+      "ourLocation": "موقعنا",
+      "emailUs": "راسلنا",
+      "callUs": "اتصل بنا",
+      "workingHours": "ساعات العمل",
+      "followUs": "تابعنا",
+      "sendUsMessage": "أرسل لنا رسالة",
+      "formDescription": "املأ النموذج وسنعود إليك في أقرب وقت ممكن.",
+      "yourName": "اسمك",
+      "yourEmail": "بريدك الإلكتروني",
+      "subject": "الموضوع",
+      "yourMessage": "رسالتك",
+      "sendMessage": "إرسال الرسالة",
+      "address": "123 شارع الطعام، مدينة المذاق",
+      "email": "contact@foodordering.com",
+      "phone": "+1 (555) 123-4567",
+      "workingHoursValue": "الإثنين - الجمعة: 9:00 صباحا - 10:00 مساء"
+    },
+    "offers": {
+      "whyChooseUs": "لماذا تختارنا؟",
+      "securePrivacy": "خصوصية آمنة",
+      "safePayments": "مدفوعات آمنة",
+      "deliveryGuarantee": "ضمان التوصيل",
+      "securityReminder": "تذكير أمني: يرجى الحذر من رسائل وروابط الاحتيال. لن نطلب رسوما إضافية عبر الرسائل أو البريد الإلكتروني.",
+      "lightningDeals": "عروض سريعة",
+      "limitedTimeOffer": "عرض لفترة محدودة"
+    },
+    "specials": {
+      "title": "عروض خاصة",
+      "orderNow": "اطلب الآن",
+      "offers": [
+        {
+          "title": "وجبة العائلة",
+          "description": "مثالية لتجمعات العائلة. احصل على خصم 20% للطلبات فوق 50 دولار",
+          "code": "FAMILY20"
+        },
+        {
+          "title": "عرض نهاية الأسبوع",
+          "description": "استمتع بخصم 15% على جميع الطلبات خلال عطلة نهاية الأسبوع",
+          "code": "WEEKEND15"
+        },
+        {
+          "title": "أول طلب",
+          "description": "زبون جديد؟ احصل على خصم 25% على أول طلب لك",
+          "code": "NEW25"
+        }
+      ]
     }
+  },
+  "menu": {
+    "title": "اختر وجبتك",
+    "subtitle": "استمتع بها",
+    "searchMenu": "ابحث في القائمة",
+    "searchPlaceholder": "ابحث بالاسم أو الكلمة المفتاحية...",
+    "filterByCategory": "تصفية حسب الفئة",
+    "dietaryOptions": "خيارات الإضافات",
+    "allCategories": "كل الفئات",
+    "addToCart": "أضف إلى العربة",
+    "pickYourSize": "اختر الحجم",
+    "anyExtra": "هل تريد إضافات؟",
+    "inCart": "في العربة",
+    "remove": "إزالة",
+    "numberOfOrders": "عدد الطلبات:",
+    "productNotFound": "لم يتم العثور على المنتج",
+    "errorLoadingProduct": "حدث خطأ أثناء تحميل المنتج. يرجى المحاولة لاحقا."
   },
   "navbar": {
     "home": "الصفحة الرئيسية",
-    "about": "معلومات عنا",
     "menu": "القائمة",
+    "offers": "العروض",
+    "orders": "طلباتي",
+    "favorites": "المفضلة",
+    "about": "معلومات عنا",
     "contact": "تواصل معنا",
+    "account": "الحساب",
     "login": "تسجيل الدخول",
     "register": "انشاء حساب",
     "signOut": "تسجيل الخروج",
@@ -258,10 +327,54 @@
   "cancel": "الغاء",
   "cart": {
     "title": "عربة التسوق",
-    "noItemsInCart": "لا توجد عناصر في سلة التسوق الخاصة بك. أضف بعضًا"
+    "noItemsInCart": "لا توجد عناصر في سلة التسوق الخاصة بك. أضف بعضًا",
+    "orderSummary": "ملخص الطلب",
+    "emptyTitle": "عربة التسوق فارغة",
+    "emptyDescription": "ابدأ بإضافة بعض الوجبات اللذيذة إلى عربتك.",
+    "size": "الحجم",
+    "extras": "الإضافات",
+    "subtotal": "المجموع الفرعي",
+    "delivery": "التوصيل",
+    "total": "الإجمالي",
+    "checkout": {
+      "emailAddress": "البريد الإلكتروني",
+      "phoneNumber": "رقم الهاتف",
+      "deliveryAddress": "عنوان التوصيل",
+      "postalCode": "الرمز البريدي",
+      "city": "المدينة",
+      "country": "الدولة",
+      "processing": "جار المعالجة...",
+      "pay": "ادفع",
+      "agreement": "بإرسال هذا الطلب، فإنك توافق على شروط الخدمة وسياسة الخصوصية"
+    }
   },
-
   "copyRight": "© 2025 جميع الحقوق محفوظة",
   "noProductsFound": "لم يتم العثور على منتجات",
-  "noCategoriesFound": "لم يتم العثور على الفئات"
+  "noCategoriesFound": "لم يتم العثور على الفئات",
+  "orderTracking": {
+    "title": "متابعة الطلب",
+    "orderPlaced": "تم استلام طلبك بنجاح!",
+    "thankYou": "شكراً لطلبك. نحن نجهز وجبتك اللذيذة بعناية.",
+    "orderReference": "رقم الطلب",
+    "status": "حالة الطلب",
+    "deliveryAddress": "عنوان التوصيل",
+    "contact": "معلومات الاتصال",
+    "items": "الوجبات المطلوبة",
+    "subtotal": "المجموع الفرعي",
+    "deliveryFee": "رسوم التوصيل",
+    "total": "المبلغ الإجمالي",
+    "orderNotFound": "لم يتم العثور على الطلب",
+    "orderNotFoundDesc": "لم نتمكن من العثور على طلب مطابق لرابط التتبع هذا.",
+    "backToMenu": "العودة إلى القائمة",
+    "statuses": {
+      "PENDING": "تم استلام الطلب",
+      "CONFIRMED": "تم تأكيد الطلب",
+      "PREPARING": "قيد التحضير في المطبخ",
+      "READY": "جاهز للاستلام / التوصيل",
+      "OUT_FOR_DELIVERY": "في الطريق إليك",
+      "COMPLETED": "تم التوصيل",
+      "CANCELLED": "ملغي",
+      "REJECTED": "مرفوض"
+    }
+  }
 }

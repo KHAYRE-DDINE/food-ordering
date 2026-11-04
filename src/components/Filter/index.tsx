@@ -18,9 +18,9 @@ import {
 } from "@/redux/features/filter/filterSlice";
 import { FilterItems as FilterCheckout } from "@/redux/features/filter/filterSlice";
 import { RootState } from "@/redux/store";
+import { Translations } from "@/types/translations";
 
-
-function FilterItems() {
+function FilterItems({ translation }: { translation: Translations['menu'] }) {
   const add = [
     {
       id: 1,
@@ -47,7 +47,7 @@ function FilterItems() {
   const filters = useSelector((state: RootState) => state.filter);
 
   const [selectedCategory, setSelectedCategory] =
-    useState<string>("All Categories");
+    useState<string>(translation.allCategories);
 
   const handleCheckedBoxes = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -66,11 +66,11 @@ function FilterItems() {
 
   return (
     <>
-      <div className="filter container bg-white rounded-2xl shadow-lg p-6 mt-10 border border-gray-100 transition-all duration-300 hover:shadow-xl">
+      <div className="filter bg-white rounded-2xl shadow-lg p-6 mt-10 border border-gray-100 transition-all duration-300 hover:shadow-xl">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-6">
           <div className="w-full md:w-auto">
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Search menu
+              {translation.searchMenu}
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -79,7 +79,7 @@ function FilterItems() {
               <input
                 type="search"
                 name="search"
-                placeholder="Search by name or keyword..."
+                placeholder={translation.searchPlaceholder}
                 className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg bg-white shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 text-gray-700 placeholder-gray-400"
                 onChange={(e) =>
                   dispatch(
@@ -92,13 +92,14 @@ function FilterItems() {
 
           <div className="w-full md:w-auto">
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Filter by Category
+              {translation.filterByCategory}
             </label>
             <div className="relative">
               <DropDown
                 selectedCategory={selectedCategory}
                 setSelectedCategory={setSelectedCategory}
                 dispatch={dispatch}
+                translation={translation}
               />
             </div>
           </div>
@@ -121,7 +122,7 @@ function FilterItems() {
             </div>
           </div>
           <h3 className="text-sm font-medium text-gray-700 mb-3">
-            Dietary Options
+            {translation.dietaryOptions}
           </h3>
           <div className="flex flex-wrap gap-4">
             {add.map((e) => (

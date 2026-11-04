@@ -1,7 +1,7 @@
 import { RootState } from "@/redux/store";
+import { cartLineKey } from "@/lib/cart-line";
 import { Extra, Size } from "@prisma/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 
 export type CartItem = {
     name: string
@@ -13,8 +13,16 @@ export type CartItem = {
     extra?: Extra[]
 }
 
+export type AppliedPromo = {
+    code: string
+    discountAmount: number
+    discountType: 'PERCENTAGE' | 'FIXED'
+    discountValue: number
+}
+
 type CartState = {
     items: CartItem[]
+    appliedPromo: AppliedPromo | null
 }
 
 let initialCartItems: CartItem[] = [];
@@ -27,11 +35,7 @@ if (typeof window !== 'undefined') {
       const parsed = JSON.parse(storedItems);
       if (Array.isArray(parsed)) {
         initialCartItems = parsed;
-      }else{
-        console.log("nothing find")
       }
-    }else{
-        console.log("nothing")
     }
   } catch (error) {
     console.error('Error parsing cart items from sessionStorage:', error);
@@ -39,7 +43,8 @@ if (typeof window !== 'undefined') {
 }
 
 const initialState: CartState = {
-    items: initialCartItems
+    items: initialCartItems,
+    appliedPromo: null
 };
 
 export const cartSlice = createSlice({
@@ -47,46 +52,59 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         AddToCart: (state, action: PayloadAction<CartItem>) => {
-            const existingItem = state.items.find((item) => item.id === action.payload.id)
-            console.log('🛒 Adding to cart:', action.payload)
-            console.log('🔍 Existing item found:', state.items.map((item) => item))
-            console.log('🔍 initialState:', initialState)
-            
+            const key = cartLineKey(action.payload)
+            const existingItem = state.items.find((item) => cartLineKey(item) === key)
+
             if (existingItem) {
                 existingItem.quantity = (existingItem.quantity || 0) + 1
-                existingItem.size = action.payload.size
-                existingItem.extra = action.payload.extra
-                console.log('existing item')
-                console.log(existingItem.quantity)
-                console.log(existingItem)
-
             } else {
                 state.items.push({ ...action.payload, quantity: 1 })
-                console.log('🆕 New item added with quantity: 1')
             }
-
-            console.log('📦 Current cart state:', state.items)
         },
-        RemoveCartItem: (state, action: PayloadAction<{ id: string }>) => {
-            const item = state.items.find((e) => e.id === action.payload.id)
+        RemoveCartItem: (state, action: PayloadAction<{ lineKey: string }>) => {
+            const item = state.items.find((e) => cartLineKey(e) === action.payload.lineKey)
             if (item) {
-                if (item.quantity === 1) {
-                    state.items = state.items.filter((item) => item.id != action.payload.id)
+                if ((item.quantity ?? 1) <= 1) {
+                    state.items = state.items.filter((e) => cartLineKey(e) !== action.payload.lineKey)
                 } else {
                     item.quantity! -= 1
                 }
             }
         },
-        RemoveItemFromForm: (state, action: PayloadAction<{ id: string }>) => {
-            state.items = state.items.filter((item) => item.id !== action.payload.id)
+        RemoveItemFromForm: (state, action: PayloadAction<{ lineKey: string }>) => {
+            state.items = state.items.filter((item) => cartLineKey(item) !== action.payload.lineKey)
         },
         ClearCartItems: (state) => {
             state.items = []
+            state.appliedPromo = null
+        },
+        ApplyPromoCode: (state, action: PayloadAction<AppliedPromo>) => {
+            state.appliedPromo = action.payload
+        },
+        RemovePromoCode: (state) => {
+            state.appliedPromo = null
+        },
+        ReorderItems: (state, action: PayloadAction<CartItem[]>) => {
+            state.items = action.payload
+            state.appliedPromo = null
+            if (typeof window !== 'undefined') {
+                sessionStorage.setItem('cartItems', JSON.stringify(action.payload))
+            }
         }
     }
 })
 
+export const { 
+    AddToCart, 
+    RemoveCartItem, 
+    RemoveItemFromForm, 
+    ClearCartItems,
+    ApplyPromoCode,
+    RemovePromoCode,
+    ReorderItems
+} = cartSlice.actions
 
-export const { AddToCart, RemoveCartItem, RemoveItemFromForm, ClearCartItems } = cartSlice.actions
 export default cartSlice.reducer
+
 export const selectCartItems = (state: RootState) => state.cart.items
+export const selectAppliedPromo = (state: RootState) => state.cart.appliedPromo

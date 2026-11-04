@@ -1,9 +1,12 @@
 import About from "@/components/About"
+import { Locale } from "@/i18n.config"
 
-const AboutPage = () => {
+const AboutPage = async ({ params }: { params: Promise<{ locale: Locale }> }) => {
+    const { locale } = await params
+
     return (
         <div>
-            <About />
+            <About locale={locale} />
         </div>
     )
 }

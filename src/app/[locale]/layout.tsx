@@ -9,6 +9,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ToastProvider } from "@/components/ToastProvider";
 
+// Read live restaurant data at request time; image builds have no database access.
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   return [{ locale: Languages.ARABIC }, { locale: Languages.ENGLISH }];
 }
@@ -16,13 +19,13 @@ export async function generateStaticParams() {
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
-  preload: true,
+  preload: false,
 });
 
 const cairo = Cairo({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
-  preload: true,
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -52,12 +55,12 @@ export default async function RootLayout({
         }
       >
         <ReduxProvider>
-          <Header />
-          <div className="pt-[80px]" style={{ minHeight: 'calc(100vh - 95px)' }}>
+          <Header locale={locale} />
+          <div style={{ minHeight: 'calc(100vh - 95px)' }}>
             {children}
           </div>
           {/* <ChatAi /> */}
-          <Footer />
+          <Footer locale={locale} />
           <ToastProvider />
         </ReduxProvider>
       </body>
