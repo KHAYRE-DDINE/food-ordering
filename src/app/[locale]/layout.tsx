@@ -9,6 +9,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ToastProvider } from "@/components/ToastProvider";
 
+// Read live restaurant data at request time; image builds have no database access.
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   return [{ locale: Languages.ARABIC }, { locale: Languages.ENGLISH }];
 }
