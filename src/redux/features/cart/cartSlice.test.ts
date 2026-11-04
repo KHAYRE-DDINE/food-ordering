@@ -15,7 +15,7 @@ const item = (overrides: Partial<CartItem> = {}): CartItem => ({
   ...overrides,
 });
 
-const empty = { items: [] as CartItem[] };
+const empty = { items: [] as CartItem[], appliedPromo: null };
 
 describe("cart reducer", () => {
   it("adding the same customization increments quantity", () => {
