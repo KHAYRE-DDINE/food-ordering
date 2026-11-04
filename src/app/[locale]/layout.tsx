@@ -53,7 +53,7 @@ export default async function RootLayout({
       >
         <ReduxProvider>
           <Header locale={locale} />
-          <div className="pt-[80px]" style={{ minHeight: 'calc(100vh - 95px)' }}>
+          <div style={{ minHeight: 'calc(100vh - 95px)' }}>
             {children}
           </div>
           {/* <ChatAi /> */}
