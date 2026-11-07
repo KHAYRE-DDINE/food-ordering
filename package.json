@@ -12,6 +12,7 @@
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "seed:catalog": "node prisma/seed-catalog.cjs",
     "vercel-build": "prisma generate && next build --webpack"
   },
   "resolutions": {
