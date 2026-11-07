@@ -65,22 +65,30 @@ export const getProductByCategory = cache(
 
 export const getBestSellers = cache(
     async (limit?: number): Promise<ProductWithRelations[]> => {
+        if (limit !== undefined && limit <= 0) return [];
         const product = await db.product.findMany({
             where: {
                 orders: {
                     some: {}, // Matches any related order
                 },
             },
-            orderBy: {
-                createdAt: 'desc', 
-            },
+            orderBy: [{ orders: { _count: 'desc' } }, { order: 'asc' }],
             include: {
                 sizes: true,
                 extras: true,
             },
             take: limit,
         });
-        return product as unknown as ProductWithRelations[];
+        if (limit !== undefined && product.length >= limit) return product;
+        // A new restaurant has no sales yet. Use curated menu order to fill the
+        // section rather than manufacturing customer orders or payment records.
+        const picks = await db.product.findMany({
+            where: { id: { notIn: product.map(item => item.id) } },
+            orderBy: [{ order: 'asc' }, { name: 'asc' }],
+            include: { sizes: true, extras: true },
+            take: limit === undefined ? undefined : limit - product.length,
+        });
+        return [...product, ...picks];
     }, ['best-seller'], { revalidate: 3600 }
 )
 
